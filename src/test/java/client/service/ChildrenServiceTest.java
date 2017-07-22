@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 
 public class ChildrenServiceTest {
 
-    protected Child getChild(){
+    protected Child getChild() {
         Child child = new Child();
         child.setAddress("Some address...");
         child.setBirthDate(new Date(System.currentTimeMillis()));
@@ -48,6 +48,7 @@ public class ChildrenServiceTest {
             }
         };
 
+        //{"surveyDate":"2017-07-18","protocolNumber":42,"familyName":"Beliakov","name":"Victor","patrName":"Vladimirovich","birthDate":"2017-07-17","placeOfEducation":"School 20","address":"Some address...","disability":false,"specialFacilitiesNeeding":false,"diagnosis":"Some diagnosis","determinedDisorder":"Some disorder","recommendedProgrammOfEducation":"Regular programm of education","recommendedFormOfEducation":"Higher education","remarks":"No remarks provided"}
         String json = "{\"surveyDate\":\"2017-07-18\",\"protocolNumber\":42,\"familyName\":\"Beliakov\",\"name\":\"Victor\",\"patrName\":\"Vladimirovich\",\"birthDate\":\"2017-07-17\",\"placeOfEducation\":\"School 20\",\"address\":\"Some address...\",\"disability\":false,\"specialFacilitiesNeeding\":false,\"diagnosis\":\"Some diagnosis\",\"determinedDisorder\":\"Some disorder\",\"recommendedProgrammOfEducation\":\"Regular programm of education\",\"recommendedFormOfEducation\":\"Higher education\",\"remarks\":\"No remarks provided\"}";
         Child child = cs.createChildFromJson(json);
         assertThat(child.getName(), is("Victor"));

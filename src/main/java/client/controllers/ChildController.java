@@ -13,13 +13,16 @@ public class ChildController {
 
     @RequestMapping(value = {"/savechild"}, method = RequestMethod.POST)
     public String saveChild(@RequestBody String jsonString){
-        Child child = childrenService.createChildFromJson(jsonString);
+        String result;
         try {
+            Child child = childrenService.createChildFromJson(jsonString);
             childrenService.saveChild(child);
+            result =  "{ result: success }";
         } catch (Exception e){
-
+            e.printStackTrace();
+            result =  "{ result: failure }";
         }
-        return "";
+        return result;
     }
 
     @RequestMapping("/getchild")
@@ -29,5 +32,3 @@ public class ChildController {
     }
 
 }
-
-
