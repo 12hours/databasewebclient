@@ -30,6 +30,7 @@ public class JpaConfig {
     @Autowired
     DataSource dataSource;
 
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
