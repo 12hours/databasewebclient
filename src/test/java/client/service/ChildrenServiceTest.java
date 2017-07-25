@@ -15,22 +15,16 @@ public class ChildrenServiceTest {
         Child child = new Child();
         child.setAddress("Some address...");
         child.setBirthDate(new Date(System.currentTimeMillis()));
-        child.setDeterminedDisorder("Some disorder");
         child.setDisability(false);
-        child.setDiagnosis("Some diagnosis");
         child.setFamilyName("Beliakov");
         child.setId(0);
         child.setName("Victor");
         child.setPatrName("Vladimirovich");
         child.setPlaceOfEducation("School 20");
-        child.setProtocolNumber(42);
-        child.setRecommendedFormOfEducation("Higher education");
-        child.setRecommendedProgrammOfEducation("Regular programm of education");
-        child.setRemarks("No remarks provided");
         child.setSpecialFacilitiesNeeding(false);
         Calendar calendar = Calendar.getInstance();
+
         calendar.set(2017, 6, 18);
-        child.setSurveyDate(new Date(calendar.getTimeInMillis()));
         return child;
     }
 
