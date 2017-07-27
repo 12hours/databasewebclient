@@ -1,6 +1,6 @@
 package client.service;
 
-import client.domain.Child;
+import core.domain.Child;
 import org.junit.Test;
 
 import java.sql.Date;
