@@ -47,9 +47,8 @@ public class Survey implements Serializable{
     @Size(max = 2000)
     private String remarks;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "child_id", referencedColumnName = "child_id", unique = false)
-//    @JsonBackReference
     @JsonFilter("OnlyIdFilter")
     private Child child;
 
@@ -57,12 +56,14 @@ public class Survey implements Serializable{
     @JoinTable(name = "surveys_recommends",
         joinColumns = @JoinColumn(name = "survey_id"),
         inverseJoinColumns = @JoinColumn(name="rec_id"))
+    @JsonIgnoreProperties("surveys")
     private Set<Recommendation> recommends = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "surveys_edu_programs",
         joinColumns = @JoinColumn(name = "survey_id"),
         inverseJoinColumns = @JoinColumn(name = "edu_pr_id"))
+    @JsonIgnoreProperties("surveys")
     private Set<EducationProgram> eduPrograms = new HashSet<>();
 
     @ManyToMany
@@ -76,6 +77,7 @@ public class Survey implements Serializable{
     @JoinTable(name = "surveys_disorders",
         joinColumns = @JoinColumn(name = "survey_id"),
         inverseJoinColumns = @JoinColumn(name = "disorder_id"))
+    @JsonIgnoreProperties("surveys")
     private Set<Disorder> disorders = new HashSet<>();
 
     @Override

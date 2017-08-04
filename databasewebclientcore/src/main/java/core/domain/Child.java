@@ -1,8 +1,7 @@
 package core.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
@@ -50,9 +49,8 @@ public class Child implements Serializable{
     private boolean specialFacilitiesNeeding;
 
     @OneToMany(mappedBy = "child", fetch = FetchType.EAGER)
+    @JsonFilter("OnlyIdFilter")
     private Set<Survey> surveys = new HashSet<>();
-
-
 
     @Override
     public boolean equals(Object o) {

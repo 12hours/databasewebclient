@@ -1,5 +1,6 @@
 package core.domain;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,5 +22,6 @@ public class Disorder {
     String disorder;
 
     @ManyToMany(mappedBy = "disorders")
+    @JsonFilter("OnlyIdFilter")
     Set<Survey> surveys = new HashSet<>();
 }

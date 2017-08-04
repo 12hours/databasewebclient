@@ -17,9 +17,10 @@ public class OnlyIdFilter extends SimpleBeanPropertyFilter {
                 return;
             }
             return;
-        } else if (!jgen.canOmitFields()) {
-            writer.serializeAsOmittedField(pojo, jgen, provider);
         }
+//        else if (!jgen.canOmitFields()) {
+//            writer.serializeAsOmittedField(pojo, jgen, provider);
+//        }
     }
     @Override
     protected boolean include(BeanPropertyWriter writer) {
