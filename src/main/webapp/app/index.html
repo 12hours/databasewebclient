@@ -21,7 +21,6 @@
     <script src="js/controllers.js"></script>
 </head>
 <body>
-
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -48,7 +47,7 @@
 <div class="container" ng-init="tabChosen = 1">
     <ul class="nav nav-tabs" >
         <li role="presentation" ng-class="{'active': tabChosen == 1}"
-            ng-click="tabChosen = 1"><a href="#">Обследования</a></li>
+            ng-click="tabChosen = 1"><a href="#">О!бследования</a></li>
 
         <li role="presentation" ng-class="{'active': tabChosen == 2}"
             ng-click="tabChosen = 2"><a href="#">Дети</a></li>
@@ -63,9 +62,8 @@
             <ng-include src="'/content/surveys-main.html'"></ng-include>
         </div>
         <div role="tabpanel" class="tab-pane" ng-class="{'active': tabChosen == 2}" id="profile">profile</div>
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': tabChosen == 3}" id="messages">messages</div>
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': tabChosen == 3}" id="messages">message!!!!s</div>
     </div>
-
 </div><!-- /.container -->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
