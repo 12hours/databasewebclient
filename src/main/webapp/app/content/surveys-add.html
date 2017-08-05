@@ -57,7 +57,7 @@
     </div>
 </div>
 
-<div class="panel panel-default" ng-controller="addSurveyController">
+<div class="panel panel-default" ng-controller="SurveyController">
     <div class="panel-heading">ПМПК</div>
     <div class="panel-body">
         <div class="row">
@@ -78,13 +78,14 @@
                     <div class="panel-heading">Диагноз</div>
                     <div class="panel-body"
                          ng-init="getDiagnosesList(); diagn_range = [0,]; diagn_list_size = 1; ">
-                        <select class="form-control" ng-repeat="i in diagn_range"
-                                ng-model="selectedDiagnoses[i]">
-                            <option></option>
-                            <option ng-repeat="item in diagnoses" value={{item.href}}>{{item.diagnosis}}</option>
-                        </select>
+                        <div ng-repeat="i in selectedDiagnoses">
+                            <select class="form-control" data-ng-model="selectedDiagnoses[$index]" 
+                                data-ng-options="item.diagnosis for item in diagnoses">
+                                <option value=""></option>
+                            </select>
+                        </div>
                         <button class="btn btn-sm btn-default"
-                                ng-click="diagn_range.push(diagn_list_size); diagn_list_size = diagn_list_size + 1;">
+                                ng-click="selectedDiagnoses.push({});">
                             Еще
                         </button>
                     </div>

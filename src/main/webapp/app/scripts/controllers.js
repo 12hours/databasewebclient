@@ -8,31 +8,37 @@ app.controller('surveyListCtrl', function($http) {
 
 app.controller('SurveyController', ['$scope', '$http', function($scope, $http){
     $scope.child = {};
+    $scope.child.diagnoses = [];
+
     $scope.selectedDiagnoses = [];
     $scope.selectedDisorders = [];
     $scope.selectedPrograms = [];
     $scope.selectedRecommendations = [];
 
     $scope.name = $scope.child.name;
+    
+    var initEmpty = function(){
+        $scope.selectedDiagnoses = [];
+        $scope.selectedDisorders = [];
+        $scope.selectedPrograms = [];
+        $scope.selectedRecommendations = [];
+    };
 
-    $scope.lg = function () {
-        console.log($scope.selectedDisorders);
-        console.log($scope.selectedDiagnoses);
-        console.log($scope.selectedPrograms);
-        console.log($scope.selectedRecommendations);
-    }
+    var init = function(){
+
+    };
 
     $scope.getDisordersList = function () {
         $http.get("/api/disorders").then(function(response) {
             var disordersList = response.data._embedded.disorders;
             var disorders = [];
-            for (var key in disordersList){
-                var dis = {};
+            for (var key in disordersList){ var dis = {};
                 dis['disorder'] = disordersList[key].disorder;
                 dis['href'] = disordersList[key]["_links"]["disorder"]['href'];
                 disorders.push(dis);
             };
             $scope.disorders = disorders;
+            
         });
     }
 
@@ -47,7 +53,7 @@ app.controller('SurveyController', ['$scope', '$http', function($scope, $http){
                 diagnoses.push(dis);
             };
             $scope.diagnoses = diagnoses;
-            console.log(diagnoses);
+            $scope.selectedDiagnoses[0] = diagnoses[1];
         });
     }
 
@@ -62,7 +68,6 @@ app.controller('SurveyController', ['$scope', '$http', function($scope, $http){
                 programs.push(dis);
             };
             $scope.programs = programs;
-            console.log(programs);
         });
     }
 
@@ -77,7 +82,6 @@ app.controller('SurveyController', ['$scope', '$http', function($scope, $http){
                 recommendations.push(dis);
             };
             $scope.recommendations = recommendations;
-            console.log(recommendations);
         });
     }
 }]);

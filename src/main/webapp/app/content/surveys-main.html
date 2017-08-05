@@ -7,15 +7,22 @@
 
                 <li role="presentation" ng-class="{'active': surveysTabChosen == 2}"
                     ng-click="surveysTabChosen = 2"><a href="#">Новое обследование</a></li>
+
+                <li role="presentation" ng-class="{'active': surveysTabChosen == 3}"
+                    ng-click="surveysTabChosen = 3"><a href="#">Child</a></li>
             </ul>
 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane" ng-class="{'active': surveysTabChosen == 1}" id="surveysPane1">
-
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': surveysTabChosen == 1}" id="surveysAll">
+                    <ng-include src="'/content/surveys-list.html'"></ng-include>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" ng-class="{'active': surveysTabChosen == 2}" id="messages">
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': surveysTabChosen == 2}" id="surveyAdd">
                     <ng-include src="'/content/surveys-add.html'"></ng-include>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': surveysTabChosen == 3}" id="survey">
+                    <ng-include src="'/content/survey.html'"></ng-include>
                 </div>
             </div>
         </div>
