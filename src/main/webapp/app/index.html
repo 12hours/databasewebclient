@@ -21,6 +21,7 @@
     <script src="js/controllers.js"></script>
 </head>
 <body>
+        
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -43,11 +44,10 @@
     </div>
 </nav>
 
-
 <div class="container" ng-init="tabChosen = 1">
     <ul class="nav nav-tabs" >
         <li role="presentation" ng-class="{'active': tabChosen == 1}"
-            ng-click="tabChosen = 1"><a href="#">О!бследования</a></li>
+            ng-click="tabChosen = 1"><a href="#">Обследования</a></li>
 
         <li role="presentation" ng-class="{'active': tabChosen == 2}"
             ng-click="tabChosen = 2"><a href="#">Дети</a></li>
@@ -70,7 +70,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
-
 
 </body>
 </html>

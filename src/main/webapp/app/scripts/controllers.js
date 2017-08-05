@@ -3,10 +3,10 @@
 var app = angular.module("clientApp", []);
 
 app.controller('surveyListCtrl', function($http) {
-    $http.get("/surveys").then(function(response) {$scope.names = response.data._embedded.surveys;});
+    $http.get("/api/surveys").then(function(response) {$scope.names = response.data._embedded.surveys;});
 });
 
-app.controller('addSurveyController', ['$scope', '$http', function($scope, $http){
+app.controller('SurveyController', ['$scope', '$http', function($scope, $http){
     $scope.child = {};
     $scope.selectedDiagnoses = [];
     $scope.selectedDisorders = [];
@@ -23,7 +23,7 @@ app.controller('addSurveyController', ['$scope', '$http', function($scope, $http
     }
 
     $scope.getDisordersList = function () {
-        $http.get("/disorders").then(function(response) {
+        $http.get("/api/disorders").then(function(response) {
             var disordersList = response.data._embedded.disorders;
             var disorders = [];
             for (var key in disordersList){
@@ -37,7 +37,7 @@ app.controller('addSurveyController', ['$scope', '$http', function($scope, $http
     }
 
     $scope.getDiagnosesList = function () {
-        $http.get("/diagnoses").then(function(response) {
+        $http.get("/api/diagnoses").then(function(response) {
             var diagnosesList = response.data._embedded.diagnoses;
             var diagnoses = [];
             for (var key in diagnosesList){
@@ -52,7 +52,7 @@ app.controller('addSurveyController', ['$scope', '$http', function($scope, $http
     }
 
     $scope.getEducationProgramsList = function () {
-        $http.get("/educationPrograms").then(function(response) {
+        $http.get("/api/educationPrograms").then(function(response) {
             var educationProgramsList = response.data._embedded.educationPrograms;
             var programs = [];
             for (var key in educationProgramsList){
@@ -67,7 +67,7 @@ app.controller('addSurveyController', ['$scope', '$http', function($scope, $http
     }
 
     $scope.getRrecommendationsList = function () {
-        $http.get("/recommendations").then(function(response) {
+        $http.get("/api/recommendations").then(function(response) {
             var recommendationsList = response.data._embedded.recommendations;
             var recommendations = [];
             for (var key in recommendationsList){
