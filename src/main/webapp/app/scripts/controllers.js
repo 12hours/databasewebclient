@@ -12,17 +12,9 @@ app.controller("NavigationController", ['$rootScope','$scope', function($rootSco
 }]);
 
 app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http){
-    $scope.child = {};
-    $scope.survey = {};
 
-    $scope.selectedDiagnoses = [];
-    $scope.selectedDisorders = [];
-    $scope.selectedPrograms = [];
-    $scope.selectedRecommendations = [];
-
-    $scope.name = $scope.child.name;
-    
-    var initEmpty = function(){
+    var clearSurvey = function(){
+        console.log("clear");
         $scope.survey = {};
         $scope.child = {};
         
@@ -31,21 +23,45 @@ app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($r
         $scope.selectedPrograms = [];
         $scope.selectedRecommendations = [];
     };
+    
+    $rootScope.initEmptySurvey = function(){
+        clearSurvey();
+    };
 
-    $rootScope.initSurvey = function(surveyId){
-        console.log("TARGET="+surveyId);
-        if (surveyId === -1){
-            initEmpty();
+    $rootScope.initSurvey = function(surveyUrl){
+        console.log("TARGET="+surveyUrl);
+        if (surveyUrl === -1){
+            $rootScope.initEmptySurvey();
             return;
         }
-        console.log("/api/surveys/" + surveyId);
-        $http.get("/api/surveys/"+surveyId).then(function(response) {
+        $http.get(surveyUrl).then(function(response) {
             $scope.survey = response.data;
             $scope.survey.surveyDate = new Date(response.data.surveyDate);
-            var childUrl = response.data._links.child.href;
+            var childUrl        = response.data._links.child.href;
+            var diagnosesUrl    = response.data._links.diagnoses.href;
+            var disordersUrl    = response.data._links.disorders.href;
+            var programsUrl     = response.data._links.eduPrograms.href;
+            var recommendsUrl   = response.data._links.recommends.href;
+
             $http.get(childUrl).then(function(response) {
                 $scope.child = response.data;
                 $scope.child.birthDate = new Date(response.data.birthDate);
+            });
+
+            $http.get(diagnosesUrl).then(function(response) {
+                $scope.selectedDiagnoses = response.data._embedded.diagnoses;
+            });
+
+            $http.get(disordersUrl).then(function(response) {
+                $scope.selectedDisorders = response.data._embedded.disorders;
+            });
+
+            $http.get(programsUrl).then(function(response) {
+                $scope.selectedPrograms = response.data._embedded.educationPrograms;
+            });
+
+            $http.get(recommendsUrl).then(function(response) {
+                $scope.selectedRecommendations = response.data._embedded.recommendations;
             });
         });
     };
@@ -59,7 +75,7 @@ app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($r
                 dis['href'] = disordersList[key]["_links"]["disorder"]['href'];
                 disorders.push(dis);
             };
-            $scope.disorders = disorders;
+            $scope.disorders = disordersList;
             
         });
     }
@@ -74,8 +90,7 @@ app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($r
                 dis['href'] = diagnosesList[key]["_links"]["diagnosis"]['href'];
                 diagnoses.push(dis);
             };
-            $scope.diagnoses = diagnoses;
-            $scope.selectedDiagnoses[0] = diagnoses[1];
+            $scope.diagnoses = diagnosesList;
         });
     }
 
@@ -89,7 +104,7 @@ app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($r
                 dis['href'] = educationProgramsList[key]["_links"]["educationProgram"]['href'];
                 programs.push(dis);
             };
-            $scope.programs = programs;
+            $scope.programs = educationProgramsList;
         });
     }
 
@@ -103,7 +118,7 @@ app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($r
                 dis['href'] = recommendationsList[key]["_links"]["recommendation"]['href'];
                 recommendations.push(dis);
             };
-            $scope.recommendations = recommendations;
+            $scope.recommendations = recommendationsList;
         });
     }
 }]);

@@ -22,19 +22,22 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <button type="button" class="btn btn-success">Сохранить</button>
-                            <button type="button" class="btn btn-warning">Сброс</button>
-                            <button type="button" class="btn btn-danger" ng-click="$root.surveysTabSelected = 1">Закрыть
+                            <button type="button" class="btn btn-warning"
+                                ng-click="$root.initEmptySurvey()">Сброс</button>
+                            <button type="button" class="btn btn-danger" 
+                                ng-click="$root.surveysTabSelected = 1; $root.initEmptySurvey()">Закрыть
                             </button>
                         </div>
                     </div>
                 </div>
-
+                <!-- Survey view -->
                 <div role="tabpanel" class="tab-pane" ng-class="{'active': $root.surveysTabSelected == 3}" id="survey">
                     @@include('./survey-edit.html')
                     <div class="row">
                         <div class="col-xs-12">
                             <button type="button" class="btn btn-success">Сохранить</button>
-                            <button type="button" class="btn btn-danger" ng-click="$root.surveysTabSelected = 1">Закрыть
+                            <button type="button" class="btn btn-danger" 
+                                ng-click="$root.surveysTabSelected = 1; $root.initEmptySurvey()">Закрыть
                             </button>
                         </div>
                     </div>
