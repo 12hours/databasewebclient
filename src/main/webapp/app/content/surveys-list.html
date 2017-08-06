@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12" ng-repeat="survey in surveys">
+            {{survey.surveyDate}} {{survey.protocolNumber}}
+            <button type="button" class="btn btn-default" 
+                ng-click="initSurvey(survey._links.self.href); $root.surveysTabSelected = 3;">Go</button>
+        </div>
+    </div>
+</div>
