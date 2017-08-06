@@ -1,3 +1,4 @@
+<!-- Survey controller scope -->
 <div class="row" ng-contoller="SurveyController">
     <div class="col-xs-12">
         <div>
@@ -23,9 +24,9 @@
                         <div class="col-xs-12">
                             <button type="button" class="btn btn-success">Сохранить</button>
                             <button type="button" class="btn btn-warning"
-                                ng-click="$root.initEmptySurvey()">Сброс</button>
+                                ng-click="initEmptySurvey()">Сброс</button>
                             <button type="button" class="btn btn-danger" 
-                                ng-click="$root.surveysTabSelected = 1; $root.initEmptySurvey()">Закрыть
+                                ng-click="$root.surveysTabSelected = 1; initEmptySurvey()">Закрыть
                             </button>
                         </div>
                     </div>
@@ -37,7 +38,7 @@
                         <div class="col-xs-12">
                             <button type="button" class="btn btn-success">Сохранить</button>
                             <button type="button" class="btn btn-danger" 
-                                ng-click="$root.surveysTabSelected = 1; $root.initEmptySurvey()">Закрыть
+                                ng-click="$root.surveysTabSelected = 1; initEmptySurvey()">Закрыть
                             </button>
                         </div>
                     </div>
@@ -46,3 +47,4 @@
         </div>
     </div>
 </div>
+<!-- end of Survey controller scope -->

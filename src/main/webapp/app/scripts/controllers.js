@@ -6,12 +6,13 @@ app.controller('surveyListCtrl', function($http) {
     $http.get("/api/surveys").then(function(response) {$scope.names = response.data._embedded.surveys;});
 });
 
-app.controller("NavigationController", ['$rootScope','$scope', function($rootScope, $scope){
+app.controller("NavigationController", ['$rootScope', function($rootScope){
         $rootScope.surveysTabSelected = 1;
         $rootScope.targetSurveyId = -1;
 }]);
 
-app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http){
+
+app.controller('SurveyController', ['$scope', '$http', function($scope, $http){
 
     var clearSurvey = function(){
         console.log("clear");
@@ -24,17 +25,18 @@ app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($r
         $scope.selectedRecommendations = [];
     };
     
-    $rootScope.initEmptySurvey = function(){
+    $scope.initEmptySurvey = function(){
         clearSurvey();
     };
 
-    $rootScope.initSurvey = function(surveyUrl){
+    $scope.initSurvey = function(surveyUrl){
         console.log("TARGET="+surveyUrl);
         if (surveyUrl === -1){
-            $rootScope.initEmptySurvey();
+            $scope.initEmptySurvey();
             return;
         }
         $http.get(surveyUrl).then(function(response) {
+            console.log("getting survey "+surveyUrl);
             $scope.survey = response.data;
             $scope.survey.surveyDate = new Date(response.data.surveyDate);
             var childUrl        = response.data._links.child.href;
@@ -78,7 +80,7 @@ app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($r
             $scope.disorders = disordersList;
             
         });
-    }
+    };
 
     $scope.getDiagnosesList = function () {
         $http.get("/api/diagnoses").then(function(response) {
@@ -106,7 +108,7 @@ app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($r
             };
             $scope.programs = educationProgramsList;
         });
-    }
+    };
 
     $scope.getRrecommendationsList = function () {
         $http.get("/api/recommendations").then(function(response) {
@@ -120,6 +122,15 @@ app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($r
             };
             $scope.recommendations = recommendationsList;
         });
-    }
+    };
+
+ $scope.$on('$viewContentLoaded', function(){
+        console.log("getting suveys");
+        $http.get("/api/surveys")
+            .then(function(response) {$scope.surveys = response.data._embedded.surveys;})
+            .catch(function (err) {console.log(err)});
+    });
+    
+
 }]);
 
