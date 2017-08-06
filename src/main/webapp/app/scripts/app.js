@@ -1,23 +1,32 @@
-var app = angular.module("clientApp", []);
+var myApp = angular.module('myApp',[]);
 
+myApp.controller('MyCtrl', function ($http, $scope, $rootScope) {
 
-app.controller('surveyListCtrl', function ($http) {
-    console.log("list");
-    $http.get("/api/surveys").then(function (response) {
-        $scope.names = response.data._embedded.surveys;
-    });
-});
-
-app.controller("NavigationController", ['$rootScope', function ($rootScope) {
+    var registerScope = null;
     $rootScope.surveysTabSelected = 1;
     $rootScope.targetSurveyId = -1;
-}]);
 
 
-app.controller('SurveyController', function ($scope, $http) {
-    (function init() {
-        console.log("init");
-    })();
+    this.$onInit = function () {
+        console.log("getting surveys ");
+        $http.get("/api/surveys")
+            .then(function (response) {
+                $scope.surveys = response.data._embedded.surveys;
+            })
+            .catch(function (err) {
+                console.log(err)
+            });
+
+        //register rootScope event
+        registerScope = $rootScope.$on('someEvent', function(event) {
+            console.log("fired");
+        });
+    };
+
+    this.$onDestroy = function () {
+        //unregister rootScope event by calling the return function
+        registerScope();
+    };
 
     var clearSurvey = function () {
         console.log("clear");
@@ -133,19 +142,4 @@ app.controller('SurveyController', function ($scope, $http) {
             $scope.recommendations = recommendationsList;
         });
     };
-
-    this.$onInit = function () {
-        console.log("getting surveys ");
-        $http.get("/api/surveys")
-            .then(function (response) {
-                $scope.surveys = response.data._embedded.surveys;
-            })
-            .catch(function (err) {
-                console.log(err)
-            });
-    };
-
-
 });
-
-
