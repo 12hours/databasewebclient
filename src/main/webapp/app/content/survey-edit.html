@@ -73,17 +73,19 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class=" panel panel-default">
-                        <div class="panel-heading">Диагноз </div>
+                        <div class="panel-heading">Диагноз {{selectedDiagnoses}}</div>
                         <div class="panel-body"
                              ng-init="getDiagnosesList();">
                             <div ng-repeat="i in selectedDiagnoses">
                                 <select class="form-control" data-ng-model="selectedDiagnoses[$index]" 
                                     data-ng-options="item.diagnosis for item in diagnoses track by item.diagnosis">
-                                    <option value=""></option>
                                 </select>
+                                <button class="btn btn-sm btn-default btn-del"
+                                        ng-click="selectedDiagnoses.splice($index,1)">
+                                    Удалить</button>
                             </div>
                             <button class="btn btn-sm btn-default"
-                                    ng-click="selectedDiagnoses.push({});">
+                                    ng-click="selectedDiagnoses.push(null);">
                                 Добавить
                             </button>
                         </div>
@@ -91,17 +93,19 @@
                 </div>
                 <div class="col-md-6">
                     <div class=" panel panel-default">
-                        <div class="panel-heading">Выявленное нарушение</div>
+                        <div class="panel-heading">Выявленное нарушение {{selectedDisorders}}</div>
                         <div class="panel-body"
                              ng-init="getDisordersList();">
                             <div ng-repeat="i in selectedDisorders">
                                 <select class="form-control" data-ng-model="selectedDisorders[$index]" 
                                     data-ng-options="item.disorder for item in disorders track by item.disorder">
-                                    <option value=""></option>
                                 </select>
+                                <button class="btn btn-sm btn-default btn-del"
+                                        ng-click="selectedDisorders.splice($index,1)">
+                                    Удалить</button>
                             </div>
                             <button class="btn btn-sm btn-default"
-                                    ng-click="selectedDisorders.push({});">
+                                    ng-click="selectedDisorders.push(null);">
                                 Добавить
                             </button>
                         </div>
@@ -111,16 +115,18 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class=" panel panel-default">
-                        <div class="panel-heading">Программа</div>
+                        <div class="panel-heading">Программа {{selectedPrograms}}</div>
                         <div class="panel-body" ng-init="getEducationProgramsList();">
                             <div ng-repeat="i in selectedPrograms">
                                 <select class="form-control" data-ng-model="selectedPrograms[$index]" 
                                     data-ng-options="item.program for item in programs track by item.program">
-                                    <option value=""></option>
                                 </select>
+                                <button class="btn btn-sm btn-default btn-del"
+                                        ng-click="selectedPrograms.splice($index,1)">
+                                    Удалить</button>
                             </div>
                             <button class="btn btn-sm btn-default"
-                                    ng-click="selectedPrograms.push({});">
+                                    ng-click="selectedPrograms.push(null);">
                                 Добавить
                             </button>
 
@@ -129,16 +135,18 @@
                 </div>
                 <div class="col-md-6">
                     <div class=" panel panel-default">
-                        <div class="panel-heading">Рекомендации</div>
+                        <div class="panel-heading">Рекомендации {{selectedRecommendations}}</div>
                         <div class="panel-body" ng-init="getRrecommendationsList();">
                             <div ng-repeat="i in selectedRecommendations">
                                 <select class="form-control" data-ng-model="selectedRecommendations[$index]" 
                                     data-ng-options="item.recommendation for item in recommendations track by item.recommendation">
-                                    <option value=""></option>
                                 </select>
+                                <button class="btn btn-sm btn-default btn-del"
+                                        ng-click="selectedRecommendations.splice($index,1)">
+                                    Удалить</button>
                             </div>
                             <button class="btn btn-sm btn-default"
-                                    ng-click="selectedRecommendations.push({});">
+                                    ng-click="selectedRecommendations.push(null);">
                                 Добавить
                             </button>
                         </div>
