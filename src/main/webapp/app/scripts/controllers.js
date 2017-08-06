@@ -42,6 +42,11 @@ app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($r
         $http.get("/api/surveys/"+surveyId).then(function(response) {
             $scope.survey = response.data;
             $scope.survey.surveyDate = new Date(response.data.surveyDate);
+            var childUrl = response.data._links.child.href;
+            $http.get(childUrl).then(function(response) {
+                $scope.child = response.data;
+                $scope.child.birthDate = new Date(response.data.birthDate);
+            });
         });
     };
 
