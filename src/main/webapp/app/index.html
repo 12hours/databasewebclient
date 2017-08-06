@@ -21,8 +21,8 @@
     <script src="js/controllers.js"></script>
     <script src="js/surveys-list-controller.js"></script>
 </head>
-<body>
-        
+<body ng-controller="NavigationController">
+    {{surveysTabSelected}} 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -60,7 +60,7 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane" ng-class="{'active': tabChosen == 1}" id="home">
-            <ng-include src="'/content/surveys-main.html'"></ng-include>
+            @@include('./content/surveys-main.html')
         </div>
         <div role="tabpanel" class="tab-pane" ng-class="{'active': tabChosen == 2}" id="profile">profile</div>
         <div role="tabpanel" class="tab-pane" ng-class="{'active': tabChosen == 3}" id="messages">message!!!!s</div>

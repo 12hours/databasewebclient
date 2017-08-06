@@ -1,28 +1,43 @@
-<div class="row">
+<div class="row" ng-contoller="SurveyController">
     <div class="col-xs-12">
-        <div ng-init="surveysTabChosen = 1">
+        <div>
             <ul class="nav nav-pills">
-                <li role="presentation" ng-class="{'active': surveysTabChosen == 1}"
-                    ng-click="surveysTabChosen = 1"><a href="#">Все</a></li>
+                <li role="presentation" ng-class="{'active': $root.surveysTabSelected == 1}"
+                    ng-click="$root.surveysTabSelected = 1"><a href="#">Все</a></li>
 
-                <li role="presentation" ng-class="{'active': surveysTabChosen == 2}"
-                    ng-click="surveysTabChosen = 2"><a href="#">Новое обследование</a></li>
+                <li role="presentation" ng-class="{'active': $root.surveysTabSelected == 2}"
+                    ng-click="$root.surveysTabSelected = 2; initSurvey(-1);"><a href="#">Новое обследование</a></li>
 
-                <li role="presentation" ng-class="{'active': surveysTabChosen == 3}"
-                    ng-click="surveysTabChosen = 3"><a href="#">Child</a></li>
+                <li role="presentation" ng-show="$root.surveysTabSelected == 3" ng-class="{'active': $root.surveysTabSelected == 3}"
+                    ng-click="$root.surveysTabSelected = 3"><a href="#">Child</a></li>
             </ul>
 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane" ng-class="{'active': surveysTabChosen == 1}" id="surveysAll">
-                    <ng-include src="'/content/surveys-list.html'"></ng-include>
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': $root.surveysTabSelected == 1}" id="surveysAll">
+                    @@include('./surveys-list.html')
                 </div>
 
-                <div role="tabpanel" class="tab-pane" ng-class="{'active': surveysTabChosen == 2}" id="surveyAdd">
-                    <ng-include src="'/content/surveys-add.html'"></ng-include>
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': $root.surveysTabSelected == 2}" id="surveyAdd">
+                    @@include('./survey-edit.html')
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn btn-success">Сохранить</button>
+                            <button type="button" class="btn btn-warning">Сброс</button>
+                            <button type="button" class="btn btn-danger" ng-click="$root.surveysTabSelected = 1">Закрыть
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" ng-class="{'active': surveysTabChosen == 3}" id="survey">
-                    <ng-include src="'/content/survey.html'"></ng-include>
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': $root.surveysTabSelected == 3}" id="survey">
+                    @@include('./survey-edit.html')
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn btn-success">Сохранить</button>
+                            <button type="button" class="btn btn-danger" ng-click="$root.surveysTabSelected = 1">Закрыть
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

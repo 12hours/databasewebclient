@@ -6,9 +6,14 @@ app.controller('surveyListCtrl', function($http) {
     $http.get("/api/surveys").then(function(response) {$scope.names = response.data._embedded.surveys;});
 });
 
-app.controller('SurveyController', ['$scope', '$http', function($scope, $http){
+app.controller("NavigationController", ['$rootScope','$scope', function($rootScope, $scope){
+        $rootScope.surveysTabSelected = 1;
+        $rootScope.targetSurveyId = -1;
+}]);
+
+app.controller('SurveyController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http){
     $scope.child = {};
-    $scope.child.diagnoses = [];
+    $scope.survey = {};
 
     $scope.selectedDiagnoses = [];
     $scope.selectedDisorders = [];
@@ -18,14 +23,26 @@ app.controller('SurveyController', ['$scope', '$http', function($scope, $http){
     $scope.name = $scope.child.name;
     
     var initEmpty = function(){
+        $scope.survey = {};
+        $scope.child = {};
+        
         $scope.selectedDiagnoses = [];
         $scope.selectedDisorders = [];
         $scope.selectedPrograms = [];
         $scope.selectedRecommendations = [];
     };
 
-    var init = function(){
-
+    $rootScope.initSurvey = function(surveyId){
+        console.log("TARGET="+surveyId);
+        if (surveyId === -1){
+            initEmpty();
+            return;
+        }
+        console.log("/api/surveys/" + surveyId);
+        $http.get("/api/surveys/"+surveyId).then(function(response) {
+            $scope.survey = response.data;
+            $scope.survey.surveyDate = new Date(response.data.surveyDate);
+        });
     };
 
     $scope.getDisordersList = function () {
