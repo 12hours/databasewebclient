@@ -1,9 +1,20 @@
 <div class="container">
     <div class="row">
-        <div class="col-xs-12" ng-repeat="survey in surveys">
-            {{survey.surveyDate}} {{survey.protocolNumber}}
-            <button type="button" class="btn btn-default"
-                ng-click="initSurvey(survey._links.self.href); $root.surveysTabSelected = 3;">Go</button>
-        </div>
+        <table class="table table-bordered">
+            <thead>
+            <th>#</th>
+            <th>Дата</th>
+            <th>ФИО</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="survey in surveys"
+                ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
+                ng-click="initSurvey(survey._links.self.href); $root.surveysTabSelected = 3;">
+                <td>{{survey.protocolNumber}}</td>
+                <td>{{survey.surveyDate}}</td>
+                <td>{{survey.childName}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>

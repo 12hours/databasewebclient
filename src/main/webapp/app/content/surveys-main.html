@@ -9,36 +9,54 @@
                 <li role="presentation" ng-class="{'active': $root.surveysTabSelected == 2}"
                     ng-click="$root.surveysTabSelected = 2; initSurvey(-1);"><a href="#">Новое обследование</a></li>
 
-                <li role="presentation" ng-show="$root.surveysTabSelected == 3" ng-class="{'active': $root.surveysTabSelected == 3}"
+                <li role="presentation" ng-show="$root.surveysTabSelected == 3"
+                    ng-class="{'active': $root.surveysTabSelected == 3}"
                     ng-click="$root.surveysTabSelected = 3"><a href="#">Child</a></li>
             </ul>
 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane" ng-class="{'active': $root.surveysTabSelected == 1}" id="surveysAll">
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': $root.surveysTabSelected == 1}"
+                     id="surveysAll">
                     @@include('./surveys-list.html')
                 </div>
 
-                <div role="tabpanel" class="tab-pane" ng-class="{'active': $root.surveysTabSelected == 2}" id="surveyAdd">
+                <!-- Survey create -->
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': $root.surveysTabSelected == 2}"
+                     id="surveyAdd">
                     @@include('./survey-edit.html')
                     <div class="row">
                         <div class="col-xs-12">
-                            <button type="button" class="btn btn-success">Сохранить</button>
+                            <button type="button" class="btn btn-success"
+                                    ng-click="submit();
+                                        initEmptySurvey();
+                                        getSurveysList();
+                                        $root.surveysTabSelected = 1">Сохранить
+                            </button>
                             <button type="button" class="btn btn-warning"
-                                ng-click="initEmptySurvey()">Сброс</button>
-                            <button type="button" class="btn btn-danger" 
-                                ng-click="$root.surveysTabSelected = 1; initEmptySurvey()">Закрыть
+                                    ng-click="initEmptySurvey()">Сброс
+                            </button>
+                            <button type="button" class="btn btn-danger"
+                                    ng-click="$root.surveysTabSelected = 1;
+                                            initEmptySurvey();">Закрыть
                             </button>
                         </div>
                     </div>
                 </div>
-                <!-- Survey view -->
+                <!-- Survey edit -->
                 <div role="tabpanel" class="tab-pane" ng-class="{'active': $root.surveysTabSelected == 3}" id="survey">
                     @@include('./survey-edit.html')
                     <div class="row">
                         <div class="col-xs-12">
-                            <button type="button" class="btn btn-success">Сохранить</button>
-                            <button type="button" class="btn btn-danger" 
-                                ng-click="$root.surveysTabSelected = 1; initEmptySurvey()">Закрыть
+                            <button type="button" class="btn btn-success"
+                                    ng-click="submit();
+                                          initEmptySurvey();
+                                          getSurveysList();
+                                          $root.surveysTabSelected = 1">Сохранить
+                            </button>
+
+                            <button type="button" class="btn btn-danger"
+                                    ng-click="$root.surveysTabSelected = 1;
+                                            initEmptySurvey();">Закрыть
                             </button>
                         </div>
                     </div>

@@ -1,16 +1,28 @@
+'use strict';
+
 var myApp = angular.module('myApp', []);
 
-myApp.controller('MyCtrl', function ($http, $scope, $rootScope) {
+myApp.controller('MyCtrl', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
     var registerScope = null;
     $rootScope.surveysTabSelected = 1;
     $rootScope.targetSurveyId = -1;
 
-    this.isNewSurvey;
+    var isNewSurvey;
 
     this.$onInit = function () {
+        var myVar;
+        $rootScope.myVar = myVar;
+        $.ajax({url: ('/api'), type: 'GET', async: false}).done(function (data) {
+            $rootScope.myVar = 42;
+        })
+        console.log("myVar", $rootScope.myVar);
+
         $scope.getSurveysList();
+
     };
+
+    console.log($scope.surveys);
 
     $scope.getSurveysList = function () {
         console.log("getting surveys ");
@@ -35,7 +47,7 @@ myApp.controller('MyCtrl', function ($http, $scope, $rootScope) {
     };
 
     $scope.initEmptySurvey = function () {
-        this.isNewSurvey = true;
+        isNewSurvey = true;
 
         console.log("clear");
         $scope.survey = {};
@@ -54,7 +66,7 @@ myApp.controller('MyCtrl', function ($http, $scope, $rootScope) {
             return;
         }
 
-        this.isNewSurvey = false;
+        isNewSurvey = false;
         $http.get(surveyUrl).then(function (response) {
             console.log("getting survey " + surveyUrl);
             $scope.survey = response.data;
@@ -143,40 +155,58 @@ myApp.controller('MyCtrl', function ($http, $scope, $rootScope) {
     };
 
     $scope.submit = function () {
-        if (this.isNewSurvey === true){
+        var childUrl;
+        var surveyUrl;
+        var methodType;
+        console.log("is new = " + isNewSurvey);
+        if (isNewSurvey === true) {
             // create
-            var methodType = 'POST';
+            methodType = 'POST';
+            childUrl = "api/children";
         } else {
             // update
-            var methodType = 'PATCH';
-            var surveyUrl = $scope.survey._links.self.href;
-            var childUrl = $scope.child._links.child.href;
+            methodType = 'PATCH';
+            childUrl = $scope.child._links.child.href;
 
         }
 
         // child
-        delete $scope.child._links;
+
         $.ajax({
-            url: (childUrl),
-            type: 'PATCH',
-            contentType: 'application/json',
-            data: angular.toJson($scope.child),
-            success: function (result) {
-                // handle success
-                console.log("child success");
-            },
-            error: function (request, msg, error) {
-                // handle failure
-                console.log("child fail");
+                url: (childUrl),
+                type: methodType,
+                async: false,
+                contentType: 'application/json',
+                data: angular.toJson($scope.child),
+                success: function (result) {
+                    console.log("child update success");
+                },
+                error: function (request, msg, error) {
+                    console.log("child update fail");
+                }
+            }
+        ).done(function (data) {
+            if (isNewSurvey) {
+                    $scope.child = data;
             }
         });
 
+
+        if (isNewSurvey === true) {
+            console.log('actual child: ', $scope.child);
+            // surveyUrl = $scope.child._links.surveys.href;
+            surveyUrl = "/api/surveys";
+        } else {
+            surveyUrl = $scope.survey._links.self.href;
+        }
         // survey
         // TODO: here we update childName field. Perhaps there are better way
         $scope.survey.childName = ($scope.child.familyName + " " + $scope.child.name + " " + $scope.child.patrName);
+        $scope.survey.child = $scope.child._links.self.href;
         $.ajax({
             url: (surveyUrl),
-            type: 'PATCH',
+            type: methodType,
+            async: false,
             contentType: 'application/json',
             data: angular.toJson($scope.survey),
             // handle success
@@ -187,10 +217,14 @@ myApp.controller('MyCtrl', function ($http, $scope, $rootScope) {
             error: function (request, msg, error) {
                 console.log("survey fail");
             }
+        }).done(function (data) {
+            if (isNewSurvey){
+                surveyUrl = data._links.self.href;
+            }
         });
 
 
-        //diagnoses
+//diagnoses
         var diagnosesArray = [];
         for (var key in $scope.selectedDiagnoses) {
             diagnosesArray.push($scope.selectedDiagnoses[key]._links.self.href);
@@ -210,7 +244,7 @@ myApp.controller('MyCtrl', function ($http, $scope, $rootScope) {
             }
         });
 
-        // disorders
+// disorders
         var disordersArray = [];
         for (var key in $scope.selectedDisorders) {
             disordersArray.push($scope.selectedDisorders[key]._links.self.href);
@@ -230,7 +264,7 @@ myApp.controller('MyCtrl', function ($http, $scope, $rootScope) {
             }
         });
 
-        // programs
+// programs
         var programsArray = [];
         for (var key in $scope.selectedPrograms) {
             programsArray.push($scope.selectedPrograms[key]._links.self.href);
@@ -250,7 +284,7 @@ myApp.controller('MyCtrl', function ($http, $scope, $rootScope) {
             }
         });
 
-        // recommendations
+// recommendations
         var recommendsArray = [];
         for (var key in $scope.selectedRecommendations) {
             recommendsArray.push($scope.selectedRecommendations[key]._links.self.href);
@@ -270,35 +304,36 @@ myApp.controller('MyCtrl', function ($http, $scope, $rootScope) {
             }
         });
 
-        // TODO: optimize
+// TODO: optimize
         document.getElementById("saved-window-message").textContent = "Сохранено";
         var savedWindow = document.getElementById("saved-window");
         savedWindow.style.display = 'block';
-        // When the user clicks anywhere outside of the modal, close it
+// When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
             if (event.target == savedWindow) {
                 savedWindow.style.display = "none";
             }
         }
 
-        //     console.log(diagnosesString);
-        //     $http.post(
-        //         (surveyUrl+"/diagnoses"),
-        //         (diagnosesString + "\r\n"),
-        //         {
-        //             headers: {"Content-Type": "text/uri-list"}
-        //         }
-        //     ).then(
-        //         function(response){
-        //             // success callback
-        //             console.log("ok "+surveyUrl+"/diagnoses");
-        //             console.log(response.status);
-        //             console.log(response.data);
-        //         },
-        //         function(response){
-        //             // failure callback
-        //             console.log("error");
-        //         }
-        //     );
+//     console.log(diagnosesString);
+//     $http.post(
+//         (surveyUrl+"/diagnoses"),
+//         (diagnosesString + "\r\n"),
+//         {
+//             headers: {"Content-Type": "text/uri-list"}
+//         }
+//     ).then(
+//         function(response){
+//             // success callback
+//             console.log("ok "+surveyUrl+"/diagnoses");
+//             console.log(response.status);
+//             console.log(response.data);
+//         },
+//         function(response){
+//             // failure callback
+//             console.log("error");
+//         }
+//     );
     }
-});
+}])
+;

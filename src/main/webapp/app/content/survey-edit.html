@@ -45,7 +45,7 @@
                     </div>
                     <div class="input-group">
                       <span class="input-group-addon">
-                        <input type="checkbox" aria-label="..." ng-model="child.pecialFacilitiesNeeding">
+                        <input type="checkbox" aria-label="..." ng-model="child.specialFacilitiesNeeding">
                       </span>
                         <input type="text" class="form-control" aria-label="..." value="Нуждаемость в спец.средствах"
                                readonly>
@@ -73,7 +73,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class=" panel panel-default">
-                        <div class="panel-heading">Диагноз {{selectedDiagnoses}}</div>
+                        <div class="panel-heading">Диагноз</div>
                         <div class="panel-body"
                              ng-init="getDiagnosesList();">
                             <div ng-repeat="i in selectedDiagnoses">
@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class=" panel panel-default">
-                        <div class="panel-heading">Выявленное нарушение {{selectedDisorders}}</div>
+                        <div class="panel-heading">Выявленное нарушение</div>
                         <div class="panel-body"
                              ng-init="getDisordersList();">
                             <div ng-repeat="i in selectedDisorders">
@@ -115,7 +115,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class=" panel panel-default">
-                        <div class="panel-heading">Программа {{selectedPrograms}}</div>
+                        <div class="panel-heading">Программа</div>
                         <div class="panel-body" ng-init="getEducationProgramsList();">
                             <div ng-repeat="i in selectedPrograms">
                                 <select class="form-control" data-ng-model="selectedPrograms[$index]" 
@@ -135,7 +135,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class=" panel panel-default">
-                        <div class="panel-heading">Рекомендации {{selectedRecommendations}}</div>
+                        <div class="panel-heading">Рекомендации</div>
                         <div class="panel-body" ng-init="getRrecommendationsList();">
                             <div ng-repeat="i in selectedRecommendations">
                                 <select class="form-control" data-ng-model="selectedRecommendations[$index]" 
