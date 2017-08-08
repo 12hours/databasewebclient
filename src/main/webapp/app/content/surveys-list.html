@@ -7,13 +7,14 @@
             <th>ФИО</th>
             </thead>
             <tbody>
-            <tr ng-repeat="survey in surveys"
-                ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
-                ng-click="initSurvey(survey._links.self.href); $root.surveysTabSelected = 3;">
-                <td>{{survey.protocolNumber}}</td>
-                <td>{{survey.surveyDate}}</td>
-                <td>{{survey.childName}}</td>
-            </tr>
+
+                <tr ng-repeat="survey in surveys"
+                    ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
+                    ng-click="initSurvey(survey._links.self.href); nav.surveysTabSelected = 3;">
+                    <td>{{survey.protocolNumber}}</td>
+                    <td>{{survey.surveyDate}}</td>
+                    <td>{{survey.childName}}</td>
+                </tr>
             </tbody>
         </table>
     </div>

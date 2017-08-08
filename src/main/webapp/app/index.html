@@ -20,9 +20,9 @@
     <script src="js/angular.min.js"></script>
 
 </head>
-<body ng-controller="MyCtrl">
-    {{surveysTabSelected}}
-    @@include('./content/saved-window.html')
+<body ng-controller='NavigationController'>
+{{surveysTabSelected}}
+@@include('./content/saved-window.html')
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -46,25 +46,27 @@
     </div>
 </nav>
 
-<div class="container" ng-init="tabChosen = 1">
-    <ul class="nav nav-tabs" >
-        <li role="presentation" ng-class="{'active': tabChosen == 1}"
-            ng-click="tabChosen = 1"><a href="#">Обследования</a></li>
+<div class="container">
+    <ul class="nav nav-tabs">
 
-        <li role="presentation" ng-class="{'active': tabChosen == 2}"
-            ng-click="tabChosen = 2"><a href="#">Дети</a></li>
+        <li role="presentation" ng-class="{'active': nav.mainTabChosen == 1}"
+            ng-click="nav.mainTabChosen = 1"><a href="#">Обследования</a></li>
 
-        <li role="presentation" ng-class="{'active': tabChosen == 3}"
-            ng-click="tabChosen = 3"><a href="#">Диагнозы</a></li>
+        <li role="presentation" ng-class="{'active': nav.mainTabChosen == 2}"
+            ng-click="nav.mainTabChosen = 2"><a href="#">Дети</a></li>
+
+        <li role="presentation" ng-class="{'active': nav.mainTabChosen == 3}"
+            ng-click="nav.mainTabChosen = 3"><a href="#">Диагнозы</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': tabChosen == 1}" id="home">
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 1}" id="home">
             @@include('./content/surveys-main.html')
         </div>
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': tabChosen == 2}" id="profile">profile</div>
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': tabChosen == 3}" id="messages">message!!!!s</div>
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 2}" id="profile">profile</div>
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 3}" id="messages">message
+            !!!!s</div>
     </div>
 </div><!-- /.container -->
 
@@ -72,6 +74,6 @@
 <script src="js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
-    <script src="js/app.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

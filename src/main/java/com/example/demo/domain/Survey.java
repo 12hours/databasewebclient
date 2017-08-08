@@ -31,7 +31,7 @@ public class Survey implements Serializable{
 
     @Column(name = "child_name")
     private String childName;
-
+    
     @Column(name = "diagnosis")
     private String diagnosis;
 

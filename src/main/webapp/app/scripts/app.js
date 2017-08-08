@@ -2,11 +2,20 @@
 
 var myApp = angular.module('myApp', []);
 
-myApp.controller('MyCtrl', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
+myApp.controller('NavigationController', ['$rootScope','$scope', function ($rootScope, $scope) {
+    this.$onInit = function () {
+        console.log("init nav");
+        $scope.nav = {};
+        $scope.nav.surveysTabSelected = 1;
+        $scope.nav.mainTabChosen = 1;
+        $scope.nav.targetSurveyId = -1;
+    }
+
+}]);
+
+myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
     var registerScope = null;
-    $rootScope.surveysTabSelected = 1;
-    $rootScope.targetSurveyId = -1;
 
     var isNewSurvey;
 
@@ -111,14 +120,13 @@ myApp.controller('MyCtrl', ['$http', '$scope', '$rootScope', function ($http, $s
     $scope.getDisordersList = function () {
         $http.get("/api/disorders").then(function (response) {
             var disordersList = response.data._embedded.disorders;
-            var disorders = [];
-            for (var key in disordersList) {
-                var dis = {};
-                dis['disorder'] = disordersList[key].disorder;
-                dis['href'] = disordersList[key]["_links"]["disorder"]['href'];
-                disorders.push(dis);
-            }
-            ;
+            // var disorders = [];
+            // for (var key in disordersList) {
+            //     var dis = {};
+            //     dis['disorder'] = disordersList[key].disorder;
+            //     dis['href'] = disordersList[key]["_links"]["disorder"]['href'];
+            //     disorders.push(dis);
+            // }
             $scope.disorders = disordersList;
 
         });
@@ -127,14 +135,13 @@ myApp.controller('MyCtrl', ['$http', '$scope', '$rootScope', function ($http, $s
     $scope.getEducationProgramsList = function () {
         $http.get("/api/educationPrograms").then(function (response) {
             var educationProgramsList = response.data._embedded.educationPrograms;
-            var programs = [];
-            for (var key in educationProgramsList) {
-                var dis = {};
-                dis['program'] = educationProgramsList[key].program;
-                dis['href'] = educationProgramsList[key]["_links"]["educationProgram"]['href'];
-                programs.push(dis);
-            }
-            ;
+            // var programs = [];
+            // for (var key in educationProgramsList) {
+            //     var dis = {};
+            //     dis['program'] = educationProgramsList[key].program;
+            //     dis['href'] = educationProgramsList[key]["_links"]["educationProgram"]['href'];
+            //     programs.push(dis);
+            // }
             $scope.programs = educationProgramsList;
         });
     };
@@ -142,14 +149,13 @@ myApp.controller('MyCtrl', ['$http', '$scope', '$rootScope', function ($http, $s
     $scope.getRrecommendationsList = function () {
         $http.get("/api/recommendations").then(function (response) {
             var recommendationsList = response.data._embedded.recommendations;
-            var recommendations = [];
-            for (var key in recommendationsList) {
-                var dis = {};
-                dis['recommendation'] = recommendationsList[key].recommendation;
-                dis['href'] = recommendationsList[key]["_links"]["recommendation"]['href'];
-                recommendations.push(dis);
-            }
-            ;
+            // var recommendations = [];
+            // for (var key in recommendationsList) {
+            //     var dis = {};
+            //     dis['recommendation'] = recommendationsList[key].recommendation;
+            //     dis['href'] = recommendationsList[key]["_links"]["recommendation"]['href'];
+            //     recommendations.push(dis);
+            // }
             $scope.recommendations = recommendationsList;
         });
     };
