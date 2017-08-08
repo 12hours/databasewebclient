@@ -27,7 +27,7 @@ public class Survey implements Serializable{
     private Date surveyDate;
 
     @Column(name = "protocol_number")
-    private int protocolNumber;
+    private String protocolNumber;
 
     @Column(name = "child_name")
     private String childName;

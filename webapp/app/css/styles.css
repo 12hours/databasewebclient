@@ -11,13 +11,23 @@ body {
     padding: 10px;
 }
 
-.form-control {
+
+.select-list{
     display:inline;
     width: 80%;
 }
 
+.select-list-box{
+    padding-bottom: 15px;
+}
+
 .btn-del {
     width: 18%;
+}
+
+#nameFilter {
+    display: inline;
+    width: 80%;
 }
 
 .saved-window {

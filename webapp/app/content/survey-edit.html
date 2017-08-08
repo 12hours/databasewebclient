@@ -6,7 +6,7 @@
                 <div class="col-sm-6 col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon">Фамилия:</span>
-                        <input type="text" class="form-control" placeholder="Фамилия" 
+                        <input type="text" class="form-control" placeholder="Фамилия"
                                ng-model="child.familyName">
                     </div>
                     <div class="input-group">
@@ -76,18 +76,24 @@
                         <div class="panel-heading">Диагноз</div>
                         <div class="panel-body"
                              ng-init="getDiagnosesList();">
-                            <div ng-repeat="i in selectedDiagnoses">
-                                <select class="form-control" data-ng-model="selectedDiagnoses[$index]" 
-                                    data-ng-options="item.diagnosis for item in diagnoses track by item.diagnosis">
-                                </select>
-                                <button class="btn btn-sm btn-default btn-del"
-                                        ng-click="selectedDiagnoses.splice($index,1)">
-                                    Удалить</button>
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in selectedDiagnoses">
+                                    <select class="form-control select-list" data-ng-model="selectedDiagnoses[$index]"
+                                            data-ng-options="item.diagnosis for item in diagnoses track by item.diagnosis">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="selectedDiagnoses.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="selectedDiagnoses.push(null);">
+                                    Добавить
+                                </button>
                             </div>
-                            <button class="btn btn-sm btn-default"
-                                    ng-click="selectedDiagnoses.push(null);">
-                                Добавить
-                            </button>
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="survey.diagnosis" rows="3"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -96,18 +102,24 @@
                         <div class="panel-heading">Выявленное нарушение</div>
                         <div class="panel-body"
                              ng-init="getDisordersList();">
-                            <div ng-repeat="i in selectedDisorders">
-                                <select class="form-control" data-ng-model="selectedDisorders[$index]" 
-                                    data-ng-options="item.disorder for item in disorders track by item.disorder">
-                                </select>
-                                <button class="btn btn-sm btn-default btn-del"
-                                        ng-click="selectedDisorders.splice($index,1)">
-                                    Удалить</button>
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in selectedDisorders">
+                                    <select class="form-control select-list" data-ng-model="selectedDisorders[$index]"
+                                            data-ng-options="item.disorder for item in disorders track by item.disorder">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="selectedDisorders.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="selectedDisorders.push(null);">
+                                    Добавить
+                                </button>
                             </div>
-                            <button class="btn btn-sm btn-default"
-                                    ng-click="selectedDisorders.push(null);">
-                                Добавить
-                            </button>
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="survey.determinedDisorder" rows="3"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -117,19 +129,25 @@
                     <div class=" panel panel-default">
                         <div class="panel-heading">Программа</div>
                         <div class="panel-body" ng-init="getEducationProgramsList();">
-                            <div ng-repeat="i in selectedPrograms">
-                                <select class="form-control" data-ng-model="selectedPrograms[$index]" 
-                                    data-ng-options="item.program for item in programs track by item.program">
-                                </select>
-                                <button class="btn btn-sm btn-default btn-del"
-                                        ng-click="selectedPrograms.splice($index,1)">
-                                    Удалить</button>
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in selectedPrograms">
+                                    <select class="form-control select-list" data-ng-model="selectedPrograms[$index]"
+                                            data-ng-options="item.program for item in programs track by item.program">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="selectedPrograms.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="selectedPrograms.push(null);">
+                                    Добавить
+                                </button>
                             </div>
-                            <button class="btn btn-sm btn-default"
-                                    ng-click="selectedPrograms.push(null);">
-                                Добавить
-                            </button>
-
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="survey.recommendedProgramOfEducation"
+                                          rows="3"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -137,18 +155,26 @@
                     <div class=" panel panel-default">
                         <div class="panel-heading">Рекомендации</div>
                         <div class="panel-body" ng-init="getRrecommendationsList();">
-                            <div ng-repeat="i in selectedRecommendations">
-                                <select class="form-control" data-ng-model="selectedRecommendations[$index]" 
-                                    data-ng-options="item.recommendation for item in recommendations track by item.recommendation">
-                                </select>
-                                <button class="btn btn-sm btn-default btn-del"
-                                        ng-click="selectedRecommendations.splice($index,1)">
-                                    Удалить</button>
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in selectedRecommendations">
+                                    <select class="form-control select-list"
+                                            data-ng-model="selectedRecommendations[$index]"
+                                            data-ng-options="item.recommendation for item in recommendations track by item.recommendation">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="selectedRecommendations.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="selectedRecommendations.push(null);">
+                                    Добавить
+                                </button>
                             </div>
-                            <button class="btn btn-sm btn-default"
-                                    ng-click="selectedRecommendations.push(null);">
-                                Добавить
-                            </button>
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="survey.recommendedFormOfEducation"
+                                          rows="3"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>

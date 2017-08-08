@@ -72,6 +72,10 @@ gulp.task('copyLibs', function () {
 
 gulp.task('copyScripts', function () {
     gulp.src('app/scripts/*.js')
+        .pipe(fileinclude({
+            prefix: '@@',
+            basepath: '@file'
+        }))
         .pipe(gulp.dest('./dist/js/'));
 });
 

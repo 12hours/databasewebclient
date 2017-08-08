@@ -1,10 +1,13 @@
 <div class="container">
     <div class="row">
+
         <table class="table table-bordered">
             <thead>
             <th>#</th>
             <th>Дата</th>
-            <th>ФИО</th>
+            <th>ФИО
+                <input type="text" class="form-control" id="nameFilter" placeholder="Поиск"
+                       ng-model="nav.targetName" ng-change="getSurveysListByName(nav.targetName)"></th>
             </thead>
             <tbody>
 
