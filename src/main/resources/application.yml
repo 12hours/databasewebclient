@@ -1,4 +1,14 @@
 spring:
+    profiles:
+        active: test
+    resources.static-locations: classpath:/static
     data:
         rest:
-            basePath: /API
+            basePath: /api
+
+    datasource:
+        initialize: true
+        data: classpath:/data.sql
+
+server:
+    port: 80

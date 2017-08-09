@@ -63,13 +63,13 @@ INSERT INTO `surveys`
   `child_id`,
   `child_name`)
 VALUES
-  (1, '2016-12-08', 101, 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 1, 'Shumak Vika Vladimirovna'),
-  (2, '2016-12-09', 102, 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 3, 'Lis Roman Olegovich'),
-  (3, '2016-12-10', 103, 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 1, 'Shumak Vika Vladimirovna'),
-  (4, '2016-12-11', 104, 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 2, 'Lagun Nikolay Olegovich'),
-  (5, '2016-12-12', 105, 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 4, 'Chubrik Alexei Anatolevich'),
-  (6, '2016-12-13', 106, 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 5, 'Shoka Stanislav Andreevich'),
-  (7, '2016-12-14', 107, 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 3, 'Lis Roman Olegovich');
+  (1, '2016-12-08', '101', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 1, 'Shumak Vika Vladimirovna'),
+  (2, '2016-12-09', '102', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 3, 'Lis Roman Olegovich'),
+  (3, '2016-12-10', '103', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 1, 'Shumak Vika Vladimirovna'),
+  (4, '2016-12-11', '104', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 2, 'Lagun Nikolay Olegovich'),
+  (5, '2016-12-12', '105', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 4, 'Chubrik Alexei Anatolevich'),
+  (6, '2016-12-13', '106', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 5, 'Shoka Stanislav Andreevich'),
+  (7, '2016-12-14', '107', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 3, 'Lis Roman Olegovich');
 
 INSERT INTO `surveys_diagnoses`
 (`survey_id`,

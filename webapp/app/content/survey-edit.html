@@ -1,5 +1,6 @@
 <div class="container">
-    <div class="panel panel-default">
+    <div class="panel panel-default" >
+
         <div class="panel-heading">Ребенок</div>
         <div class="panel-body">
             <div class="row">
@@ -7,48 +8,49 @@
                     <div class="input-group">
                         <span class="input-group-addon">Фамилия:</span>
                         <input type="text" class="form-control" placeholder="Фамилия"
-                               ng-model="child.familyName">
+                               ng-model="survey.child.familyName"
+                               ng-blur="findChild(survey.child.familyName)">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Имя:</span>
                         <input type="text" class="form-control" placeholder="Имя"
-                               ng-model="child.name">
+                               ng-model="survey.child.name">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Отчество:</span>
                         <input type="text" class="form-control" placeholder="Отчество"
-                               ng-model="child.patrName">
+                               ng-model="survey.child.patrName">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Дата рождения:</span>
                         <input type="date" class="form-control" placeholder="Фамилия"
-                               ng-model="child.birthDate">
+                               ng-model="survey.child.birthDate">
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon">Адрес:</span>
                         <input type="text" class="form-control" placeholder=""
-                               ng-model="child.address">
+                               ng-model="survey.child.address">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Учебное заведение:</span>
                         <input type="text" class="form-control" placeholder=""
-                               ng-model="child.placeOfEducation">
+                               ng-model="survey.child.placeOfEducation">
                     </div>
 
                     <div class="input-group">
                       <span class="input-group-addon">
-                        <input type="checkbox" aria-label="..." ng-model="child.disability">
+                        <input type="checkbox" aria-label="..." ng-model="survey.child.disability">
                       </span>
-                        <input type="text" class="form-control" aria-label="..." value="Инвалидность" readonly>
+                        <input type="text" class="form-control" aria-label="..." value="Инвалидность" disabled>
                     </div>
                     <div class="input-group">
                       <span class="input-group-addon">
-                        <input type="checkbox" aria-label="..." ng-model="child.specialFacilitiesNeeding">
+                        <input type="checkbox" aria-label="..." ng-model="survey.child.specialFacilitiesNeeding">
                       </span>
                         <input type="text" class="form-control" aria-label="..." value="Нуждаемость в спец.средствах"
-                               readonly>
+                               disabled>
                     </div>
                 </div>
             </div>
@@ -154,7 +156,7 @@
                 <div class="col-md-6">
                     <div class=" panel panel-default">
                         <div class="panel-heading">Рекомендации</div>
-                        <div class="panel-body" ng-init="getRrecommendationsList();">
+                        <div class="panel-body" ng-init="getRecommendationsList();">
                             <div class="col-xs-12 select-list-box">
                                 <div ng-repeat="i in selectedRecommendations">
                                     <select class="form-control select-list"

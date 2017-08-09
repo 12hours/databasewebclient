@@ -37,7 +37,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         isNewSurvey = true;
         console.log("clear");
         $scope.survey = {};
-        $scope.child = {};
+        $scope.survey.child = {};
 
         $scope.selectedDiagnoses = [];
         $scope.selectedDisorders = [];
@@ -64,8 +64,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             var recommendsUrl = response.data._links.recommends.href;
 
             $http.get(childUrl).then(function (response) {
-                $scope.child = response.data;
-                $scope.child.birthDate = new Date(response.data.birthDate);
+                $scope.survey.child = response.data;
+                $scope.survey.child.birthDate = new Date(response.data.birthDate);
             });
 
             $http.get(diagnosesUrl).then(function (response) {
@@ -109,7 +109,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         });
     };
 
-    $scope.getRrecommendationsList = function () {
+    $scope.getRecommendationsList = function () {
         $http.get(RECOMMENDS).then(function (response) {
             var recommendationsList = response.data._embedded.recommendations;
             $scope.recommendations = recommendationsList;
@@ -128,7 +128,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         } else {
             // update
             methodType = PATCH;
-            childUrl = $scope.child._links.child.href;
+            childUrl = $scope.survey.child._links.child.href;
         }
 
         // child
@@ -138,7 +138,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 type: methodType,
                 async: false,
                 contentType: 'application/json',
-                data: angular.toJson($scope.child),
+                data: angular.toJson($scope.survey.child),
                 success: function (result) {
                     console.log("child update success");
                 },
@@ -148,14 +148,14 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             }
         ).done(function (data) {
             if (isNewSurvey) {
-                $scope.child = data;
+                $scope.survey.child = data;
             }
         });
 
 
         if (isNewSurvey === true) {
-            console.log('actual child: ', $scope.child);
-            // surveyUrl = $scope.child._links.surveys.href;
+            console.log('actual child: ', $scope.survey.child);
+            // surveyUrl = $scope.survey.child._links.surveys.href;
             surveyUrl = SURVEYS;
         } else {
             surveyUrl = $scope.survey._links.self.href;
@@ -163,8 +163,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
 
         // survey
         // TODO: here we update childName field. Perhaps there are better way
-        $scope.survey.childName = ($scope.child.familyName + " " + $scope.child.name + " " + $scope.child.patrName);
-        $scope.survey.child = $scope.child._links.self.href;
+        $scope.survey.childName = ($scope.survey.child.familyName + " " + $scope.survey.child.name + " " + $scope.survey.child.patrName);
+        $scope.survey.child = $scope.survey.child._links.self.href;
         $.ajax({
             url: (surveyUrl),
             type: methodType,
@@ -263,15 +263,10 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         });
 
 // TODO: optimize
-        document.getElementById("saved-window-message").textContent = "Сохранено";
-        var savedWindow = document.getElementById("saved-window");
+        document.getElementById("popup-window-message").textContent = "Сохранено";
+        var savedWindow = document.getElementById("popup-window");
         savedWindow.style.display = 'block';
-// When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == savedWindow) {
-                savedWindow.style.display = "none";
-            }
-        }
+
     }
 }])
 ;

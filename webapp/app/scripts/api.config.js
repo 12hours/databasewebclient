@@ -6,6 +6,8 @@ var EDU_PROGRAMS = '/api/educationPrograms';
 var DISORDERS = '/api/disorders';
 var RECOMMENDS = '/api/recommendations';
 
+var FIND_CHILD = '/api/children/search/findBy?'
+
 var GET = 'GET';
 var POST = 'POST';
 var PATCH = 'PATCH';

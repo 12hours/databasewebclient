@@ -1,6 +1,8 @@
 <!-- Survey controller scope -->
-<div class="row" ng-controller="SurveyController">
-    <div class="col-xs-12">
+<div class="row" ng-controller="SurveyController" >
+
+    <div class="col-xs-12" >
+
         <div>
             <ul class="nav nav-pills">
                 <li role="presentation" ng-class="{'active': nav.surveysTabSelected == 1}"
@@ -21,8 +23,10 @@
                 </div>
 
                 <!-- Survey create -->
-                <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.surveysTabSelected == 2}"
+                <div ng-controller="ChildController" role="tabpanel" class="tab-pane"
+                     ng-class="{'active': nav.surveysTabSelected == 2}"
                      id="surveyAdd">
+                    @@include('./children-list-popup-window.html')
                     @@include('./survey-edit.html')
                     <div class="row">
                         <div class="col-xs-12">

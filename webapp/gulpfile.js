@@ -15,10 +15,12 @@ var gulp = require('gulp'),
     rev = require('gulp-rev'),
     browserSync = require('browser-sync'),
     del = require('del'),
+    fileinclude = require('gulp-file-include'),
     url = require('url'),
     proxy = require('proxy-middleware'),
-    fileinclude = require('gulp-file-include')
+    inject = require('gulp-inject')
 ;
+
 
 gulp.task('jshint', function () {
     return gulp.src('app/scripts/**/*.js')
@@ -35,6 +37,11 @@ gulp.task('build', function () {
     gulp.start('copyScripts', 'copyContent', 'copyStyles', 'copyLibs');
 });
 
+gulp.task('install', ['build'], function () {
+    gulp.src('./dist/**/*')
+        .pipe(gulp.dest('../src/main/resources/static'))
+})
+
 gulp.task('default', function () {
     gulp.start('clean', 'build');
 })
@@ -47,14 +54,6 @@ gulp.task('usemin', ['jshint'], function () {
         }))
         .pipe(gulp.dest('dist/'));
 });
-
-// Images
-// gulp.task('imagemin', function () {
-//     return del(['dist/images']), gulp.src('app/images/**/*')
-//         .pipe(cache(imagemin({optimizationLevel: 3, progressive: true, interlaced: true})))
-//         .pipe(gulp.dest('dist/images'))
-//         .pipe(notify({message: 'Images task complete'}));
-// });
 
 gulp.task('copyLibs', function () {
     gulp.src('bower_components/bootstrap/dist/fonts/**/*.{ttf,woff,eof,svg}*')
@@ -72,20 +71,17 @@ gulp.task('copyLibs', function () {
 
 gulp.task('copyScripts', function () {
     gulp.src('app/scripts/*.js')
-        .pipe(fileinclude({
-            prefix: '@@',
-            basepath: '@file'
-        }))
         .pipe(gulp.dest('./dist/js/'));
 });
 
 gulp.task('copyContent', function () {
-    gulp.src('app/*.html')
+    gulp.src('app/**/*.html')
         .pipe(fileinclude({
             prefix: '@@',
             basepath: '@file'
         }))
-        .pipe(gulp.dest('dist'));
+        .pipe(inject(gulp.src('./app/scripts/*.js', {read: false}), {ignorePath: '/app/scripts/', addPrefix: '/js'}))
+        .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('copyStyles', function () {

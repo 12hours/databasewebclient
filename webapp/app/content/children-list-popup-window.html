@@ -1,0 +1,33 @@
+<div id="children-list-popup-window" class="popup-window" >
+
+    <!-- Modal content -->
+    <div class="popup-window-content">
+        <table class="table table-bordered">
+            <thead>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Дата рождения</th>
+            <th>Адрес</th>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="i in suggestedChildren"
+                ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
+                ng-click="survey.child = initChild(suggestedChildren[$index]);
+                            suggestedChildren = null;"
+                onclick="document.getElementById('children-list-popup-window').style.display =
+                'none'">
+                <td>{{suggestedChildren[$index].familyName}}</td>
+                <td>{{suggestedChildren[$index].name}}</td>
+                <td>{{suggestedChildren[$index].patrName}}</td>
+                <td>{{suggestedChildren[$index].birthDate}}</td>
+                <td>{{suggestedChildren[$index].address}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button class="btn btn-default" onclick="this.parentElement.parentElement.style.display = 'none'">&times; Закрыть</button>
+    </div>
+
+</div>
