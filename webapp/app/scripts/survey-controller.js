@@ -5,25 +5,34 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     var isNewSurvey;
 
     this.$onInit = function () {
+        $scope.surveys = {};
+        $scope.surveys.list = [];
+        $scope.surveys.size = 0;
+        $scope.surveys.currentPage = 0;
         $scope.getSurveysList(0);
     };
 
     $scope.getSurveysList = function (page) {
-        console.log("getting surveys ", SURVEYS);
-        $http.get(SURVEYS + "?page=" + page)
-            .then(function (response) {
-                $scope.surveys = response.data._embedded.surveys;
-            })
-            .catch(function (err) {
-                console.log(err)
-            });
+        var url = SURVEYS + "?page=" + page;
+        $scope.getSurveysListByUrl(url);
     };
 
     $scope.getSurveysListByName = function (name) {
-        console.log("getting surveys ", SURVEYS);
-        $http.get(SURVEYS+"/search/byChildName?childName="+name)
+        var url = SURVEYS + "/search/byChildName?childName=" + name;
+        $scope.getSurveysListByUrl(url);
+    };
+
+    $scope.getSurveysListByUrl = function (url) {
+        console.log("getting page with url ", url);
+        $http.get(url)
             .then(function (response) {
-                $scope.surveys = response.data._embedded.surveys;
+                $scope.surveys.list = response.data._embedded.surveys;
+                $scope.surveys.totalPages = response.data.page.totalPages;
+                $scope.surveys.currentPage = response.data.page.number;
+                $scope.surveys.nextPage = (response.data._links.next == null) ?
+                    response.data._links.last.href : response.data._links.next.href;
+                $scope.surveys.prevPage = (response.data._links.prev == null) ?
+                    response.data._links.first.href : response.data._links.prev.href;
             })
             .catch(function (err) {
                 console.log(err)
@@ -63,7 +72,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             var disordersUrl = response.data._links.disorders.href;
             var programsUrl = response.data._links.eduPrograms.href;
             var recommendsUrl = response.data._links.recommends.href;
-
 
 
             // $http.get(childUrl).then(function (response) {
@@ -189,7 +197,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 console.log("survey fail");
             }
         }).done(function (data) {
-            if (isNewSurvey){
+            if (isNewSurvey) {
                 surveyUrl = data._links.self.href;
             }
         });
