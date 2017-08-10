@@ -5,12 +5,12 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     var isNewSurvey;
 
     this.$onInit = function () {
-        $scope.getSurveysList();
+        $scope.getSurveysList(0);
     };
 
-    $scope.getSurveysList = function () {
+    $scope.getSurveysList = function (page) {
         console.log("getting surveys ", SURVEYS);
-        $http.get(SURVEYS)
+        $http.get(SURVEYS + "?page=" + page)
             .then(function (response) {
                 $scope.surveys = response.data._embedded.surveys;
             })
