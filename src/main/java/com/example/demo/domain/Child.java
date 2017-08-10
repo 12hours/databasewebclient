@@ -1,10 +1,11 @@
 package com.example.demo.domain;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +29,8 @@ public class Child implements Serializable{
     private String patrName;
 
     @Column(name = "birth_date")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     private Date birthDate;
 
     @Column(name = "place_of_education")

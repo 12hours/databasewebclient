@@ -14,6 +14,7 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
     @RestResource(path = "byProtocolNumber", rel = "byProtocolNumber")
     public Page findByProtocolNumberStartsWith(@Param("protocolNumber") String protocolNumber, Pageable p);
 
+
     @RestResource(path = "byChildName", rel = "byChildName")
     public Page findByChildNameStartsWith(@Param("childName") String childName, Pageable p);
 

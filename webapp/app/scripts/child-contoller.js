@@ -7,7 +7,7 @@ myApp.controller('ChildController', ['$scope', function ($scope) {
     $scope.findChild = function (familyName){
         $.ajax({
             type: GET,
-            url: FIND_CHILD + 'familyName=' + familyName,
+            url: FIND_CHILD_BY_FAMILY_NAME + 'familyName=' + familyName,
             async: false,
             success: function (result) {
                 console.log("child search success");

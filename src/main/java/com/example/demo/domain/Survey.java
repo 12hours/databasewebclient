@@ -9,7 +9,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +24,7 @@ public class Survey implements Serializable{
     private Long id;
 
     @Column(name = "survey_date")
+    @Temporal(TemporalType.DATE)
     private Date surveyDate;
 
     @Column(name = "protocol_number")
