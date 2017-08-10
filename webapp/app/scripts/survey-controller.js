@@ -55,18 +55,21 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         isNewSurvey = false;
         $http.get(surveyUrl).then(function (response) {
             console.log("getting survey " + surveyUrl);
-            $scope.survey = response.data;
+            $scope.survey = angular.fromJson(response.data);
             $scope.survey.surveyDate = new Date(response.data.surveyDate);
-            var childUrl = response.data._links.child.href;
+            $scope.survey.child.birthDate = new Date(response.data.child.birthDate);
+            // var childUrl = response.data._links.child.href;
             var diagnosesUrl = response.data._links.diagnoses.href;
             var disordersUrl = response.data._links.disorders.href;
             var programsUrl = response.data._links.eduPrograms.href;
             var recommendsUrl = response.data._links.recommends.href;
 
-            $http.get(childUrl).then(function (response) {
-                $scope.survey.child = response.data;
-                $scope.survey.child.birthDate = new Date(response.data.birthDate);
-            });
+
+
+            // $http.get(childUrl).then(function (response) {
+            //     $scope.survey.child = response.data;
+            //     $scope.survey.child.birthDate = new Date(response.data.birthDate);
+            // });
 
             $http.get(diagnosesUrl).then(function (response) {
                 $scope.selectedDiagnoses = response.data._embedded.diagnoses;
@@ -123,12 +126,17 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         console.log("is new = " + isNewSurvey);
         if (isNewSurvey === true) {
             // create
-            methodType = POST;
-            childUrl = CHILDREN;
+
         } else {
-            // update
-            methodType = PATCH;
+        }
+        // update
+
+        try {
             childUrl = $scope.survey.child._links.child.href;
+            methodType = PATCH;
+        } catch (err) {
+            childUrl = CHILDREN;
+            methodType = POST;
         }
 
         // child
@@ -157,6 +165,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             console.log('actual child: ', $scope.survey.child);
             // surveyUrl = $scope.survey.child._links.surveys.href;
             surveyUrl = SURVEYS;
+            methodType = POST;
         } else {
             surveyUrl = $scope.survey._links.self.href;
         }
