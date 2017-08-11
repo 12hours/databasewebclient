@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.config.Projection;
 
 import java.sql.Date;
 
-@Projection(name = "inlineChild", types = {Survey.class})
+//@Projection(name = "inlineChild", types = {Survey.class})
 public interface InlineChild {
 
     Long getId();

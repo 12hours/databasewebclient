@@ -14,7 +14,7 @@
 
             <tr ng-repeat="i in suggestedChildren"
                 ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
-                ng-click="survey.child = initChild(suggestedChildren[$index]);
+                ng-click="surveys.currentSurvey.child = initChild(suggestedChildren[$index]);
                             suggestedChildren = null;"
                 onclick="document.getElementById('children-list-popup-window').style.display =
                 'none'">

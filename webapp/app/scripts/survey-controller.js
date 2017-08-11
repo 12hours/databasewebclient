@@ -9,6 +9,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         $scope.surveys.list = [];
         $scope.surveys.size = 0;
         $scope.surveys.currentPage = 0;
+        $scope.surveys.currentSurvey = {};
         $scope.getSurveysList(0);
     };
 
@@ -28,11 +29,13 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             .then(function (response) {
                 $scope.surveys.list = response.data._embedded.surveys;
                 $scope.surveys.totalPages = response.data.page.totalPages;
-                $scope.surveys.currentPage = response.data.page.number;
-                $scope.surveys.nextPage = (response.data._links.next == null) ?
-                    response.data._links.last.href : response.data._links.next.href;
-                $scope.surveys.prevPage = (response.data._links.prev == null) ?
-                    response.data._links.first.href : response.data._links.prev.href;
+                if ($scope.surveys.totalPages > 1) {
+                    $scope.surveys.currentPage = response.data.page.number;
+                    $scope.surveys.nextPage = (response.data._links.next == null) ?
+                        response.data._links.last.href : response.data._links.next.href;
+                    $scope.surveys.prevPage = (response.data._links.prev == null) ?
+                        response.data._links.first.href : response.data._links.prev.href;
+                }
             })
             .catch(function (err) {
                 console.log(err)
@@ -45,8 +48,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     $scope.initEmptySurvey = function () {
         isNewSurvey = true;
         console.log("clear");
-        $scope.survey = {};
-        $scope.survey.child = {};
+        $scope.surveys.currentSurvey.survey = {};
+        $scope.surveys.currentSurvey.child = {};
 
         $scope.selectedDiagnoses = [];
         $scope.selectedDisorders = [];
@@ -64,20 +67,20 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         isNewSurvey = false;
         $http.get(surveyUrl).then(function (response) {
             console.log("getting survey " + surveyUrl);
-            $scope.survey = angular.fromJson(response.data);
-            $scope.survey.surveyDate = new Date(response.data.surveyDate);
-            $scope.survey.child.birthDate = new Date(response.data.child.birthDate);
-            // var childUrl = response.data._links.child.href;
+            $scope.surveys.currentSurvey.survey = angular.fromJson(response.data);
+            $scope.surveys.currentSurvey.survey.surveyDate = new Date(response.data.surveyDate);
+            // $scope.survey.child.birthDate = new Date(response.data.child.birthDate);
+            var childUrl = response.data._links.child.href;
             var diagnosesUrl = response.data._links.diagnoses.href;
             var disordersUrl = response.data._links.disorders.href;
             var programsUrl = response.data._links.eduPrograms.href;
             var recommendsUrl = response.data._links.recommends.href;
 
 
-            // $http.get(childUrl).then(function (response) {
-            //     $scope.survey.child = response.data;
-            //     $scope.survey.child.birthDate = new Date(response.data.birthDate);
-            // });
+            $http.get(childUrl).then(function (response) {
+                $scope.surveys.currentSurvey.child = response.data;
+                $scope.surveys.currentSurvey.child.birthDate = new Date(response.data.birthDate);
+            });
 
             $http.get(diagnosesUrl).then(function (response) {
                 $scope.selectedDiagnoses = response.data._embedded.diagnoses;
@@ -128,6 +131,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     };
 
     $scope.submit = function () {
+        $scope.surveys.currentSurvey.survey.childName = ($scope.surveys.currentSurvey.child.familyName + " " + $scope.surveys.currentSurvey.child.name + " " + $scope.surveys.currentSurvey.child.patrName);
         var childUrl;
         var surveyUrl;
         var methodType;
@@ -140,7 +144,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         // update
 
         try {
-            childUrl = $scope.survey.child._links.child.href;
+            childUrl = $scope.surveys.currentSurvey.child._links.self.href;
             methodType = PATCH;
         } catch (err) {
             childUrl = CHILDREN;
@@ -154,7 +158,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 type: methodType,
                 async: false,
                 contentType: 'application/json',
-                data: angular.toJson($scope.survey.child),
+                data: angular.toJson($scope.surveys.currentSurvey.child),
                 success: function (result) {
                     console.log("child update success");
                 },
@@ -163,31 +167,28 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 }
             }
         ).done(function (data) {
-            if (isNewSurvey) {
-                $scope.survey.child = data;
-            }
+            $scope.surveys.currentSurvey.survey.child = data._links.self.href;
         });
 
 
         if (isNewSurvey === true) {
-            console.log('actual child: ', $scope.survey.child);
+            console.log('actual child: ', $scope.surveys.currentSurvey.child);
             // surveyUrl = $scope.survey.child._links.surveys.href;
             surveyUrl = SURVEYS;
             methodType = POST;
         } else {
-            surveyUrl = $scope.survey._links.self.href;
+            surveyUrl = $scope.surveys.currentSurvey.survey._links.self.href;
         }
 
         // survey
         // TODO: here we update childName field. Perhaps there are better way
-        $scope.survey.childName = ($scope.survey.child.familyName + " " + $scope.survey.child.name + " " + $scope.survey.child.patrName);
-        $scope.survey.child = $scope.survey.child._links.self.href;
+
         $.ajax({
             url: (surveyUrl),
             type: methodType,
             async: false,
             contentType: 'application/json',
-            data: angular.toJson($scope.survey),
+            data: angular.toJson($scope.surveys.currentSurvey.survey),
             // handle success
             success: function (result) {
                 console.log("survey success");
@@ -197,8 +198,9 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 console.log("survey fail");
             }
         }).done(function (data) {
+            surveyUrl = data._links.self.href;
+            console.log("URL ", surveyUrl);
             if (isNewSurvey) {
-                surveyUrl = data._links.self.href;
             }
         });
 
@@ -278,6 +280,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 // handle failure
             }
         });
+
 
 // TODO: optimize
         document.getElementById("popup-window-message").textContent = "Сохранено";

@@ -13,7 +13,7 @@
 
             <tr ng-repeat="survey in surveys.list"
                 ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
-                ng-click="initSurvey(survey._links.self.href+'?projection=inlineChild'); nav.surveysTabSelected = 3;">
+                ng-click="initSurvey(survey._links.self.href); nav.surveysTabSelected = 3;">
                 <td>{{survey.protocolNumber}}</td>
                 <td>{{survey.surveyDate}}</td>
                 <td>{{survey.childName}}</td>

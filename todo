@@ -1,7 +1,9 @@
-TODO: search by familyName in surveys-list window
-TODO: add pagination to surveys-list window
-TODO: in survey-edit window add text boxes for descriptions of diagnoses, disorders etc.
+DONE: search by familyName in surveys-list window
+DONE: add pagination to surveys-list window
+DONE: in survey-edit window add text boxes for descriptions of diagnoses, disorders etc.
 TODO: add config for test, dev and deploy db
 TODO: add profiles for test, dev and deploy
-TODO: add children-list window
+DONE: add children-list window
 TODO: add defaults to domain
+TODO: fix bug on surveys-list window when no surveys found there is exception
+TODO: implement some trim function for input data
