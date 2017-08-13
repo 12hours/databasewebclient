@@ -1,4 +1,4 @@
-var API = '/api';
+var API = "api";
 var SURVEYS = '/api/surveys';
 var CHILDREN = '/api/children';
 var DIAGNOSES = '/api/diagnoses';

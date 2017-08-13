@@ -2,12 +2,13 @@
 
 myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
+    $scope.surveys = {};
+    $scope.surveys.list = [];
+    $scope.surveys.size = 0;
+    $scope.surveys.currentPage = 0;
+    $scope.surveys.currentSurvey = {};
+
     this.$onInit = function () {
-        $scope.surveys = {};
-        $scope.surveys.list = [];
-        $scope.surveys.size = 0;
-        $scope.surveys.currentPage = 0;
-        $scope.surveys.currentSurvey = {};
         $scope.getSurveysList(0);
     };
 
@@ -23,24 +24,51 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
 
     $scope.getSurveysListByUrl = function (url) {
         console.log("getting page with url ", url);
-        $http.get(url)
-            .then(function (response) {
-                $scope.surveys.list = response.data._embedded.surveys;
-                $scope.surveys.totalPages = response.data.page.totalPages;
-                $scope.surveys.currentPage = response.data.page.number;
-                if ($scope.surveys.totalPages > 1) {
-                    $scope.surveys.nextPage = (response.data._links.next == null) ?
-                        response.data._links.last.href : response.data._links.next.href;
-                    $scope.surveys.prevPage = (response.data._links.prev == null) ?
-                        response.data._links.first.href : response.data._links.prev.href;
-                } else {
-                    $scope.surveys.nextPage = url;
-                    $scope.surveys.prevPage = url;
-                }
-            })
-            .catch(function (err) {
-                console.log(err)
-            });
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            async: false,
+            success: function (result) {
+                console.log("child update success");
+            },
+            error: function (request, msg, error) {
+                console.log("child update fail");
+                console.log(error);
+            }
+        }).done(function (data) {
+            $scope.surveys.list = data._embedded.surveys;
+            $scope.surveys.totalPages = data.page.totalPages;
+            $scope.surveys.currentPage = data.page.number;
+            if ($scope.surveys.totalPages > 1) {
+                $scope.surveys.nextPage = (data._links.next == null) ?
+                    data._links.last.href : data._links.next.href;
+                $scope.surveys.prevPage = (data._links.prev == null) ?
+                    data._links.first.href : data._links.prev.href;
+            } else {
+                $scope.surveys.nextPage = url;
+                $scope.surveys.prevPage = url;
+            }
+        });
+
+        // $http.get(url)
+        //     .then(function (response) {
+        //         $scope.surveys.list = response.data._embedded.surveys;
+        //         $scope.surveys.totalPages = response.data.page.totalPages;
+        //         $scope.surveys.currentPage = response.data.page.number;
+        //         if ($scope.surveys.totalPages > 1) {
+        //             $scope.surveys.nextPage = (response.data._links.next == null) ?
+        //                 response.data._links.last.href : response.data._links.next.href;
+        //             $scope.surveys.prevPage = (response.data._links.prev == null) ?
+        //                 response.data._links.first.href : response.data._links.prev.href;
+        //         } else {
+        //             $scope.surveys.nextPage = url;
+        //             $scope.surveys.prevPage = url;
+        //         }
+        //     })
+        //     .catch(function (err) {
+        //         console.log(err)
+        //     });
     };
 
     this.$onDestroy = function () {
@@ -51,10 +79,10 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         $scope.surveys.currentSurvey.survey = {};
         $scope.surveys.currentSurvey.child = {};
 
-        $scope.selectedDiagnoses = [];
-        $scope.selectedDisorders = [];
-        $scope.selectedPrograms = [];
-        $scope.selectedRecommendations = [];
+        $scope.surveys.currentSurvey.selectedDiagnoses = [];
+        $scope.surveys.currentSurvey.selectedDisorders = [];
+        $scope.surveys.currentSurvey.selectedPrograms = [];
+        $scope.surveys.currentSurvey.selectedRecommendations = [];
     };
 
     $scope.initSurvey = function (surveyUrl) {
@@ -64,40 +92,140 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             return;
         }
 
-        $http.get(surveyUrl).then(function (response) {
-            console.log("getting survey " + surveyUrl);
-            $scope.surveys.currentSurvey.survey = angular.fromJson(response.data);
-            $scope.surveys.currentSurvey.survey.surveyDate = new Date(response.data.surveyDate);
+        $.ajax({
+            type: "GET",
+            url: surveyUrl,
+            async: false,
+            success: function (result) {
+                console.log("get survey success");
+            },
+            error: function (request, msg, error) {
+                console.log("get survey fail");
+                console.log(error);
+            }
+        }).done(function (data) {
+            $scope.surveys.currentSurvey.survey = angular.fromJson(data);
+            $scope.surveys.currentSurvey.survey.surveyDate = new Date(data.surveyDate);
             // $scope.survey.child.birthDate = new Date(response.data.child.birthDate);
-            var childUrl = response.data._links.child.href;
-            var diagnosesUrl = response.data._links.diagnoses.href;
-            var disordersUrl = response.data._links.disorders.href;
-            var programsUrl = response.data._links.eduPrograms.href;
-            var recommendsUrl = response.data._links.recommends.href;
+            var childUrl = data._links.child.href;
+            var diagnosesUrl = data._links.diagnoses.href;
+            var disordersUrl = data._links.disorders.href;
+            var programsUrl = data._links.eduPrograms.href;
+            var recommendsUrl = data._links.recommends.href;
 
 
-            $http.get(childUrl).then(function (response) {
-                $scope.surveys.currentSurvey.child = response.data;
-                $scope.surveys.currentSurvey.child.birthDate = new Date(response.data.birthDate);
+            $.ajax({
+                type: "GET",
+                url: childUrl,
+                async: false,
+                success: function (result) {
+                    console.log("get child for survey success");
+                },
+                error: function (request, msg, error) {
+                    console.log("get child for survey fail");
+                    console.log(error);
+                }
+            }).done(function (data) {
+                $scope.surveys.currentSurvey.child = data;
+                $scope.surveys.currentSurvey.child.birthDate = new Date(data.birthDate);
             });
 
-            $http.get(diagnosesUrl).then(function (response) {
-                $scope.selectedDiagnoses = response.data._embedded.diagnoses;
+            $.ajax({
+                type: "GET",
+                url: diagnosesUrl,
+                async: false,
+                success: function (result) {
+                    console.log("get diagnoses for survey success");
+                },
+                error: function (request, msg, error) {
+                    console.log("get diagnoses for survey fail");
+                    console.log(error);
+                }
+            }).done(function (data) {
+                $scope.surveys.currentSurvey.selectedDiagnoses = data._embedded.diagnoses;
             });
 
-            $http.get(disordersUrl).then(function (response) {
-                $scope.selectedDisorders = response.data._embedded.disorders;
+            $.ajax({
+                type: "GET",
+                url: disordersUrl,
+                async: false,
+                success: function (result) {
+                    console.log("get disorders for survey success");
+                },
+                error: function (request, msg, error) {
+                    console.log("get disorders for survey fail");
+                    console.log(error);
+                }
+            }).done(function (data) {
+                $scope.surveys.currentSurvey.selectedDisorders = data._embedded.disorders;
             });
 
-            $http.get(programsUrl).then(function (response) {
-                $scope.selectedPrograms = response.data._embedded.educationPrograms;
+            $.ajax({
+                type: "GET",
+                url: programsUrl,
+                async: false,
+                success: function (result) {
+                    console.log("get programs for survey success");
+                },
+                error: function (request, msg, error) {
+                    console.log("get programs for survey fail");
+                    console.log(error);
+                }
+            }).done(function (data) {
+                $scope.surveys.currentSurvey.selectedPrograms = data._embedded.educationPrograms;
             });
 
-            $http.get(recommendsUrl).then(function (response) {
-                $scope.selectedRecommendations = response.data._embedded.recommendations;
+            $.ajax({
+                type: "GET",
+                url: recommendsUrl,
+                async: false,
+                success: function (result) {
+                    console.log("get recommendations for survey success");
+                },
+                error: function (request, msg, error) {
+                    console.log("get recommendations for survey fail");
+                    console.log(error);
+                }
+            }).done(function (data) {
+                $scope.surveys.currentSurvey.selectedRecommendations = data._embedded.recommendations;
             });
 
         });
+
+        // $http.get(surveyUrl).then(function (response) {
+        //     console.log("getting survey " + surveyUrl);
+        //     $scope.surveys.currentSurvey.survey = angular.fromJson(response.data);
+        //     $scope.surveys.currentSurvey.survey.surveyDate = new Date(response.data.surveyDate);
+        //     // $scope.survey.child.birthDate = new Date(response.data.child.birthDate);
+        //     var childUrl = response.data._links.child.href;
+        //     var diagnosesUrl = response.data._links.diagnoses.href;
+        //     var disordersUrl = response.data._links.disorders.href;
+        //     var programsUrl = response.data._links.eduPrograms.href;
+        //     var recommendsUrl = response.data._links.recommends.href;
+        //
+        //
+        //     $http.get(childUrl).then(function (response) {
+        //         $scope.surveys.currentSurvey.child = response.data;
+        //         $scope.surveys.currentSurvey.child.birthDate = new Date(response.data.birthDate);
+        //     });
+        //
+        //     $http.get(diagnosesUrl).then(function (response) {
+        //         $scope.selectedDiagnoses = response.data._embedded.diagnoses;
+        //     });
+        //
+        //     $http.get(disordersUrl).then(function (response) {
+        //         $scope.selectedDisorders = response.data._embedded.disorders;
+        //     });
+        //
+        //     $http.get(programsUrl).then(function (response) {
+        //         $scope.selectedPrograms = response.data._embedded.educationPrograms;
+        //     });
+        //
+        //     $http.get(recommendsUrl).then(function (response) {
+        //         $scope.selectedRecommendations = response.data._embedded.recommendations;
+        //     });
+        //
+        // });
     };
 
     $scope.getDiagnosesList = function () {
@@ -207,8 +335,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
 
         //diagnoses
         var diagnosesArray = [];
-        for (var key in $scope.selectedDiagnoses) {
-            diagnosesArray.push($scope.selectedDiagnoses[key]._links.self.href);
+        for (var key in $scope.surveys.currentSurvey.selectedDiagnoses) {
+            diagnosesArray.push($scope.surveys.currentSurvey.selectedDiagnoses[key]._links.self.href);
         }
         var diagnosesString = diagnosesArray.join("\r\n");
         $.ajax({
@@ -226,8 +354,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
 
         // disorders
         var disordersArray = [];
-        for (var key in $scope.selectedDisorders) {
-            disordersArray.push($scope.selectedDisorders[key]._links.self.href);
+        for (var key in $scope.surveys.currentSurvey.selectedDisorders) {
+            disordersArray.push($scope.surveys.currentSurvey.selectedDisorders[key]._links.self.href);
         }
         var disordersString = disordersArray.join("\r\n");
         $.ajax({
@@ -245,8 +373,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
 
         // programs
         var programsArray = [];
-        for (var key in $scope.selectedPrograms) {
-            programsArray.push($scope.selectedPrograms[key]._links.self.href);
+        for (var key in $scope.surveys.currentSurvey.selectedPrograms) {
+            programsArray.push($scope.surveys.currentSurvey.selectedPrograms[key]._links.self.href);
         }
         var programsString = programsArray.join("\r\n");
         $.ajax({
@@ -264,8 +392,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
 
         // recommendations
         var recommendsArray = [];
-        for (var key in $scope.selectedRecommendations) {
-            recommendsArray.push($scope.selectedRecommendations[key]._links.self.href);
+        for (var key in $scope.surveys.currentSurvey.selectedRecommendations) {
+            recommendsArray.push($scope.surveys.currentSurvey.selectedRecommendations[key]._links.self.href);
         }
         var recommendsString = recommendsArray.join("\r\n");
         $.ajax({

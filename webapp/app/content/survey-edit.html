@@ -79,17 +79,17 @@
                         <div class="panel-body"
                              ng-init="getDiagnosesList();">
                             <div class="col-xs-12 select-list-box">
-                                <div ng-repeat="i in selectedDiagnoses">
-                                    <select class="form-control select-list" data-ng-model="selectedDiagnoses[$index]"
+                                <div ng-repeat="i in surveys.currentSurvey.selectedDiagnoses">
+                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedDiagnoses[$index]"
                                             data-ng-options="item.diagnosis for item in diagnoses track by item.diagnosis">
                                     </select>
                                     <button class="btn btn-sm btn-default btn-del"
-                                            ng-click="selectedDiagnoses.splice($index,1)">
+                                            ng-click="surveys.currentSurvey.selectedDiagnoses.splice($index,1)">
                                         Удалить
                                     </button>
                                 </div>
                                 <button class="btn btn-sm btn-default"
-                                        ng-click="selectedDiagnoses.push(null);">
+                                        ng-click="surveys.currentSurvey.selectedDiagnoses.push(null);">
                                     Добавить
                                 </button>
                             </div>
@@ -105,17 +105,17 @@
                         <div class="panel-body"
                              ng-init="getDisordersList();">
                             <div class="col-xs-12 select-list-box">
-                                <div ng-repeat="i in selectedDisorders">
-                                    <select class="form-control select-list" data-ng-model="selectedDisorders[$index]"
+                                <div ng-repeat="i in surveys.currentSurvey.selectedDisorders">
+                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedDisorders[$index]"
                                             data-ng-options="item.disorder for item in disorders track by item.disorder">
                                     </select>
                                     <button class="btn btn-sm btn-default btn-del"
-                                            ng-click="selectedDisorders.splice($index,1)">
+                                            ng-click="surveys.currentSurvey.selectedDisorders.splice($index,1)">
                                         Удалить
                                     </button>
                                 </div>
                                 <button class="btn btn-sm btn-default"
-                                        ng-click="selectedDisorders.push(null);">
+                                        ng-click="surveys.currentSurvey.selectedDisorders.push(null);">
                                     Добавить
                                 </button>
                             </div>
@@ -132,17 +132,17 @@
                         <div class="panel-heading">Программа</div>
                         <div class="panel-body" ng-init="getEducationProgramsList();">
                             <div class="col-xs-12 select-list-box">
-                                <div ng-repeat="i in selectedPrograms">
-                                    <select class="form-control select-list" data-ng-model="selectedPrograms[$index]"
+                                <div ng-repeat="i in surveys.currentSurvey.selectedPrograms">
+                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedPrograms[$index]"
                                             data-ng-options="item.program for item in programs track by item.program">
                                     </select>
                                     <button class="btn btn-sm btn-default btn-del"
-                                            ng-click="selectedPrograms.splice($index,1)">
+                                            ng-click="surveys.currentSurvey.selectedPrograms.splice($index,1)">
                                         Удалить
                                     </button>
                                 </div>
                                 <button class="btn btn-sm btn-default"
-                                        ng-click="selectedPrograms.push(null);">
+                                        ng-click="surveys.currentSurvey.selectedPrograms.push(null);">
                                     Добавить
                                 </button>
                             </div>
@@ -158,18 +158,18 @@
                         <div class="panel-heading">Рекомендации</div>
                         <div class="panel-body" ng-init="getRecommendationsList();">
                             <div class="col-xs-12 select-list-box">
-                                <div ng-repeat="i in selectedRecommendations">
+                                <div ng-repeat="i in surveys.currentSurvey.selectedRecommendations">
                                     <select class="form-control select-list"
-                                            data-ng-model="selectedRecommendations[$index]"
+                                            data-ng-model="surveys.currentSurvey.selectedRecommendations[$index]"
                                             data-ng-options="item.recommendation for item in recommendations track by item.recommendation">
                                     </select>
                                     <button class="btn btn-sm btn-default btn-del"
-                                            ng-click="selectedRecommendations.splice($index,1)">
+                                            ng-click="surveys.currentSurvey.selectedRecommendations.splice($index,1)">
                                         Удалить
                                     </button>
                                 </div>
                                 <button class="btn btn-sm btn-default"
-                                        ng-click="selectedRecommendations.push(null);">
+                                        ng-click="surveys.currentSurvey.selectedRecommendations.push(null);">
                                     Добавить
                                 </button>
                             </div>
