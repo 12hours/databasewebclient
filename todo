@@ -5,5 +5,7 @@ TODO: add config for test, dev and deploy db
 TODO: add profiles for test, dev and deploy
 DONE: add children-list window
 TODO: add defaults to domain
-TODO: fix bug on surveys-list window when no surveys found there is exception
+TODO: fix bug on surveys-list window when no surveys found there is exception(??)
 TODO: implement some trim function for input data
+TODO: after survey modifying view should be redirected on the same page of surveys-list
+TODO: show some window ("Please wait") while saving is performed

@@ -29,12 +29,15 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             .then(function (response) {
                 $scope.surveys.list = response.data._embedded.surveys;
                 $scope.surveys.totalPages = response.data.page.totalPages;
+                $scope.surveys.currentPage = response.data.page.number;
                 if ($scope.surveys.totalPages > 1) {
-                    $scope.surveys.currentPage = response.data.page.number;
                     $scope.surveys.nextPage = (response.data._links.next == null) ?
                         response.data._links.last.href : response.data._links.next.href;
                     $scope.surveys.prevPage = (response.data._links.prev == null) ?
                         response.data._links.first.href : response.data._links.prev.href;
+                } else {
+                    $scope.surveys.nextPage = url;
+                    $scope.surveys.prevPage = url;
                 }
             })
             .catch(function (err) {
@@ -136,12 +139,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         var surveyUrl;
         var methodType;
         console.log("is new = " + isNewSurvey);
-        if (isNewSurvey === true) {
-            // create
-
-        } else {
-        }
-        // update
 
         try {
             childUrl = $scope.surveys.currentSurvey.child._links.self.href;
@@ -152,7 +149,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         }
 
         // child
-
         $.ajax({
                 url: (childUrl),
                 type: methodType,
@@ -189,11 +185,9 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             async: false,
             contentType: 'application/json',
             data: angular.toJson($scope.surveys.currentSurvey.survey),
-            // handle success
             success: function (result) {
                 console.log("survey success");
             },
-            // handle failure
             error: function (request, msg, error) {
                 console.log("survey fail");
             }
