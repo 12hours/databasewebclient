@@ -27,16 +27,16 @@ public interface ChildRepository extends PagingAndSortingRepository<Child, Long>
             + "and (:patrName='' or c.patrName=:patrName)"
             + "and (:birthDate=Null or c.birthDate=:birthDate) ")
     Page identify(@Param("familyName") String familyName,
-                        @Param("name") String name,
-                        @Param("patrName") String patrName,
-                        @Param("birthDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthDate,
-            Pageable page);
+                  @Param("name") String name,
+                  @Param("patrName") String patrName,
+                  @Param("birthDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthDate,
+                  Pageable page);
 
     @RestResource(path = "byFamilyName", rel = "byFamilyName")
     public Page findByFamilyName(@Param("familyName") String familyName, Pageable p);
 
-    @RestResource(path = "findByBd", rel = "findByBd")
+    @RestResource(path = "findByBirthDate")
     Page findByBirthDate(@Param("birthDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthDate,
-                Pageable page);
+                         Pageable page);
 }
 

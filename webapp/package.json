@@ -23,12 +23,15 @@
     "gulp-uglify": "^3.0.0",
     "gulp-usemin": "^0.3.28",
     "jasmine-core": "^2.7.0",
+    "jasmine-expect": "^3.7.1",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-firefox-launcher": "^1.0.1",
+    "karma-inject-html": "0.0.1",
     "karma-jasmine": "^1.1.0",
+    "karma-jasmine-matchers": "^3.7.0",
     "proxy-middleware": "^0.15.0"
   },
   "engines": {

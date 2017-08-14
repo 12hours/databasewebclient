@@ -75,7 +75,7 @@ gulp.task('copyScripts', function () {
 });
 
 gulp.task('copyContent', function () {
-    gulp.src('app/**/*.html')
+    gulp.src('app/*.html')
         .pipe(fileinclude({
             prefix: '@@',
             basepath: '@file'

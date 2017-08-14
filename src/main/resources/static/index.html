@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/angular.min.js"></script>
+
+</head>
+<body ng-controller='NavigationController'>
+{{surveysTabSelected}}
+<div id="popup-window" class="popup-window">
+
+    <!-- Modal content -->
+    <div class="popup-window-content">
+        <p id="popup-window-message"></p>
+        <button class="btn btn-default" onclick="this.parentElement.parentElement.style.display = 'none'">&times; Закрыть</button>
+    </div>
+
+</div>
+
+<script>
+    // When the user clicks anywhere outside of the modal, close it
+    var popupWindow = document.getElementsByClassName("popup-window");
+    window.onclick = function (event) {
+        if (event.target == popupWindow) {
+            popupWindow.style.display = "none";
+        }
+    }
+</script>
+
+
+<div class="container">
+    <ul class="nav nav-tabs">
+
+        <li role="presentation" ng-class="{'active': nav.mainTabChosen == 1}"
+            ng-click="nav.mainTabChosen = 1"><a href="#">Обследования</a></li>
+
+        <li role="presentation" ng-class="{'active': nav.mainTabChosen == 2}"
+            ng-click="nav.mainTabChosen = 2"><a href="#">Дети</a></li>
+
+        <li role="presentation" ng-class="{'active': nav.mainTabChosen == 3}"
+            ng-click="nav.mainTabChosen = 3"><a href="#">Диагнозы</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 1}" id="home">
+            <!-- Survey controller scope -->
+<div class="row" ng-controller="SurveyController" >
+
+    <div class="col-xs-12" >
+
+        <div>
+            <ul class="nav nav-pills">
+                <li role="presentation" ng-class="{'active': nav.surveysTabSelected == 1}"
+                    ng-click="nav.surveysTabSelected = 1"><a href="#">Все</a></li>
+
+                <li role="presentation" ng-class="{'active': nav.surveysTabSelected == 2}"
+                    ng-click="nav.surveysTabSelected = 2; initSurvey(-1);"><a href="#">Новое обследование</a></li>
+
+                <li role="presentation" ng-show="nav.surveysTabSelected == 3"
+                    ng-class="{'active': nav.surveysTabSelected == 3}"
+                    ng-click="nav.surveysTabSelected = 3"><a href="#">Редактирование</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.surveysTabSelected == 1}"
+                     id="surveysAll">
+                    <div class="container">
+    <div class="row">
+
+        <table class="table table-bordered">
+            <thead>
+            <th>#</th>
+            <th>Дата</th>
+            <th>ФИО
+                <input type="text" class="form-control" id="nameFilter" placeholder="Поиск"
+                       ng-model="nav.targetName" ng-change="getSurveysListByName(nav.targetName)"></th>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="survey in surveys.list"
+                ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
+                ng-click="initSurvey(survey._links.self.href); nav.surveysTabSelected = 3;">
+                <td>{{survey.protocolNumber}}</td>
+                <td>{{survey.surveyDate}}</td>
+                <td>{{survey.childName}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li ng-click="getSurveysListByUrl(surveys.prevPage)"
+                $scope.surveys.prevPage=response._links.pref.href;">
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li ng-repeat="n in [].constructor(surveys.totalPages) track by $index"
+                ng-class="{active: $index == surveys.currentPage}"
+                ng-show="$index >= (surveys.currentPage-3) && $index <= (surveys.currentPage+3) ||
+                            $index == 0 || $index == (surveys.totalPages - 1)"
+                ng-click="getSurveysList($index)">
+                <a href="#">
+                    {{($index > 0 && $index < (surveys.totalPages-1) &&
+                        ($index==(surveys.currentPage+3) || $index==(surveys.currentPage-3)))?
+                    "...":
+                    ($index+1)}}
+                </a>
+            </li>
+
+            <li ng-click="getSurveysListByUrl(surveys.nextPage)">
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+                </div>
+
+                <!-- Survey create -->
+                <div ng-controller="ChildController" role="tabpanel" class="tab-pane"
+                     ng-class="{'active': nav.surveysTabSelected == 2}"
+                     id="surveyAdd">
+                    <div id="children-list-popup-window" class="popup-window" >
+
+    <!-- Modal content -->
+    <div class="popup-window-content">
+        <table class="table table-bordered">
+            <thead>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Дата рождения</th>
+            <th>Адрес</th>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="i in suggestedChildren"
+                ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
+                ng-click="surveys.currentSurvey.child = initChild(suggestedChildren[$index]);
+                            suggestedChildren = null;"
+                onclick="document.getElementById('children-list-popup-window').style.display =
+                'none'">
+                <td>{{suggestedChildren[$index].familyName}}</td>
+                <td>{{suggestedChildren[$index].name}}</td>
+                <td>{{suggestedChildren[$index].patrName}}</td>
+                <td>{{suggestedChildren[$index].birthDate}}</td>
+                <td>{{suggestedChildren[$index].address}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button class="btn btn-default" onclick="this.parentElement.parentElement.style.display = 'none'">&times; Закрыть</button>
+    </div>
+
+</div>
+                    <div class="container">
+    <div class="panel panel-default" >
+
+        <div class="panel-heading">Ребенок</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">Фамилия:</span>
+                        <input type="text" class="form-control" placeholder="Фамилия"
+                               ng-model="surveys.currentSurvey.child.familyName"
+                               ng-blur="findChild(surveys.currentSurvey.child.familyName)">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Имя:</span>
+                        <input type="text" class="form-control" placeholder="Имя"
+                               ng-model="surveys.currentSurvey.child.name">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Отчество:</span>
+                        <input type="text" class="form-control" placeholder="Отчество"
+                               ng-model="surveys.currentSurvey.child.patrName">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Дата рождения:</span>
+                        <input type="date" class="form-control" placeholder="Фамилия"
+                               ng-model="surveys.currentSurvey.child.birthDate">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">Адрес:</span>
+                        <input type="text" class="form-control" placeholder=""
+                               ng-model="surveys.currentSurvey.child.address">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Учебное заведение:</span>
+                        <input type="text" class="form-control" placeholder=""
+                               ng-model="surveys.currentSurvey.child.placeOfEducation">
+                    </div>
+
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="checkbox" aria-label="..." ng-model="surveys.currentSurvey.child.disability">
+                      </span>
+                        <input type="text" class="form-control" aria-label="..." value="Инвалидность" disabled>
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="checkbox" aria-label="..." ng-model="surveys.currentSurvey.child.specialFacilitiesNeeding">
+                      </span>
+                        <input type="text" class="form-control" aria-label="..." value="Нуждаемость в спец.средствах"
+                               disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">ПМПК</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">Номер протокола:
+                        <input type="text" class="form-control" placeholder=""
+                               ng-model="surveys.currentSurvey.survey.protocolNumber"></span>
+                        <span class="input-group-addon">Дата обследования:
+                        <input type="date" class="form-control" placeholder=""
+                               ng-model="surveys.currentSurvey.survey.surveyDate"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class=" panel panel-default">
+                        <div class="panel-heading">Диагноз</div>
+                        <div class="panel-body"
+                             ng-init="getDiagnosesList();">
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in surveys.currentSurvey.selectedDiagnoses">
+                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedDiagnoses[$index]"
+                                            data-ng-options="item.diagnosis for item in diagnoses track by item.diagnosis">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="surveys.currentSurvey.selectedDiagnoses.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="surveys.currentSurvey.selectedDiagnoses.push(null);">
+                                    Добавить
+                                </button>
+                            </div>
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.diagnosis" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class=" panel panel-default">
+                        <div class="panel-heading">Выявленное нарушение</div>
+                        <div class="panel-body"
+                             ng-init="getDisordersList();">
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in surveys.currentSurvey.selectedDisorders">
+                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedDisorders[$index]"
+                                            data-ng-options="item.disorder for item in disorders track by item.disorder">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="surveys.currentSurvey.selectedDisorders.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="surveys.currentSurvey.selectedDisorders.push(null);">
+                                    Добавить
+                                </button>
+                            </div>
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.determinedDisorder" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class=" panel panel-default">
+                        <div class="panel-heading">Программа</div>
+                        <div class="panel-body" ng-init="getEducationProgramsList();">
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in surveys.currentSurvey.selectedPrograms">
+                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedPrograms[$index]"
+                                            data-ng-options="item.program for item in programs track by item.program">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="surveys.currentSurvey.selectedPrograms.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="surveys.currentSurvey.selectedPrograms.push(null);">
+                                    Добавить
+                                </button>
+                            </div>
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.recommendedProgramOfEducation"
+                                          rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class=" panel panel-default">
+                        <div class="panel-heading">Рекомендации</div>
+                        <div class="panel-body" ng-init="getRecommendationsList();">
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in surveys.currentSurvey.selectedRecommendations">
+                                    <select class="form-control select-list"
+                                            data-ng-model="surveys.currentSurvey.selectedRecommendations[$index]"
+                                            data-ng-options="item.recommendation for item in recommendations track by item.recommendation">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="surveys.currentSurvey.selectedRecommendations.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="surveys.currentSurvey.selectedRecommendations.push(null);">
+                                    Добавить
+                                </button>
+                            </div>
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.recommendedFormOfEducation"
+                                          rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn btn-success"
+                                    ng-click="submit();
+                                        initEmptySurvey();
+                                        getSurveysList();
+                                        nav.surveysTabSelected = 1">Сохранить
+                            </button>
+                            <button type="button" class="btn btn-warning"
+                                    ng-click="initEmptySurvey()">Сброс
+                            </button>
+                            <button type="button" class="btn btn-danger"
+                                    ng-click="nav.surveysTabSelected = 1;
+                                            initEmptySurvey();">Закрыть
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Survey edit -->
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.surveysTabSelected == 3}" id="survey">
+                    <div class="container">
+    <div class="panel panel-default" >
+
+        <div class="panel-heading">Ребенок</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">Фамилия:</span>
+                        <input type="text" class="form-control" placeholder="Фамилия"
+                               ng-model="surveys.currentSurvey.child.familyName"
+                               ng-blur="findChild(surveys.currentSurvey.child.familyName)">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Имя:</span>
+                        <input type="text" class="form-control" placeholder="Имя"
+                               ng-model="surveys.currentSurvey.child.name">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Отчество:</span>
+                        <input type="text" class="form-control" placeholder="Отчество"
+                               ng-model="surveys.currentSurvey.child.patrName">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Дата рождения:</span>
+                        <input type="date" class="form-control" placeholder="Фамилия"
+                               ng-model="surveys.currentSurvey.child.birthDate">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">Адрес:</span>
+                        <input type="text" class="form-control" placeholder=""
+                               ng-model="surveys.currentSurvey.child.address">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Учебное заведение:</span>
+                        <input type="text" class="form-control" placeholder=""
+                               ng-model="surveys.currentSurvey.child.placeOfEducation">
+                    </div>
+
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="checkbox" aria-label="..." ng-model="surveys.currentSurvey.child.disability">
+                      </span>
+                        <input type="text" class="form-control" aria-label="..." value="Инвалидность" disabled>
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="checkbox" aria-label="..." ng-model="surveys.currentSurvey.child.specialFacilitiesNeeding">
+                      </span>
+                        <input type="text" class="form-control" aria-label="..." value="Нуждаемость в спец.средствах"
+                               disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">ПМПК</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">Номер протокола:
+                        <input type="text" class="form-control" placeholder=""
+                               ng-model="surveys.currentSurvey.survey.protocolNumber"></span>
+                        <span class="input-group-addon">Дата обследования:
+                        <input type="date" class="form-control" placeholder=""
+                               ng-model="surveys.currentSurvey.survey.surveyDate"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class=" panel panel-default">
+                        <div class="panel-heading">Диагноз</div>
+                        <div class="panel-body"
+                             ng-init="getDiagnosesList();">
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in surveys.currentSurvey.selectedDiagnoses">
+                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedDiagnoses[$index]"
+                                            data-ng-options="item.diagnosis for item in diagnoses track by item.diagnosis">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="surveys.currentSurvey.selectedDiagnoses.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="surveys.currentSurvey.selectedDiagnoses.push(null);">
+                                    Добавить
+                                </button>
+                            </div>
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.diagnosis" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class=" panel panel-default">
+                        <div class="panel-heading">Выявленное нарушение</div>
+                        <div class="panel-body"
+                             ng-init="getDisordersList();">
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in surveys.currentSurvey.selectedDisorders">
+                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedDisorders[$index]"
+                                            data-ng-options="item.disorder for item in disorders track by item.disorder">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="surveys.currentSurvey.selectedDisorders.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="surveys.currentSurvey.selectedDisorders.push(null);">
+                                    Добавить
+                                </button>
+                            </div>
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.determinedDisorder" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class=" panel panel-default">
+                        <div class="panel-heading">Программа</div>
+                        <div class="panel-body" ng-init="getEducationProgramsList();">
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in surveys.currentSurvey.selectedPrograms">
+                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedPrograms[$index]"
+                                            data-ng-options="item.program for item in programs track by item.program">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="surveys.currentSurvey.selectedPrograms.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="surveys.currentSurvey.selectedPrograms.push(null);">
+                                    Добавить
+                                </button>
+                            </div>
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.recommendedProgramOfEducation"
+                                          rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class=" panel panel-default">
+                        <div class="panel-heading">Рекомендации</div>
+                        <div class="panel-body" ng-init="getRecommendationsList();">
+                            <div class="col-xs-12 select-list-box">
+                                <div ng-repeat="i in surveys.currentSurvey.selectedRecommendations">
+                                    <select class="form-control select-list"
+                                            data-ng-model="surveys.currentSurvey.selectedRecommendations[$index]"
+                                            data-ng-options="item.recommendation for item in recommendations track by item.recommendation">
+                                    </select>
+                                    <button class="btn btn-sm btn-default btn-del"
+                                            ng-click="surveys.currentSurvey.selectedRecommendations.splice($index,1)">
+                                        Удалить
+                                    </button>
+                                </div>
+                                <button class="btn btn-sm btn-default"
+                                        ng-click="surveys.currentSurvey.selectedRecommendations.push(null);">
+                                    Добавить
+                                </button>
+                            </div>
+                            <div class="col-xs-12">Текстовое описание:
+                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.recommendedFormOfEducation"
+                                          rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn btn-success"
+                                    ng-click="submit();
+                                          initEmptySurvey();
+                                          getSurveysList();
+                                          nav.surveysTabSelected = 1">Сохранить
+                            </button>
+
+                            <button type="button" class="btn btn-danger"
+                                    ng-click="nav.surveysTabSelected = 1;
+                                            initEmptySurvey();">Закрыть
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Survey controller scope -->
+
+        </div>
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 2}" id="profile">profile</div>
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 3}" id="messages">message
+            !!!!s</div>
+    </div>
+</div><!-- /.container -->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- inject:js -->
+<script src="/js/api.config.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/child-contoller.js"></script>
+<script src="/js/navigation-controller.js"></script>
+<script src="/js/survey-controller.js"></script>
+<!-- endinject -->
+
+</body>
+</html>

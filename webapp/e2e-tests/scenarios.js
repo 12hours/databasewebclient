@@ -27,17 +27,19 @@ describe('app', function () {
     }));
 
 
-    describe('$scope.grade', function() {
+    describe('init empty survey', function() {
         it('controller init', function() {
 
             var $scope = {};
             var controller = $controller('SurveyController', { $scope: $scope });
+            expect($scope.surveys.currentSurvey.survey).toBeUndefined();
+            expect($scope.surveys.list.length).toEqual(0);
             $scope.initEmptySurvey();
             expect(typeof $scope.surveys.currentSurvey.survey).toEqual('object');
             expect(typeof $scope.surveys.currentSurvey.child).toEqual('object');
         });
 
-        it('controller get list of surveys on init', function () {
+        it('get list of surveys on init', function () {
             var $scope = {};
             var controller = $controller('SurveyController', { $scope: $scope });
             expect($scope.surveys.list.length).toEqual(0);
@@ -45,16 +47,76 @@ describe('app', function () {
             expect($scope.surveys.list.length).toBeGreaterThan(0);
         });
 
-        it('repeat', function () {
+        it('get survey', function () {
             var $scope = {};
             var controller = $controller('SurveyController', { $scope: $scope });
-            expect($scope.surveys.list.length).toEqual(0);
 
-            expect($scope.surveys.currentSurvey.survey).toBeUndefined();
+            $scope.initEmptySurvey();
+            expect($scope.surveys.currentSurvey.survey).toBeEmptyObject();
+            expect($scope.surveys.currentSurvey.child).toBeEmptyObject();
+            expect( $scope.surveys.currentSurvey.selectedDiagnoses).toBeEmptyArray();
+            expect($scope.surveys.currentSurvey.selectedDisorders).toBeEmptyArray();
+            expect($scope.surveys.currentSurvey.selectedPrograms).toBeEmptyArray();
+            expect( $scope.surveys.currentSurvey.selectedRecommendations).toBeEmptyArray();
+
             $scope.initSurvey("http://localhost:8080/api/surveys/1");
-            expect($scope.surveys.currentSurvey.survey).not.toBeUndefined();
-            expect($scope.surveys.currentSurvey.child).not.toBeUndefined();
-        })
+
+            expect($scope.surveys.currentSurvey.survey).toBeNonEmptyObject();
+            expect($scope.surveys.currentSurvey.child).toBeNonEmptyObject();
+            expect( $scope.surveys.currentSurvey.selectedDiagnoses).toBeNonEmptyArray();
+            expect($scope.surveys.currentSurvey.selectedDisorders).toBeNonEmptyArray();
+            expect($scope.surveys.currentSurvey.selectedPrograms).toBeNonEmptyArray();
+            expect( $scope.surveys.currentSurvey.selectedRecommendations).toBeNonEmptyArray();
+        });
+
+        it('get, save and clear survey', function () {
+            var $scope = {};
+            var controller = $controller('SurveyController', { $scope: $scope });
+            $scope.initSurvey("http://localhost:8080/api/surveys/1");
+            $scope.submit();
+            $scope.initEmptySurvey();
+            expect($scope.surveys.currentSurvey.survey).toBeEmptyObject();
+            expect($scope.surveys.currentSurvey.child).toBeEmptyObject();
+            expect( $scope.surveys.currentSurvey.selectedDiagnoses).toBeEmptyArray();
+            expect($scope.surveys.currentSurvey.selectedDisorders).toBeEmptyArray();
+            expect($scope.surveys.currentSurvey.selectedPrograms).toBeEmptyArray();
+            expect( $scope.surveys.currentSurvey.selectedRecommendations).toBeEmptyArray();
+        });
+
+
+
+        it('get, modify and save survey', function () {
+            var $scope = {};
+            var controller = $controller('SurveyController', { $scope: $scope });
+            $scope.initSurvey("http://localhost:8080/api/surveys/1");
+            $scope.surveys.currentSurvey.survey.protocolNumber = "148test";
+            $scope.surveys.currentSurvey.child.name = "testName";
+            $scope.submit();
+            $scope.initEmptySurvey();
+
+            $scope.initSurvey("http://localhost:8080/api/surveys/1");
+            expect($scope.surveys.currentSurvey.survey.protocolNumber).toEqual("148test");
+            expect($scope.surveys.currentSurvey.child.name).toEqual("testName");
+        });
+
+        it('create survey, then get it', function () {
+            var $scope = {};
+            var controller = $controller('SurveyController', { $scope: $scope });
+            $scope.initEmptySurvey();
+            $scope.surveys.currentSurvey.survey.protocolNumber = "999";
+            $scope.surveys.currentSurvey.survey.surveyDate = new Date();
+            $scope.surveys.currentSurvey.child.name = "testName";
+            $scope.surveys.currentSurvey.child.familyName = "testFamilyName";
+            $scope.surveys.currentSurvey.child.birthDate = new Date();
+            $scope.submit();
+            var surveyUrl =  $scope.surveys.currentSurvey.survey._links.self.href;
+            $scope.initEmptySurvey();
+            $scope.initSurvey(surveyUrl);
+            expect($scope.surveys.currentSurvey.survey.protocolNumber).toEqual("999");
+            expect($scope.surveys.currentSurvey.child.familyName).toEqual("testFamilyName");
+            expect($scope.surveys.currentSurvey.child.name).toEqual("testName");
+        });
+
 
     });
 

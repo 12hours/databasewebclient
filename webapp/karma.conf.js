@@ -10,7 +10,16 @@ module.exports = function (config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine',
+            'jasmine-matchers'],
+
+        plugins: [
+            'karma-jasmine',
+            'karma-jasmine-matchers',
+            'karma-chrome-launcher',
+            'karma-inject-html'
+
+        ],
 
 
         // list of files / patterns to load in the browser
@@ -20,7 +29,9 @@ module.exports = function (config) {
             './node_modules/angular-mocks/angular-mocks.js',
             './bower_components/jquery/dist/jquery.js',
             './e2e-tests/scenarios.js',
-            './app/scripts/*.js'
+            './dist/js/*.js',
+            './dist/index.html'
+            // './app/scripts/*.js'
         ],
 
 
@@ -30,7 +41,13 @@ module.exports = function (config) {
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {},
+        preprocessors: {
+            './dist/js/*.js': ['inject-html']
+        },
+
+        injectHtml: {
+            file: 'dist/index.html'
+        },
 
 
         // test results reporter to use
@@ -58,7 +75,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Firefox'],
+        browsers: ['Chrome'],
 
 
         // Continuous Integration mode

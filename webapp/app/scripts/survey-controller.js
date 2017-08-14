@@ -328,9 +328,11 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 console.log("survey fail");
             }
         }).done(function (data) {
-            surveyUrl = data._links.self.href;
+            // surveyUrl = data._links.self.href;
+            $scope.surveys.currentSurvey.survey = data;
             console.log("URL ", surveyUrl);
         });
+        surveyUrl = $scope.surveys.currentSurvey.survey._links.self.href;
 
 
         //diagnoses
@@ -413,7 +415,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         document.getElementById("popup-window-message").textContent = "Сохранено";
         var savedWindow = document.getElementById("popup-window");
         savedWindow.style.display = 'block';
-
     }
 }])
 ;
