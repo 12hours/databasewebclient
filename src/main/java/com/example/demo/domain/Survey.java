@@ -15,7 +15,10 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "surveys")
+@Table(name = "surveys",
+        uniqueConstraints=
+        @UniqueConstraint(columnNames={"protocol_number", "survey_date"})
+)
 public class Survey implements Serializable{
 
     @Id
