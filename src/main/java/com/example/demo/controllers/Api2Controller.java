@@ -1,15 +1,18 @@
 package com.example.demo.controllers;
 
 
+import com.example.demo.dao.tx.ChildDao;
+import com.example.demo.dao.tx.SurveyDao;
 import com.example.demo.domain.Child;
+import com.example.demo.domain.Survey;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +20,7 @@ import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository // JPA exceptions will be translated into DataAccessException
+@Repository
 @RestController
 @RequestMapping("/api2")
 public class Api2Controller {
@@ -26,27 +29,24 @@ public class Api2Controller {
 
     private static final String COOKIE_TX_ID = "tx_id";
 
-    @PersistenceUnit
-    private EntityManagerFactory emf;
+    private ChildDao childDao;
+    private SurveyDao surveyDao;
 
-    private Map<String, EntityManager> map = new HashMap<>();
+    @Autowired
+    public Api2Controller(ChildDao childDao, SurveyDao surveyDao) {
+        this.childDao = childDao;
+        this.surveyDao = surveyDao;
+    }
 
     @PostMapping("/begin")
-    public String beginTransaction(@CookieValue(value = COOKIE_TX_ID, required = false) String txCookie,
+    public String beginTransaction(@CookieValue(value = COOKIE_TX_ID, required = false) String txToken,
                                    HttpServletResponse response) {
-        if (txCookie == null || map.containsKey(txCookie) == false) {
-            EntityManager entityManager = emf.createEntityManager();
-            txCookie = createNewToken();
-            map.put(txCookie, entityManager);
-            response.addCookie(new Cookie(COOKIE_TX_ID, txCookie));
+        if (txToken == null) {
+            txToken = createNewToken();
+            response.addCookie(new Cookie(COOKIE_TX_ID, txToken));
         }
-        logger.info("beginning transaction with " + txCookie);
 
-        EntityManager entityManager = map.get(txCookie);
-        EntityTransaction tx = entityManager.getTransaction();
-        if (!tx.isActive()) {
-            entityManager.getTransaction().begin();
-        }
+        childDao.beginTransaction(txToken);
 
         return "{ transaction: 'active' }";
     }
@@ -57,28 +57,26 @@ public class Api2Controller {
     }
 
     @PostMapping("/commit")
-    public String commitTransaction(@CookieValue(value = COOKIE_TX_ID, required = false) String txCookie){
-        logger.debug("trying to commit " + txCookie);
-        EntityManager entityManager = map.get(txCookie);
-        EntityTransaction tx = entityManager.getTransaction();
-        entityManager.flush();
-        tx.commit();
+    public String commitTransaction(@CookieValue(value = COOKIE_TX_ID, required = false) String txToken) {
+        logger.debug("trying to commit " + txToken);
+        childDao.commitTransaction(txToken);
         return null;
     }
 
     @PostMapping("/save/child")
-    public String saveSurvey(@CookieValue(value = COOKIE_TX_ID, required = false) String txCookie,
+    public String saveChild(@CookieValue(value = COOKIE_TX_ID, required = false) String txToken,
                              @RequestBody Child child) {
         logger.debug("saving child " + child.toString());
-        EntityManager entityManager = map.get(txCookie);
-
-        if (child.getId() == null){
-            entityManager.persist(child);
-        } else {
-
-        }
+        childDao.saveChild(txToken, child);
         return null;
     }
 
+    @PostMapping("/save/survey")
+    public String saveSurvey(@CookieValue(value = COOKIE_TX_ID, required = true) String txToken,
+                            @RequestBody Survey survey){
+        logger.debug("saving child " + survey.toString());
+        surveyDao.saveSurvey(txToken, survey);
+        return null;
+    }
 
 }

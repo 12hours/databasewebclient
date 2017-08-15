@@ -61,7 +61,8 @@ INSERT INTO `surveys`
   `recommended_form`,
   `remarks`,
   `child_id`,
-  `child_name`)
+  `child_name`
+  )
 VALUES
   (1, '2016-12-08', '101', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 1, 'Shumak Vika Vladimirovna'),
   (2, '2016-12-09', '102', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 3, 'Lis Roman Olegovich'),

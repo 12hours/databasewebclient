@@ -1,9 +1,5 @@
 package com.example.demo.domain;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -81,6 +77,15 @@ public class Survey implements Serializable{
         joinColumns = @JoinColumn(name = "survey_id"),
         inverseJoinColumns = @JoinColumn(name = "disorder_id"))
     private Set<Disorder> disorders = new HashSet<>();
+
+    @PrePersist
+    @PreUpdate
+    @PostLoad
+    private void setChildName(){
+        this.childName = child.getFamilyName() + " "
+                + child.getName() + " "
+                + child.getPatrName();
+    }
 
     @Override
     public boolean equals(Object o) {
