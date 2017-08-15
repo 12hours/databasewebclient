@@ -109,6 +109,7 @@ describe('app', function () {
             $scope.surveys.currentSurvey.child.familyName = "testFamilyName";
             $scope.surveys.currentSurvey.child.birthDate = new Date();
             $scope.submit();
+
             var surveyUrl =  $scope.surveys.currentSurvey.survey._links.self.href;
             $scope.initEmptySurvey();
             $scope.initSurvey(surveyUrl);

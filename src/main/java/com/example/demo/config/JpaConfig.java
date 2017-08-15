@@ -26,8 +26,8 @@ public class JpaConfig {
     @Autowired
     DataSource dataSource;
 
-    @Bean
-//    @Profile("dev")
+    @Bean(name = "entityManagerFactory")
+    @Profile("dev")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
@@ -43,10 +43,28 @@ public class JpaConfig {
         return emf;
     }
 
+    @Bean(name = "entityManagerFactory")
+    @Profile("test")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryForH2(){
+        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+        emf.setDataSource(dataSource);
+        emf.setPackagesToScan("com.example.demo.domain");
+        emf.setJpaProperties(new Properties(){
+            {
+                put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+                put("hibernate.hbm2ddl.auto", "update");
+                put("hibernate.show_sql", "true");
+            }
+        });
+        emf.setPersistenceProvider(new HibernatePersistenceProvider());
+        return emf;
+    }
+
+
     @Bean
-//    @Profile("dev")
-    public PlatformTransactionManager transactionManager() {
-        return new JpaTransactionManager(entityManagerFactory().getObject());
+    @Profile({"test","dev"})
+    public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean emfb) {
+        return new JpaTransactionManager(emfb.getObject());
     }
 
 }

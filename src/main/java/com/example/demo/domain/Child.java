@@ -15,7 +15,7 @@ import java.util.Set;
 public class Child implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "child_id")
     private Long id;
 

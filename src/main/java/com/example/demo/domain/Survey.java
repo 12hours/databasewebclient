@@ -22,7 +22,7 @@ import java.util.Set;
 public class Survey implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "survey_id")
     private Long id;
 
