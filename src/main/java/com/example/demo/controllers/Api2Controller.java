@@ -56,10 +56,27 @@ public class Api2Controller {
         return String.valueOf(Math.abs(random.nextLong())) + String.valueOf(Math.abs(random.nextLong()));
     }
 
+    @PostMapping("/commit")
+    public String commitTransaction(@CookieValue(value = COOKIE_TX_ID, required = false) String txCookie){
+        logger.debug("trying to commit " + txCookie);
+        EntityManager entityManager = map.get(txCookie);
+        EntityTransaction tx = entityManager.getTransaction();
+        entityManager.flush();
+        tx.commit();
+        return null;
+    }
+
     @PostMapping("/save/child")
     public String saveSurvey(@CookieValue(value = COOKIE_TX_ID, required = false) String txCookie,
-                             Child child) {
+                             @RequestBody Child child) {
         logger.debug("saving child " + child.toString());
+        EntityManager entityManager = map.get(txCookie);
+
+        if (child.getId() == null){
+            entityManager.persist(child);
+        } else {
+
+        }
         return null;
     }
 
