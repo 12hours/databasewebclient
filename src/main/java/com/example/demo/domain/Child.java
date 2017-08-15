@@ -50,6 +50,7 @@ public class Child implements Serializable{
 
     @Override
     public boolean equals(Object o) {
+        if (id == null) return false;
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
@@ -61,6 +62,7 @@ public class Child implements Serializable{
 
     @Override
     public int hashCode() {
+        if (id == null) return super.hashCode();
         int result = super.hashCode();
         result = 31 * result + (int) (id ^ (id >>> 32));
         return result;

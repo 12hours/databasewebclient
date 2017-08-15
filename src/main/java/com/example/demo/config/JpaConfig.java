@@ -27,7 +27,7 @@ public class JpaConfig {
     DataSource dataSource;
 
     @Bean
-    @Profile("dev")
+//    @Profile("dev")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
@@ -44,7 +44,7 @@ public class JpaConfig {
     }
 
     @Bean
-    @Profile("dev")
+//    @Profile("dev")
     public PlatformTransactionManager transactionManager() {
         return new JpaTransactionManager(entityManagerFactory().getObject());
     }
