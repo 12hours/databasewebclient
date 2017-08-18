@@ -1,0 +1,29 @@
+<div id="surveys-list-popup-window" class="popup-window" >
+
+    <!-- Modal content -->
+    <div class="popup-window-content">
+        <table class="table table-bordered">
+            <thead>
+            <th>Дата обследования</th>
+            <th>Номер протокола</th>
+            <th>ФИО</th>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="i in suggestedSurveys"
+                ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
+                ng-click=""
+                onclick="document.getElementById('surveys-list-popup-window').style.display =
+                'none'">
+                <td>{{suggestedSurveys[$index].surveyDate}}</td>
+                <td>{{suggestedSurveys[$index].protocolNumber}}</td>
+                <td>{{suggestedSurveys[$index].childName}}</td>
+
+            </tr>
+            </tbody>
+        </table>
+
+        <button class="btn btn-default" onclick="this.parentElement.parentElement.style.display = 'none'">&times; Закрыть</button>
+    </div>
+
+</div>

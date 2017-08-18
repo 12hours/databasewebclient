@@ -43,9 +43,12 @@
         <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 1}" id="home">
             @@include('./content/surveys-main.html')
         </div>
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 2}" id="profile">profile</div>
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 3}" id="messages">message
-            !!!!s</div>
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 2}" id="profile">
+            @@include('./content/children-main.html')
+        </div>
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 3}" id="messages">
+            @@include('./content/diagnoses-list.html')
+        </div>
     </div>
 </div><!-- /.container -->
 

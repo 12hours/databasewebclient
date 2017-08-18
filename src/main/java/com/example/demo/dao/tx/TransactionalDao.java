@@ -1,7 +1,6 @@
 package com.example.demo.dao.tx;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -11,20 +10,20 @@ import java.util.Map;
 
 public abstract class TransactionalDao {
 
-    @Autowired
+    @Resource(name = "entityHashMap")
     private Map<String, EntityManager> map = new HashMap<>();
 
     @PersistenceUnit
     private EntityManagerFactory emf;
 
-    protected EntityManager getEntityManager(String token){
+    protected EntityManager getEntityManager(String token) {
         return map.get(token);
     }
 
-    public void beginTransaction(String token){
+    public void beginTransaction(String token) {
 
         EntityManager entityManager = map.get(token);
-        if (entityManager == null){
+        if (entityManager == null) {
             entityManager = emf.createEntityManager();
             map.put(token, entityManager);
         }
@@ -35,11 +34,10 @@ public abstract class TransactionalDao {
         }
     }
 
-    public void commitTransaction(String token){
+    public void commitTransaction(String token) {
         EntityManager entityManager = map.get(token);
         entityManager.getTransaction().commit();
     }
-
 
 
 }

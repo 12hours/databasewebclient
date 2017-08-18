@@ -15,7 +15,6 @@ describe('app', function () {
         $controller = _$controller_;
         $httpBackend = _$httpBackend_;
         // $httpBackend.whenGET(/.*/).passThrough();
-        SURVEYS = "http://localhost:8080/api/suveys";
         SURVEYS = 'http://localhost:8080/api/surveys';
         CHILDREN = 'http://localhost:8080/api/children';
         DIAGNOSES = 'http://localhost:8080/api/diagnoses';
