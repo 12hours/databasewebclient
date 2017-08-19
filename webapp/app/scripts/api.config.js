@@ -1,5 +1,6 @@
 var API = "api";
 var SURVEYS = '/api/surveys';
+var SURVEYS_SEARCH = '/api/surveys/search/byNameAndDate?'
 var CHILDREN = '/api/children';
 var DIAGNOSES = '/api/diagnoses';
 var EDU_PROGRAMS = '/api/educationPrograms';

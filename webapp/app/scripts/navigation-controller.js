@@ -8,6 +8,4 @@ myApp.controller('NavigationController', ['$rootScope','$scope', function ($root
     $scope.nav.targetSurveyId = -1;
     $scope.nav.childrenTabSelected = 1;
 
-
-
 }]);

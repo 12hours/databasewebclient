@@ -2,6 +2,30 @@
 
 myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
+    var nameQuery = '';
+    var dateQuery = '';
+
+    $('.date-own').datepicker({
+        minViewMode: 2,
+        format: 'yyyy',
+        clearBtn: true
+    });
+    $('.date-own').on('changeDate', function() {
+        $scope.$apply(function () {
+            $scope.year = $('.date-own').datepicker('getFormattedDate');
+            if ($scope.year === ''){
+                dateQuery = '';
+                $scope.year = null;
+                $scope.getSurveysList(0);
+            } else {
+                var startDate = new Date($scope.year+ '-01-01').toISOString().split('T')[0];
+                var endDate = new Date($scope.year + '-12-31').toISOString().split('T')[0];
+                dateQuery = "start=" + startDate + "&end=" + endDate;
+                $scope.getSurveysList(0);
+            }
+        });
+    });
+
     $scope.surveys = {};
     $scope.surveys.list = [];
     $scope.surveys.size = 0;
@@ -12,14 +36,13 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         $scope.getSurveysList(0);
     };
 
-    $scope.getSurveysList = function (page) {
-        var url = SURVEYS + "?page=" + page;
-        $scope.getSurveysListByUrl(url);
+    $scope.getSurveysListByName = function (name) {
+        nameQuery = "childName="+name;
+        $scope.getSurveysList(0);
     };
 
-    $scope.getSurveysListByName = function (name) {
-        var url = SURVEYS + "/search/byChildName?childName=" + name;
-        $scope.getSurveysListByUrl(url);
+    $scope.getSurveysList = function (page) {
+        $scope.getSurveysListByUrl(SURVEYS_SEARCH + dateQuery + "&" + nameQuery + "&page=" + page);
     };
 
     $scope.getSurveysListByUrl = function (url) {

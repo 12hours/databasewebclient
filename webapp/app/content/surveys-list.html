@@ -3,10 +3,13 @@
 
         <table class="table table-bordered">
             <thead>
-            <th>#</th>
-            <th>Дата</th>
+            <th style="width: 5%;">#</th>
+            <th style="width: 10%;" >Дата
+                <button class="date-own btn btn-default" id="yearPicker" type="text" placeholder="Год"
+                        ng-model="year">{{year == null ? 'Год' : year}}</button>
+            </th>
             <th>ФИО
-                <input type="text" class="form-control" id="nameFilter" placeholder="Поиск"
+            <input type="text" class="form-control" id="nameFilter" placeholder="Поиск"
                        ng-model="nav.targetName" ng-change="getSurveysListByName(nav.targetName)"></th>
             </thead>
             <tbody>
@@ -36,7 +39,7 @@
                 ng-click="getSurveysList($index)">
                 <a href="#">
                     {{($index > 0 && $index < (surveys.totalPages-1) &&
-                        ($index==(surveys.currentPage+3) || $index==(surveys.currentPage-3)))?
+                    ($index==(surveys.currentPage+3) || $index==(surveys.currentPage-3)))?
                     "...":
                     ($index+1)}}
                 </a>

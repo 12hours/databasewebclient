@@ -65,8 +65,11 @@ gulp.task('copyLibs', function () {
     gulp.src('bower_components/angular/angular.min.js')
         .pipe(gulp.dest('./dist/js'));
     gulp.src('bower_components/jquery/dist/jquery.min.js')
-        .pipe(gulp.dest('./dist/js'))
-
+        .pipe(gulp.dest('./dist/js'));
+    gulp.src('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')
+        .pipe(gulp.dest('./dist/css'));
+    gulp.src('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
+        .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('copyScripts', function () {

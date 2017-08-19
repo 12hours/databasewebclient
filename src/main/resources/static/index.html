@@ -9,6 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -18,6 +19,22 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="js/angular.min.js"></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datepicker.min.js"></script>
+
+    <!-- inject:js -->
+    <script src="/js/api.config.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/child-contoller.js"></script>
+    <script src="/js/children-controller.js"></script>
+    <script src="/js/diagnoses-controller.js"></script>
+    <script src="/js/navigation-controller.js"></script>
+    <script src="/js/survey-controller.js"></script>
+    <!-- endinject -->
 
 </head>
 <body ng-controller='NavigationController'>
@@ -86,9 +103,12 @@
         <table class="table table-bordered">
             <thead>
             <th>#</th>
-            <th>Дата</th>
+            <th style="width: 200px;" >Дата
+                <button class="date-own btn btn-default" id="yearPicker" type="text" placeholder="Год"
+                        ng-model="year">{{year == null ? 'Год' : year}}</button>
+            </th>
             <th>ФИО
-                <input type="text" class="form-control" id="nameFilter" placeholder="Поиск"
+            <input type="text" class="form-control" id="nameFilter" placeholder="Поиск"
                        ng-model="nav.targetName" ng-change="getSurveysListByName(nav.targetName)"></th>
             </thead>
             <tbody>
@@ -118,7 +138,7 @@
                 ng-click="getSurveysList($index)">
                 <a href="#">
                     {{($index > 0 && $index < (surveys.totalPages-1) &&
-                        ($index==(surveys.currentPage+3) || $index==(surveys.currentPage-3)))?
+                    ($index==(surveys.currentPage+3) || $index==(surveys.currentPage-3)))?
                     "...":
                     ($index+1)}}
                 </a>
@@ -364,7 +384,7 @@
                             <button type="button" class="btn btn-success"
                                     ng-click="submit();
                                         initEmptySurvey();
-                                        getSurveysList();
+                                        getSurveysList(surveys.currentPage);
                                         nav.surveysTabSelected = 1">Сохранить
                             </button>
                             <button type="button" class="btn btn-warning"
@@ -571,7 +591,7 @@
                             <button type="button" class="btn btn-success"
                                     ng-click="submit();
                                           initEmptySurvey();
-                                          getSurveysList();
+                                          getSurveysList(surveys.currentPage);
                                           nav.surveysTabSelected = 1">Сохранить
                             </button>
 
@@ -589,24 +609,231 @@
 <!-- end of Survey controller scope -->
 
         </div>
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 2}" id="profile">profile</div>
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 3}" id="messages">message
-            !!!!s</div>
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 2}" id="profile">
+            <!-- Survey controller scope -->
+<div class="row" ng-controller="ChildrenController" >
+
+    <div class="col-xs-12" >
+
+        <div>
+            <ul class="nav nav-pills">
+                <li role="presentation" ng-class="{'active': nav.childrenTabSelected== 1}"
+                    ng-click="nav.childrenTabSelected= 1"><a href="#">Все</a></li>
+
+                <li role="presentation" ng-class="{'active': nav.childrenTabSelected== 2}"
+                    ng-click="nav.childrenTabSelected= 2; initSurvey(-1);"><a href="#">Редактирование</a></li>
+
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.childrenTabSelected== 1}"
+                     id="surveysAll">
+                    <div class="container">
+    <div class="row">
+
+        <table class="table table-bordered">
+            <thead>
+            <th>ФИО</th>
+            <th>Дата</th>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="child in children.list"
+                ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
+                ng-click="initChild(child._links.self.href); nav.childrenTabSelected = 2;">
+                <td>{{child.familyName}} {{child.name}} {{child.patrName}}</td>
+                <td>{{child.birthDate}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li ng-click="getSurveysListByUrl(children.prevPage)"
+                $scope.children.prevPage=response._links.pref.href;">
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li ng-repeat="n in [].constructor(children.totalPages) track by $index"
+                ng-class="{active: $index == children.currentPage}"
+                ng-show="$index >= (children.currentPage-3) && $index <= (children.currentPage+3) ||
+                            $index == 0 || $index == (children.totalPages - 1)"
+                ng-click="getSurveysList($index)">
+                <a href="#">
+                    {{($index > 0 && $index < (children.totalPages-1) &&
+                    ($index==(children.currentPage+3) || $index==(children.currentPage-3)))?
+                    "...":
+                    ($index+1)}}
+                </a>
+            </li>
+
+            <li ng-click="getSurveysListByUrl(children.nextPage)">
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+                </div>
+
+                <div ng-controller="ChildController" role="tabpanel" class="tab-pane"
+                     ng-class="{'active': nav.childrenTabSelected== 2}"
+                     id="surveyAdd">
+                    <div class="container">
+    <div class="panel panel-default" >
+
+        <div class="panel-heading">Ребенок</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">Фамилия:</span>
+                        <input type="text" class="form-control" placeholder="Фамилия"
+                               ng-model="children.currentChild.child.familyName">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Имя:</span>
+                        <input type="text" class="form-control" placeholder="Имя"
+                               ng-model="children.currentChild.child.name">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Отчество:</span>
+                        <input type="text" class="form-control" placeholder="Отчество"
+                               ng-model="children.currentChild.child.patrName">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Дата рождения:</span>
+                        <input type="date" class="form-control" placeholder="Фамилия"
+                               ng-model="children.currentChild.child.birthDate">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">Адрес:</span>
+                        <input type="text" class="form-control" placeholder=""
+                               ng-model="children.currentChild.child.address">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Учебное заведение:</span>
+                        <input type="text" class="form-control" placeholder=""
+                               ng-model="children.currentChild.child.placeOfEducation">
+                    </div>
+
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="checkbox" aria-label="..." ng-model="children.currentChild.child.disability">
+                      </span>
+                        <input type="text" class="form-control" aria-label="..." value="Инвалидность" disabled>
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="checkbox" aria-label="..." ng-model="children.currentChild.child.specialFacilitiesNeeding">
+                      </span>
+                        <input type="text" class="form-control" aria-label="..." value="Нуждаемость в спец.средствах"
+                               disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">ПМПК</div>
+        <div class="panel-body">
+        </div>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Survey controller scope -->
+
+        </div>
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 3}" id="messages">
+            <div class="container" ng-controller="DiagnosesController">
+    <div id="surveys-list-popup-window" class="popup-window" >
+
+    <!-- Modal content -->
+    <div class="popup-window-content">
+        <table class="table table-bordered">
+            <thead>
+            <th>Дата обследования</th>
+            <th>Номер протокола</th>
+            <th>ФИО</th>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="i in suggestedSurveys"
+                ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
+                ng-click=""
+                onclick="document.getElementById('surveys-list-popup-window').style.display =
+                'none'">
+                <td>{{suggestedSurveys[$index].surveyDate}}</td>
+                <td>{{suggestedSurveys[$index].protocolNumber}}</td>
+                <td>{{suggestedSurveys[$index].childName}}</td>
+
+            </tr>
+            </tbody>
+        </table>
+
+        <button class="btn btn-default" onclick="this.parentElement.parentElement.style.display = 'none'">&times; Закрыть</button>
+    </div>
+
+</div>
+    <div class="row">
+
+        <table class="table table-bordered">
+            <thead>
+            <th>Диагноз</th>
+            </thead>
+            <tbody>
+
+                <tr ng-repeat="diagnosis in diagnoses.list"
+                    ng-class="{success: hover}" ng-mouseenter="hover = true;"
+                    ng-mouseleave="hover = false;"
+                    ng-click="showList(diagnosis._links.surveys.href)">
+                    <td>{{diagnosis.diagnosis}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-xs-8">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Добавить новый диагноз"
+                   ng-model="diagnoses.newDiagnosis.diagnosis">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"
+                        ng-click="addDiagnosis(); getDiagnosesList();">Сохранить</button>
+            </span>
+        </div>
+    </div>
+</div>
+
+        </div>
     </div>
 </div><!-- /.container -->
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
 
-<!-- inject:js -->
-<script src="/js/api.config.js"></script>
-<script src="/js/app.js"></script>
-<script src="/js/child-contoller.js"></script>
-<script src="/js/navigation-controller.js"></script>
-<script src="/js/survey-controller.js"></script>
-<!-- endinject -->
+<script type="text/javascript">
+//    $('.date-own').datepicker({
+//        minViewMode: 2,
+//        format: 'yyyy'
+//    });
+//    $('.date-own').on('changeDate', function() {
+//        console.log("ch");
+//        $scope.year = $('.date-own').datepicker('getFormattedDate');
+////        $('#yearPicker').val(
+////            $('.date-own').datepicker('getFormattedDate')
+////        );
+//    });
+</script>
 
 </body>
 </html>

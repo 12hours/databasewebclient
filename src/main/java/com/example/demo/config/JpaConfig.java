@@ -35,7 +35,7 @@ public class JpaConfig {
         emf.setJpaProperties(new Properties(){
             {
                 put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-                put("hibernate.hbm2ddl.auto", "create");
+                put("hibernate.hbm2ddl.auto", "update");
                 put("hibernate.show_sql", "true");
             }
         });
