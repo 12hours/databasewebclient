@@ -55,16 +55,16 @@ public class Survey implements Serializable{
     private Child child;
 
     @ManyToMany
-    @JoinTable(name = "surveys_recommends",
+    @JoinTable(name = "surveys_recommendations",
         joinColumns = @JoinColumn(name = "survey_id"),
         inverseJoinColumns = @JoinColumn(name="rec_id"))
-    private Set<Recommendation> recommends = new HashSet<>();
+    private Set<Recommendation> recommendations = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "surveys_edu_programs",
         joinColumns = @JoinColumn(name = "survey_id"),
         inverseJoinColumns = @JoinColumn(name = "edu_pr_id"))
-    private Set<EducationProgram> eduPrograms = new HashSet<>();
+    private Set<EducationProgram> educationPrograms = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "surveys_diagnoses",
@@ -80,7 +80,7 @@ public class Survey implements Serializable{
 
     @PrePersist
     @PreUpdate
-    @PostLoad
+//    @PostLoad
     private void setChildName(){
         this.childName = child.getFamilyName() + " "
                 + child.getName() + " "

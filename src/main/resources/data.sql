@@ -35,7 +35,7 @@ VALUES
 (4, 'Dislexiya'),
 (5, 'Autism');
 
-INSERT INTO `edu_programs`
+INSERT INTO `education_programs`
 (`id`,
 `program`)
 VALUES
@@ -43,7 +43,7 @@ VALUES
 (2, 'Special education in school'),
 (3, 'Special pre-school education');
 
-INSERT INTO `recommends`
+INSERT INTO `recommendations`
 (`id`,
 `recommendation`)
 VALUES
@@ -122,7 +122,7 @@ VALUES
   (7, 1),
   (7, 3);
 
-INSERT INTO `surveys_recommends`
+INSERT INTO `surveys_recommendations`
 (`survey_id`,
 `rec_id`)
 VALUES

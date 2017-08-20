@@ -97,7 +97,7 @@ gulp.task('copyStyles', function () {
 gulp.task('serve', ['build'], function () {
     gulp.watch('app/css/**/*.css', ['copyStyles']);
     gulp.watch('app/scripts/*.js', ['copyScripts']);
-    gulp.watch(['app/content/*.html', 'app/*.html'], ['copyContent']);
+    gulp.watch(['app/content/**/*.html', 'app/*.html'], ['copyContent']);
 
     var proxyOptions = url.parse('http://localhost:8080/api');
     proxyOptions.route = '/api';

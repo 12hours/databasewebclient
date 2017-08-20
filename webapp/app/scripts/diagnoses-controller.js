@@ -3,9 +3,8 @@
 myApp.controller('DiagnosesController', ['$scope', function ($scope) {
 
     $scope.diagnoses = {};
-    $scope.diagnoses.totalPages = 0;
-    $scope.diagnoses.currentPage = 0;
     $scope.diagnoses.newDiagnosis = {};
+    $scope.diagnoses.list = [];
 
     this.$onInit = function () {
         $scope.getDiagnosesList();
@@ -23,11 +22,16 @@ myApp.controller('DiagnosesController', ['$scope', function ($scope) {
                 console.log("diagnoses list fail");
             }
         }).done(function (data) {
+            console.log(data._embedded.diagnoses);
             $scope.diagnoses.list = data._embedded.diagnoses;
         })
     };
 
     $scope.addDiagnosis = function () {
+        if ($scope.addDiagnosisForm.diagnosis.$invalid){
+            raisePopup("Поле не может быть пустым");
+            return;
+        }
         $.ajax({
             type: POST,
             url: DIAGNOSES,
@@ -41,27 +45,38 @@ myApp.controller('DiagnosesController', ['$scope', function ($scope) {
                 console.log("diagnosis save fail");
             }
         });
+        $scope.getDiagnosesList();
+        $scope.diagnoses.newDiagnosis = {};
+        $scope.nav.diagnosesTabSelected = 1;
     };
 
-    $scope.showList = function(url) {
-        $scope.suggestedSurveys = [];
+    $scope.updateDiagnosis = function (url) {
+        if ($scope.updateDiagnosisForm.diagnosis.$invalid){
+            raisePopup("Поле не может быть пустым");
+            return;
+        }
         $.ajax({
-            type: GET,
+            type: PATCH,
             url: url,
             async: false,
+            contentType: 'application/json',
+            data: angular.toJson($scope.diagnoses.currentDiagnosis),
             success: function (result) {
-                console.log("surveys list get success");
+                console.log("diagnosis update success");
             },
             error: function (request, msg, error) {
-                console.log("surveys list get fail");
+                console.log("diagnosis update fail");
             }
-        }).done(function (data) {
-            $scope.suggestedSurveys = data._embedded.surveys;
-            var popupWindow = document.getElementById("surveys-list-popup-window");
-            popupWindow.style.display = 'block';
         });
+        $scope.getDiagnosesList();
+        $scope.diagnoses.currentDiagnosis = {};
+        $scope.nav.diagnosesTabSelected = 1;
+    };
 
 
+    $scope.editDiagnosis = function(diagnosis) {
+        var popupWindow = document.getElementById("surveys-list-popup-window");
+        popupWindow.style.display = 'block';
     }
 
 }]);

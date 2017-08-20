@@ -155,8 +155,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             var childUrl = data._links.child.href;
             var diagnosesUrl = data._links.diagnoses.href;
             var disordersUrl = data._links.disorders.href;
-            var programsUrl = data._links.eduPrograms.href;
-            var recommendsUrl = data._links.recommends.href;
+            var programsUrl = data._links.educationPrograms.href;
+            var recommendsUrl = data._links.recommendations.href;
 
 
             $.ajax({
@@ -304,10 +304,10 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
 
     $scope.submit = function () {
         // TODO: here we update childName field. Perhaps there is better way
-        $scope.surveys.currentSurvey.survey.childName =
-                ($scope.surveys.currentSurvey.child.familyName + " "
-                + $scope.surveys.currentSurvey.child.name + " "
-                + $scope.surveys.currentSurvey.child.patrName);
+        // $scope.surveys.currentSurvey.survey.childName =
+        //         ($scope.surveys.currentSurvey.child.familyName + " "
+        //         + $scope.surveys.currentSurvey.child.name + " "
+        //         + $scope.surveys.currentSurvey.child.patrName);
 
         var childUrl;
         var surveyUrl;
@@ -425,7 +425,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         }
         var programsString = programsArray.join("\r\n");
         $.ajax({
-            url: (surveyUrl + "/eduPrograms"),
+            url: (surveyUrl + "/educationPrograms"),
             type: PUT,
             contentType: 'text/uri-list',
             data: programsString,
@@ -444,7 +444,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         }
         var recommendsString = recommendsArray.join("\r\n");
         $.ajax({
-            url: (surveyUrl + "/recommends"),
+            url: (surveyUrl + "/recommendations"),
             type: PUT,
             contentType: 'text/uri-list',
             data: recommendsString,

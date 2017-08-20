@@ -52,7 +52,7 @@ public class JpaConfig {
         emf.setJpaProperties(new Properties(){
             {
                 put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-                put("hibernate.hbm2ddl.auto", "update");
+                put("hibernate.hbm2ddl.auto", "create");
                 put("hibernate.show_sql", "true");
             }
         });

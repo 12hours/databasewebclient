@@ -73,10 +73,10 @@ public class DomainTest {
         rec.getSurveys().add(survey);
         eduProg.getSurveys().add(survey);
 
-        survey.getEduPrograms().add(eduProg);
+        survey.getEducationPrograms().add(eduProg);
         survey.getDiagnoses().add(diagnosis);
         survey.getDisorders().add(disorder);
-        survey.getRecommends().add(rec);
+        survey.getRecommendations().add(rec);
 
         em.flush();
 
@@ -238,10 +238,10 @@ public class DomainTest {
         rec.getSurveys().add(survey);
         eduProg.getSurveys().add(survey);
         survey.setChild(child);
-        survey.getRecommends().add(rec);
+        survey.getRecommendations().add(rec);
         survey.getDisorders().add(disorder);
         survey.getDiagnoses().add(diagnosis);
-        survey.getEduPrograms().add(eduProg);
+        survey.getEducationPrograms().add(eduProg);
 
         em.persist(survey);
         em.flush();
@@ -266,8 +266,8 @@ public class DomainTest {
         assertTrue(foundSurvey.getChild().getId() == childId);
         assertTrue(foundSurvey.getDiagnoses().iterator().next().getId() == diagnosisId);
         assertTrue(foundSurvey.getDisorders().iterator().next().getId() == disorderId);
-        assertTrue(foundSurvey.getEduPrograms().iterator().next().getId() == eduId);
-        assertTrue(foundSurvey.getRecommends().iterator().next().getId() == recId);
+        assertTrue(foundSurvey.getEducationPrograms().iterator().next().getId() == eduId);
+        assertTrue(foundSurvey.getRecommendations().iterator().next().getId() == recId);
 
         // TEST CHILD
         Child foundChild = em.find(Child.class, childId);

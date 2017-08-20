@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "edu_programs")
+@Table(name = "education_programs")
 public class EducationProgram {
 
     @Id
@@ -21,6 +21,6 @@ public class EducationProgram {
     @Size(max = 2000)
     private String program;
 
-    @ManyToMany(mappedBy = "eduPrograms")
+    @ManyToMany(mappedBy = "educationPrograms")
     Set<Survey> surveys = new HashSet<>();
 }

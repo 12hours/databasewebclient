@@ -52,13 +52,13 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 1}" id="home">
-            @@include('./content/surveys-main.html')
+            @@include('./content/surveys/surveys-main.html')
         </div>
         <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 2}" id="profile">
             @@include('./content/children-main.html')
         </div>
         <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 3}" id="messages">
-            @@include('./content/diagnoses-list.html')
+            @@include('./content/diagnoses/diagnoses-main.html')
         </div>
     </div>
 </div><!-- /.container -->
