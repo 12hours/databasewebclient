@@ -5,8 +5,10 @@
             <thead>
             <th style="width: 5%;">#</th>
             <th style="width: 10%;" >Дата
-                <button class="date-own btn btn-default" id="yearPicker" type="text" placeholder="Год"
-                        ng-model="year">{{year == null ? 'Год' : year}}</button>
+                <button class="date-start btn btn-default" type="text"
+                        ng-model="year">{{dateStart == null ? 'From' : dateStart}}</button>
+                <button class="date-end btn btn-default"  type="text"
+                        ng-model="year">{{dateEnd == null ? 'To' : dateEnd}}</button>
             </th>
             <th>ФИО
             <input type="text" class="form-control" id="nameFilter" placeholder="Поиск"

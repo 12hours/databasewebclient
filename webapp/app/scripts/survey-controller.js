@@ -3,24 +3,46 @@
 myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
     var nameQuery = '';
-    var dateQuery = '';
+    var startDateQuery = '';
+    var endDateQuery = '';
+    var startDate = '';
+    var endDate = '';
 
-    $('.date-own').datepicker({
-        minViewMode: 2,
-        format: 'yyyy',
-        clearBtn: true
+    $('.date-start').datepicker({
+        minViewMode: 0,
+        format: 'yyyy-mm-dd',
+        clearBtn: true,
+        language: 'ru'
     });
-    $('.date-own').on('changeDate', function() {
+    $('.date-start').on('changeDate', function() {
         $scope.$apply(function () {
-            $scope.year = $('.date-own').datepicker('getFormattedDate');
-            if ($scope.year === ''){
-                dateQuery = '';
-                $scope.year = null;
+            $scope.dateStart = $('.date-start').datepicker('getFormattedDate');
+            if ($scope.dateStart === ''){
+                startDateQuery = '';
+                $scope.dateStart = null;
                 $scope.getSurveysList(0);
             } else {
-                var startDate = new Date($scope.year+ '-01-01').toISOString().split('T')[0];
-                var endDate = new Date($scope.year + '-12-31').toISOString().split('T')[0];
-                dateQuery = "start=" + startDate + "&end=" + endDate;
+                startDateQuery = "&start=" + new Date($scope.dateStart).toISOString().split('T')[0];
+                $scope.getSurveysList(0);
+            }
+        });
+    });
+
+    $('.date-end').datepicker({
+        minViewMode: 0,
+        format: 'yyyy-mm-dd',
+        clearBtn: true,
+        language: 'ru'
+    });
+    $('.date-end').on('changeDate', function() {
+        $scope.$apply(function () {
+            $scope.dateEnd = $('.date-end').datepicker('getFormattedDate');
+            if ($scope.dateEnd === ''){
+                endDateQuery = '';
+                $scope.dateEnd = null;
+                $scope.getSurveysList(0);
+            } else {
+                endDateQuery = "&end=" + new Date($scope.dateEnd).toISOString().split('T')[0];
                 $scope.getSurveysList(0);
             }
         });
@@ -37,12 +59,12 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     };
 
     $scope.getSurveysListByName = function (name) {
-        nameQuery = "childName="+name;
+        nameQuery = "&childName="+name;
         $scope.getSurveysList(0);
     };
 
     $scope.getSurveysList = function (page) {
-        $scope.getSurveysListByUrl(SURVEYS_SEARCH + dateQuery + "&" + nameQuery + "&page=" + page);
+        $scope.getSurveysListByUrl(SURVEYS_SEARCH + startDateQuery + endDateQuery + nameQuery + "&page=" + page);
     };
 
     $scope.getSurveysListByUrl = function (url) {

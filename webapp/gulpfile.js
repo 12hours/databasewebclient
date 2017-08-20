@@ -70,6 +70,8 @@ gulp.task('copyLibs', function () {
         .pipe(gulp.dest('./dist/css'));
     gulp.src('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
         .pipe(gulp.dest('./dist/js'));
+    gulp.src('bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.ru.js')
+        .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('copyScripts', function () {
