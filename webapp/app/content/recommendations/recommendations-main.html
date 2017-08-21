@@ -1,0 +1,37 @@
+<div class="row" ng-controller="RecommendationsController" >
+
+    <div class="col-xs-12" >
+
+        <div>
+            <ul class="nav nav-pills">
+                <li role="presentation" ng-class="{'active': nav.recommendationsTabSelected == 1}"
+                    ng-click="nav.recommendationsTabSelected = 1; getRecommendationsList()"><a href="#">Все</a></li>
+
+                <li role="presentation" ng-class="{'active': nav.recommendationsTabSelected == 2}"
+                    ng-click="nav.recommendationsTabSelected = 2;"><a href="#">Добавить диагноз</a></li>
+
+                <li role="presentation" ng-show="nav.recommendationsTabSelected == 3"
+                    ng-class="{'active': nav.recommendationsTabSelected == 3}"
+                    ng-click="nav.recommendationsTabSelected = 3;"><a href="#">Редактирование</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.recommendationsTabSelected == 1}"
+                     id="surveysAll">
+                    @@include('./recommendations-list.html')
+                </div>
+
+                <div role="tabpanel" class="tab-pane"
+                     ng-class="{'active': nav.recommendationsTabSelected == 2}">
+                    @@include('./recommendations-add.html')
+
+                </div>
+
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.recommendationsTabSelected == 3}" id="survey">
+                    @@include('./recommendations-edit.html')
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

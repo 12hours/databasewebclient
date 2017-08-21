@@ -1,0 +1,37 @@
+<div class="row" ng-controller="DisordersController" >
+
+    <div class="col-xs-12" >
+
+        <div>
+            <ul class="nav nav-pills">
+                <li role="presentation" ng-class="{'active': nav.disordersTabSelected == 1}"
+                    ng-click="nav.disordersTabSelected = 1; getDisordersList()"><a href="#">Все</a></li>
+
+                <li role="presentation" ng-class="{'active': nav.disordersTabSelected == 2}"
+                    ng-click="nav.disordersTabSelected = 2;"><a href="#">Добавить диагноз</a></li>
+
+                <li role="presentation" ng-show="nav.disordersTabSelected == 3"
+                    ng-class="{'active': nav.disordersTabSelected == 3}"
+                    ng-click="nav.disordersTabSelected = 3;"><a href="#">Редактирование</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.disordersTabSelected == 1}"
+                     id="surveysAll">
+                    @@include('./disorders-list.html')
+                </div>
+
+                <div role="tabpanel" class="tab-pane"
+                     ng-class="{'active': nav.disordersTabSelected == 2}">
+                    @@include('./disorders-add.html')
+
+                </div>
+
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.disordersTabSelected == 3}" id="survey">
+                    @@include('./disorders-edit.html')
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

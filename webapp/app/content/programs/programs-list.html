@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+
+        <table class="table table-bordered">
+            <thead>
+            <th>Программа</th>
+            </thead>
+            <tbody>
+
+                <tr ng-repeat="program in programs.list"
+                    ng-class="{success: hover}" ng-mouseenter="hover = true;"
+                    ng-mouseleave="hover = false;"
+                    ng-click="programs.currentProgram = program;
+                                nav.programsTabSelected = 3;">
+                    <td>{{program.program}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

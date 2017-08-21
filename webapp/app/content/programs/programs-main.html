@@ -1,0 +1,37 @@
+<div class="row" ng-controller="ProgramsController" >
+
+    <div class="col-xs-12" >
+
+        <div>
+            <ul class="nav nav-pills">
+                <li role="presentation" ng-class="{'active': nav.programsTabSelected == 1}"
+                    ng-click="nav.programsTabSelected = 1; getProgramsList()"><a href="#">Все</a></li>
+
+                <li role="presentation" ng-class="{'active': nav.programsTabSelected == 2}"
+                    ng-click="nav.programsTabSelected = 2;"><a href="#">Добавить диагноз</a></li>
+
+                <li role="presentation" ng-show="nav.programsTabSelected == 3"
+                    ng-class="{'active': nav.programsTabSelected == 3}"
+                    ng-click="nav.programsTabSelected = 3;"><a href="#">Редактирование</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.programsTabSelected == 1}"
+                     id="surveysAll">
+                    @@include('./programs-list.html')
+                </div>
+
+                <div role="tabpanel" class="tab-pane"
+                     ng-class="{'active': nav.programsTabSelected == 2}">
+                    @@include('./programs-add.html')
+
+                </div>
+
+                <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.programsTabSelected == 3}" id="survey">
+                    @@include('./programs-edit.html')
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

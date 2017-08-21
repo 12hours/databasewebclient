@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+
+        <table class="table table-bordered">
+            <thead>
+            <th>Диагноз</th>
+            </thead>
+            <tbody>
+
+                <tr ng-repeat="recommendation in recommendations.list"
+                    ng-class="{success: hover}" ng-mouseenter="hover = true;"
+                    ng-mouseleave="hover = false;"
+                    ng-click="recommendations.currentRecommendation = recommendation;
+                                nav.recommendationsTabSelected = 3;">
+                    <td>{{recommendation.recommendation}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

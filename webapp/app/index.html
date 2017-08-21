@@ -67,38 +67,23 @@
         <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 2}" id="profile">
             @@include('./content/children/children-main.html')
         </div>
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 3}" id="messages">
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 3}" id="diagnoses">
             @@include('./content/diagnoses/diagnoses-main.html')
         </div>
 
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 4}" id="messages">
-            Нарушения
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 4}" id="disorders">
+            @@include('./content/disorders/disorders-main.html')
         </div>
 
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 5}" id="messages">
-            Программы
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 5}" id="programs">
+            @@include('./content/programs/programs-main.html')
         </div>
 
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 6}" id="messages">
-           Рекомендации
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 6}" id="recommendations">
+            @@include('./content/recommendations/recommendations-main.html')
         </div>
     </div>
 </div><!-- /.container -->
-
-
-<script type="text/javascript">
-//    $('.date-own').datepicker({
-//        minViewMode: 2,
-//        format: 'yyyy'
-//    });
-//    $('.date-own').on('changeDate', function() {
-//        console.log("ch");
-//        $scope.year = $('.date-own').datepicker('getFormattedDate');
-////        $('#yearPicker').val(
-////            $('.date-own').datepicker('getFormattedDate')
-////        );
-//    });
-</script>
 
 </body>
 </html>
