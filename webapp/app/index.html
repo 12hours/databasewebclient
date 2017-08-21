@@ -47,6 +47,16 @@
 
         <li role="presentation" ng-class="{'active': nav.mainTabChosen == 3}"
             ng-click="nav.mainTabChosen = 3"><a href="#">Диагнозы</a></li>
+
+        <li role="presentation" ng-class="{'active': nav.mainTabChosen == 4}"
+            ng-click="nav.mainTabChosen = 4"><a href="#">Нарушения</a></li>
+
+        <li role="presentation" ng-class="{'active': nav.mainTabChosen == 5}"
+            ng-click="nav.mainTabChosen = 5"><a href="#">Программы</a></li>
+
+        <li role="presentation" ng-class="{'active': nav.mainTabChosen == 6}"
+            ng-click="nav.mainTabChosen = 6"><a href="#">Рекомендации</a></li>
+
     </ul>
 
     <!-- Tab panes -->
@@ -59,6 +69,18 @@
         </div>
         <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 3}" id="messages">
             @@include('./content/diagnoses/diagnoses-main.html')
+        </div>
+
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 4}" id="messages">
+            Нарушения
+        </div>
+
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 5}" id="messages">
+            Программы
+        </div>
+
+        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 6}" id="messages">
+           Рекомендации
         </div>
     </div>
 </div><!-- /.container -->

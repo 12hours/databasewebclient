@@ -33,7 +33,7 @@ public interface ChildRepository extends PagingAndSortingRepository<Child, Long>
                   Pageable page);
 
     @RestResource(path = "byFamilyName", rel = "byFamilyName")
-    public Page findByFamilyName(@Param("familyName") String familyName, Pageable p);
+    public Page findByFamilyNameIgnoreCase(@Param("familyName") String familyName, Pageable p);
 
     @RestResource(path = "findByBirthDate")
     Page findByBirthDate(@Param("birthDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthDate,

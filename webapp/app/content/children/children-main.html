@@ -1,4 +1,3 @@
-<!-- Survey controller scope -->
 <div class="row" ng-controller="ChildrenController" >
 
     <div class="col-xs-12" >
@@ -9,23 +8,24 @@
                     ng-click="nav.childrenTabSelected= 1"><a href="#">Все</a></li>
 
                 <li role="presentation" ng-class="{'active': nav.childrenTabSelected== 2}"
-                    ng-click="nav.childrenTabSelected= 2; initSurvey(-1);"><a href="#">Редактирование</a></li>
+                    ng-show="nav.childrenTabSelected == 2"
+                    ng-click="nav.childrenTabSelected= 2;"><a href="#">Редактирование</a></li>
 
             </ul>
 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.childrenTabSelected== 1}"
-                     id="surveysAll">
+                <div role="tabpanel" class="tab-pane"
+                     ng-class="{'active': nav.childrenTabSelected== 1}"
+                     id="childrenAll">
                     @@include('./children-list.html')
                 </div>
 
                 <div ng-controller="ChildController" role="tabpanel" class="tab-pane"
                      ng-class="{'active': nav.childrenTabSelected== 2}"
-                     id="surveyAdd">
-                    @@include('./child-edit.html')
+                     id="childrenEdit">
+                    @@include('./children-edit.html')
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- end of Survey controller scope -->

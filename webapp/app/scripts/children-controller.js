@@ -54,11 +54,32 @@ myApp.controller('ChildrenController', ['$scope', function ($scope) {
                 console.log("children list fail");
             }
         }).done(function (data) {
-            $scope.children.currentChild.child = data;
-            $scope.children.currentChild.child.birthDate = new Date(data.birthDate);
+            $scope.children.currentChild = data;
+            $scope.children.currentChild.birthDate = new Date(data.birthDate);
         });
 
     };
+
+
+    $scope.updateChild = function (url) {
+        $.ajax({
+            type: PATCH,
+            url: url,
+            async: false,
+            contentType: 'application/json',
+            data: angular.toJson($scope.children.currentChild),
+            success: function (result) {
+                console.log("child update success");
+            },
+            error: function (request, msg, error) {
+                console.log("child update fail");
+            }
+        });
+        $scope.children.currentChild = {};
+        $scope.nav.childrenTabSelected = 1;
+        $scope.getChildrenList($scope.children.currentPage);
+    };
+
 
     $scope.getChildSurveys = function(childUrl){
 

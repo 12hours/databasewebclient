@@ -31,7 +31,7 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
     @RestResource(path = "byNameAndDate")
     @Query("Select s from Survey s " +
         "WHERE " +
-        "(:childName IS NULL OR (1 = LOCATE(:childName, s.childName))) AND "+
+        "(:childName IS NULL OR (UPPER(s.childName) LIKE UPPER(:childName)||'%' )) AND "+
         "(:start IS NULL OR s.surveyDate >= :start) AND" +
         "(:end IS NULL OR s.surveyDate <= :end)")
     public Page findByChildNameAndDateBetween(@Param("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date

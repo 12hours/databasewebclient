@@ -8,51 +8,63 @@
                     <div class="input-group">
                         <span class="input-group-addon">Фамилия:</span>
                         <input type="text" class="form-control" placeholder="Фамилия"
-                               ng-model="children.currentChild.child.familyName">
+                               ng-model="children.currentChild.familyName">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Имя:</span>
                         <input type="text" class="form-control" placeholder="Имя"
-                               ng-model="children.currentChild.child.name">
+                               ng-model="children.currentChild.name">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Отчество:</span>
                         <input type="text" class="form-control" placeholder="Отчество"
-                               ng-model="children.currentChild.child.patrName">
+                               ng-model="children.currentChild.patrName">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Дата рождения:</span>
                         <input type="date" class="form-control" placeholder="Фамилия"
-                               ng-model="children.currentChild.child.birthDate">
+                               ng-model="children.currentChild.birthDate">
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon">Адрес:</span>
                         <input type="text" class="form-control" placeholder=""
-                               ng-model="children.currentChild.child.address">
+                               ng-model="children.currentChild.address">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Учебное заведение:</span>
                         <input type="text" class="form-control" placeholder=""
-                               ng-model="children.currentChild.child.placeOfEducation">
+                               ng-model="children.currentChild.placeOfEducation">
                     </div>
 
                     <div class="input-group">
                       <span class="input-group-addon">
-                        <input type="checkbox" aria-label="..." ng-model="children.currentChild.child.disability">
+                        <input type="checkbox" aria-label="..." ng-model="children.currentChild.disability">
                       </span>
                         <input type="text" class="form-control" aria-label="..." value="Инвалидность" disabled>
                     </div>
                     <div class="input-group">
                       <span class="input-group-addon">
-                        <input type="checkbox" aria-label="..." ng-model="children.currentChild.child.specialFacilitiesNeeding">
+                        <input type="checkbox" aria-label="..." ng-model="children.currentChild.specialFacilitiesNeeding">
                       </span>
                         <input type="text" class="form-control" aria-label="..." value="Нуждаемость в спец.средствах"
                                disabled>
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="button" class="btn btn-success"
+                            ng-click="updateChild(children.currentChild._links.self.href);">Сохранить
+                    </button>
+                    <button type="button" class="btn btn-danger"
+                            ng-click="nav.childrenTabSelected = 1; children.currentChild = {};">Закрыть
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 
