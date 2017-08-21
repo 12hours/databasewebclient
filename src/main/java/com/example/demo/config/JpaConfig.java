@@ -43,6 +43,7 @@ public class JpaConfig {
         return emf;
     }
 
+
     @Bean(name = "entityManagerFactory")
     @Profile("test")
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryForH2(){

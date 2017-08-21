@@ -5,8 +5,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     var nameQuery = '';
     var startDateQuery = '';
     var endDateQuery = '';
-    var startDate = '';
-    var endDate = '';
 
     $('.date-start').datepicker({
         minViewMode: 0,
