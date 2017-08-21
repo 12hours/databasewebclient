@@ -118,6 +118,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     };
 
     $scope.initEmptySurvey = function () {
+        $scope.getData();
         console.log("clear");
         $scope.surveys.currentSurvey.survey = {};
         $scope.surveys.currentSurvey.child = {};
@@ -129,6 +130,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     };
 
     $scope.initSurvey = function (surveyUrl) {
+        $scope.getData();
         console.log("TARGET=" + surveyUrl);
         if (surveyUrl === -1) {
             $scope.initEmptySurvey();
@@ -270,6 +272,13 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         //
         // });
     };
+
+    $scope.getData = function () {
+        $scope.getDiagnosesList();
+        $scope.getDisordersList();
+        $scope.getEducationProgramsList();
+        $scope.getRecommendationsList();
+    }
 
     $scope.getDiagnosesList = function () {
         $http.get(DIAGNOSES).then(function (response) {

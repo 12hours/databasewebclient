@@ -76,8 +76,7 @@
                 <div class="col-md-6">
                     <div class=" panel panel-default">
                         <div class="panel-heading">Диагноз</div>
-                        <div class="panel-body"
-                             ng-init="getDiagnosesList();">
+                        <div class="panel-body">
                             <div class="col-xs-12 select-list-box">
                                 <div ng-repeat="i in surveys.currentSurvey.selectedDiagnoses">
                                     <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedDiagnoses[$index]"
@@ -102,8 +101,7 @@
                 <div class="col-md-6">
                     <div class=" panel panel-default">
                         <div class="panel-heading">Выявленное нарушение</div>
-                        <div class="panel-body"
-                             ng-init="getDisordersList();">
+                        <div class="panel-body">
                             <div class="col-xs-12 select-list-box">
                                 <div ng-repeat="i in surveys.currentSurvey.selectedDisorders">
                                     <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedDisorders[$index]"
@@ -130,7 +128,7 @@
                 <div class="col-md-6">
                     <div class=" panel panel-default">
                         <div class="panel-heading">Программа</div>
-                        <div class="panel-body" ng-init="getEducationProgramsList();">
+                        <div class="panel-body">
                             <div class="col-xs-12 select-list-box">
                                 <div ng-repeat="i in surveys.currentSurvey.selectedPrograms">
                                     <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedPrograms[$index]"
@@ -156,7 +154,7 @@
                 <div class="col-md-6">
                     <div class=" panel panel-default">
                         <div class="panel-heading">Рекомендации</div>
-                        <div class="panel-body" ng-init="getRecommendationsList();">
+                        <div class="panel-body">
                             <div class="col-xs-12 select-list-box">
                                 <div ng-repeat="i in surveys.currentSurvey.selectedRecommendations">
                                     <select class="form-control select-list"
