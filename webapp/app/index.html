@@ -38,10 +38,10 @@
     <ul class="nav nav-tabs">
 
         <li role="presentation" ng-class="{'active': nav.mainTabChosen == 1}"
-            ng-click="nav.mainTabChosen = 1"><a href="#">Обследования</a></li>
+            ng-click="nav.mainTabChosen = 1;  nav.surveysTabSelected = 1"><a href="#">Обследования</a></li>
 
         <li role="presentation" ng-class="{'active': nav.mainTabChosen == 2}"
-            ng-click="nav.mainTabChosen = 2"><a href="#">Дети</a></li>
+            ng-click="nav.mainTabChosen = 2; nav.childrenTabSelected = 1"><a href="#">Дети</a></li>
 
         <li role="presentation" ng-class="{'active': nav.mainTabChosen == 3}"
             ng-click="nav.mainTabChosen = 3;  nav.diagnosesTabSelected = 1"><a href="#">Диагнозы</a></li>
