@@ -1,6 +1,5 @@
 package com.example.demo.domain;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import lombok.Data;
 
 import javax.persistence.*;
