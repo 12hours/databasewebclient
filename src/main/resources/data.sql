@@ -29,27 +29,27 @@ INSERT INTO `disorders`
 (`id`,
 `disorder`)
 VALUES
-(1, 'Alaliya'),
-(2, 'ZPR'),
-(3, 'Dislaliya'),
-(4, 'Dislexiya'),
-(5, 'Autism');
+(1, 'Алалия'),
+(2, 'Задержка психического развития'),
+(3, 'Дислалия'),
+(4, 'Дислексия'),
+(5, 'Аутизм');
 
 INSERT INTO `education_programs`
 (`id`,
 `program`)
 VALUES
-(1, 'Regular education'),
-(2, 'Special education in school'),
-(3, 'Special pre-school education');
+(1, 'Общее образование'),
+(2, 'Специальное школьное образование'),
+(3, 'Специальное докшольное образование');
 
 INSERT INTO `recommendations`
 (`id`,
 `recommendation`)
 VALUES
-(1, 'Lessons with psychologist'),
-(2, 'Lessons with defectologist'),
-(3, 'Special group');
+(1, 'Занятия с психологом'),
+(2, 'Занятия с дефектологом'),
+(3, 'Специальная группа');
 
 INSERT INTO `surveys`
 (`survey_id`,
@@ -64,9 +64,9 @@ INSERT INTO `surveys`
   `child_name`
   )
 VALUES
-  (1, '2016-12-08', '101', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 1, 'Shumak Vika Vladimirovna'),
+  (1, '2016-12-08', '101', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 1, 'Shumak Anna Vladimirovna'),
   (2, '2016-12-09', '102', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 3, 'Lis Roman Olegovich'),
-  (3, '2016-12-10', '103', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 1, 'Shumak Vika Vladimirovna'),
+  (3, '2016-12-10', '103', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 1, 'Shumak Anna Vladimirovna'),
   (4, '2016-12-11', '104', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 2, 'Lagun Nikolay Olegovich'),
   (5, '2016-12-12', '105', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 4, 'Chubrik Alexei Anatolevich'),
   (6, '2016-12-13', '106', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 5, 'Shoka Stanislav Andreevich'),
