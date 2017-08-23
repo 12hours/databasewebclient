@@ -93,25 +93,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 $scope.surveys.prevPage = url;
             }
         });
-
-        // $http.get(url)
-        //     .then(function (response) {
-        //         $scope.surveys.list = response.data._embedded.surveys;
-        //         $scope.surveys.totalPages = response.data.page.totalPages;
-        //         $scope.surveys.currentPage = response.data.page.number;
-        //         if ($scope.surveys.totalPages > 1) {
-        //             $scope.surveys.nextPage = (response.data._links.next == null) ?
-        //                 response.data._links.last.href : response.data._links.next.href;
-        //             $scope.surveys.prevPage = (response.data._links.prev == null) ?
-        //                 response.data._links.first.href : response.data._links.prev.href;
-        //         } else {
-        //             $scope.surveys.nextPage = url;
-        //             $scope.surveys.prevPage = url;
-        //         }
-        //     })
-        //     .catch(function (err) {
-        //         console.log(err)
-        //     });
     };
 
     this.$onDestroy = function () {
@@ -236,41 +217,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             });
 
         });
-
-        // $http.get(surveyUrl).then(function (response) {
-        //     console.log("getting survey " + surveyUrl);
-        //     $scope.surveys.currentSurvey.survey = angular.fromJson(response.data);
-        //     $scope.surveys.currentSurvey.survey.surveyDate = new Date(response.data.surveyDate);
-        //     // $scope.survey.child.birthDate = new Date(response.data.child.birthDate);
-        //     var childUrl = response.data._links.child.href;
-        //     var diagnosesUrl = response.data._links.diagnoses.href;
-        //     var disordersUrl = response.data._links.disorders.href;
-        //     var programsUrl = response.data._links.eduPrograms.href;
-        //     var recommendsUrl = response.data._links.recommends.href;
-        //
-        //
-        //     $http.get(childUrl).then(function (response) {
-        //         $scope.surveys.currentSurvey.child = response.data;
-        //         $scope.surveys.currentSurvey.child.birthDate = new Date(response.data.birthDate);
-        //     });
-        //
-        //     $http.get(diagnosesUrl).then(function (response) {
-        //         $scope.selectedDiagnoses = response.data._embedded.diagnoses;
-        //     });
-        //
-        //     $http.get(disordersUrl).then(function (response) {
-        //         $scope.selectedDisorders = response.data._embedded.disorders;
-        //     });
-        //
-        //     $http.get(programsUrl).then(function (response) {
-        //         $scope.selectedPrograms = response.data._embedded.educationPrograms;
-        //     });
-        //
-        //     $http.get(recommendsUrl).then(function (response) {
-        //         $scope.selectedRecommendations = response.data._embedded.recommendations;
-        //     });
-        //
-        // });
     };
 
     $scope.getData = function () {
@@ -310,12 +256,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     };
 
     $scope.submit = function () {
-        // TODO: here we update childName field. Perhaps there is better way
-        // $scope.surveys.currentSurvey.survey.childName =
-        //         ($scope.surveys.currentSurvey.child.familyName + " "
-        //         + $scope.surveys.currentSurvey.child.name + " "
-        //         + $scope.surveys.currentSurvey.child.patrName);
-
         var childUrl;
         var surveyUrl;
         var childMethodType;
@@ -347,17 +287,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             $scope.surveys.currentSurvey.survey.child = data._links.self.href;
         });
 
-
-        // if (isNewSurvey === true) {
-        //     console.log('actual child: ', $scope.surveys.currentSurvey.child);
-        //     // surveyUrl = $scope.survey.child._links.surveys.href;
-        //     surveyUrl = SURVEYS;
-        //     methodType = POST;
-        // } else {
-        //     surveyUrl = $scope.surveys.currentSurvey.survey._links.self.href;
-        // }
-
-
         try {
             surveyUrl = $scope.surveys.currentSurvey.survey._links.self.href;
             surveyMethodType = PATCH;
@@ -374,10 +303,10 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             contentType: 'application/json',
             data: angular.toJson($scope.surveys.currentSurvey.survey),
             success: function (result) {
-                console.log("survey success");
+                console.log("survey update success");
             },
             error: function (request, msg, error) {
-                console.log("survey fail");
+                console.log("survey update fail: ", surveyMethodType, 'on', surveyUrl);
             }
         }).done(function (data) {
             // surveyUrl = data._links.self.href;

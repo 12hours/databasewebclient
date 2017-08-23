@@ -28,6 +28,7 @@ module.exports = function (config) {
             './node_modules/angular-ui-router/release/angular-ui-router.js', // ui-router
             './node_modules/angular-mocks/angular-mocks.js',
             './bower_components/jquery/dist/jquery.js',
+            './dist/js/ext/*.js',
             './e2e-tests/scenarios.js',
             './dist/js/*.js',
             './dist/index.html'

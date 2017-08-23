@@ -27,7 +27,7 @@ public class DataSourceConfig {
                 .driverClassName("com.mysql.jdbc.Driver")
                 .url("jdbc:mysql://localhost:3306/dev_db")
                 .username("root")
-                .password("jAn22enin")
+                .password("password")
                 .build();
     }
 

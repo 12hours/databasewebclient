@@ -22,11 +22,11 @@ public class Survey implements Serializable{
     @Column(name = "survey_id")
     private Long id;
 
-    @Column(name = "survey_date")
+    @Column(name = "survey_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date surveyDate;
 
-    @Column(name = "protocol_number")
+    @Column(name = "protocol_number", nullable = false)
     private String protocolNumber;
 
     @Column(name = "child_name")
@@ -101,7 +101,6 @@ public class Survey implements Serializable{
 
     @Override
     public int hashCode() {
-        // TODO: looking bad
         if (id == null) return super.hashCode();
         long result = super.hashCode();
         result = 31 * result + id;

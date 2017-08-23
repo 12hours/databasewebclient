@@ -1,17 +1,24 @@
-DONE: search by familyName in surveys-list window
-DONE: add pagination to surveys-list window
-DONE: in survey-edit window add text boxes for descriptions of diagnoses, disorders etc.
-TODO: add config for test, dev and deploy db
-TODO: add profiles for test, dev and deploy
-DONE: add children-list window
-TODO: add defaults to domain
-TODO: fix bug on surveys-list window when no surveys found there is exception(??)
+------FRONT------
 TODO: implement some trim function for input data
-DONE: after survey modifying view should be redirected on the same page of surveys-list
-TODO: show some window ("Please wait") while saving is performed
+TODO: show some message ("Please wait") while saving is performing
 TODO: fix bug: when clicking few times on 'Add' in diagnosis section of Survey-edit-window then it takes same number of clicks to delete diagnosis item
     UPDATE TO PREVIOUS: seems like we have to add empty object instead of null on surveys-edit.html:91
 TODO: add 'remarks' field to survey-edit window
 TODO: add error handling to survey saving
-TODO: make input forms wider
+TODO: make input text fields wider
 TODO: add validation to survey form
+TODO: fix bug on surveys-list window: when no surveys found there is exception(??)
+TODO: would be useful to have information if Child is at school or pre-school age
+TODO: add flexible search
+TODO: find out how logging is implemented in JS
+
+------BACK------
+TODO: add config for test, dev and deploy db
+TODO: add maven profiles for test, dev and deploy
+TODO: add defaults to domain fields
+TODO: add HSQLDB as production database
+TODO: Survey and Child hashCode methods not looking good
+TODO: add in SurveyRepository some method to check if given Survey already exists
+TODO: add some way to configure server port before starting of jar-app
+TODO: rename main package
+TODO: find out how to delete Entities with OneToMany/ManyToMany relations

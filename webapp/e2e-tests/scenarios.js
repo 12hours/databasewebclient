@@ -14,19 +14,19 @@ describe('app', function () {
         // The injector unwraps the underscores (_) from around the parameter names when matching
         $controller = _$controller_;
         $httpBackend = _$httpBackend_;
-        // $httpBackend.whenGET(/.*/).passThrough();
         SURVEYS = 'http://localhost:8080/api/surveys';
         CHILDREN = 'http://localhost:8080/api/children';
         DIAGNOSES = 'http://localhost:8080/api/diagnoses';
         EDU_PROGRAMS = 'http://localhost:8080/api/educationPrograms';
         DISORDERS = 'http://localhost:8080/api/disorders';
         RECOMMENDS = 'http://localhost:8080/api/recommendations';
-        FIND_CHILD_BY_FAMILY_NAME = 'http://localhost:8080/api/children/search/byFamilyName?'
+        FIND_CHILD_BY_FAMILY_NAME = 'http://localhost:8080/api/children/search/byFamilyName?';
+        SURVEYS_SEARCH = 'http://localhost:8080/api/surveys/search/byNameAndDate?'
 
     }));
 
 
-    describe('init empty survey', function() {
+    describe('test_1:', function() {
         it('controller init', function() {
 
             var $scope = {};
