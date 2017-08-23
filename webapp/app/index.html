@@ -18,23 +18,21 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="js/angular.min.js"></script>
+    <script src="js/ext/angular.min.js"></script>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery.min.js"></script>
+    <script src="js/ext/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap-datepicker.min.js"></script>
-    <script src="js/bootstrap-datepicker.ru.js" charset="UTF-8"></script>
+    <script src="js/ext/bootstrap.min.js"></script>
+    <script src="js/ext/bootstrap-datepicker.min.js"></script>
+    <script src="js/ext/bootstrap-datepicker.ru.js" charset="UTF-8"></script>
 
     <!-- inject:js -->
     <!-- endinject -->
 
 </head>
 <body ng-controller='NavigationController'>
-{{surveysTabSelected}}
 @@include('./content/popup-window.html')
-
 
 <div class="container">
     <ul class="nav nav-tabs">
@@ -46,16 +44,16 @@
             ng-click="nav.mainTabChosen = 2"><a href="#">Дети</a></li>
 
         <li role="presentation" ng-class="{'active': nav.mainTabChosen == 3}"
-            ng-click="nav.mainTabChosen = 3"><a href="#">Диагнозы</a></li>
+            ng-click="nav.mainTabChosen = 3;  nav.diagnosesTabSelected = 1"><a href="#">Диагнозы</a></li>
 
         <li role="presentation" ng-class="{'active': nav.mainTabChosen == 4}"
-            ng-click="nav.mainTabChosen = 4"><a href="#">Нарушения</a></li>
+            ng-click="nav.mainTabChosen = 4;  nav.disordersTabSelected = 1"><a href="#">Нарушения</a></li>
 
         <li role="presentation" ng-class="{'active': nav.mainTabChosen == 5}"
-            ng-click="nav.mainTabChosen = 5"><a href="#">Программы</a></li>
+            ng-click="nav.mainTabChosen = 5;  nav.programsTabSelected = 1"><a href="#">Программы</a></li>
 
         <li role="presentation" ng-class="{'active': nav.mainTabChosen == 6}"
-            ng-click="nav.mainTabChosen = 6"><a href="#">Рекомендации</a></li>
+            ng-click="nav.mainTabChosen = 6;  nav.recommendationsTabSelected = 1"><a href="#">Рекомендации</a></li>
 
     </ul>
 
@@ -67,7 +65,8 @@
         <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 2}" id="profile">
             @@include('./content/children/children-main.html')
         </div>
-        <div role="tabpanel" class="tab-pane" ng-class="{'active': nav.mainTabChosen == 3}" id="diagnoses">
+        <div role="tabpanel" class="tab-pane"
+             ng-class="{'active': nav.mainTabChosen == 3}" id="diagnoses">
             @@include('./content/diagnoses/diagnoses-main.html')
         </div>
 

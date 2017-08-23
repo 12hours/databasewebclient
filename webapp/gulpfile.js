@@ -18,7 +18,8 @@ var gulp = require('gulp'),
     fileinclude = require('gulp-file-include'),
     url = require('url'),
     proxy = require('proxy-middleware'),
-    inject = require('gulp-inject')
+    inject = require('gulp-inject'),
+    runSequence = require('run-sequence')
 ;
 
 
@@ -34,20 +35,41 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function () {
-    gulp.start('copyScripts', 'copyContent', 'copyStyles', 'copyLibs');
+    runSequence('copyScripts',
+                'copyContent',
+                'copyJsLibs',
+                'copyCssLibs',
+                'copyStyles'
+    );
 });
 
-gulp.task('install', ['build'], function () {
+gulp.task('update', function () {
+    gulp.run('copyScripts', 'copyContent', 'copyStyles');
+
+})
+
+gulp.task('install', function () {
+    runSequence(
+        'concatScripts',
+        'copyContent',
+        'copyJsLibs',
+        'copyCssLibs',
+        'copyStyles',
+        'copyToResources'
+    );
+});
+
+gulp.task('copyToResources', function () {
     gulp.src('./dist/**/*')
-        .pipe(gulp.dest('../src/main/resources/static'))
+        .pipe(gulp.dest('../src/main/resources/static'));
 })
 
 gulp.task('default', function () {
     gulp.start('clean', 'build');
 })
 
-gulp.task('usemin', ['jshint'], function () {
-    return gulp.src('./app/index.html')
+gulp.task('usemin', function () {
+    return gulp.src('./dist/index.html')
         .pipe(usemin({
             css: [minifycss(), rev()],
             js: [uglify(), rev()]
@@ -55,42 +77,65 @@ gulp.task('usemin', ['jshint'], function () {
         .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('copyLibs', function () {
-    gulp.src('bower_components/bootstrap/dist/fonts/**/*.{ttf,woff,eof,svg}*')
-        .pipe(gulp.dest('./dist/fonts'));
-    gulp.src('bower_components/bootstrap/dist/css/bootstrap.min.css')
-        .pipe(gulp.dest('./dist/css'));
-    gulp.src('bower_components/bootstrap/dist/js/bootstrap.min.js')
-        .pipe(gulp.dest('./dist/js'));
-    gulp.src('bower_components/angular/angular.min.js')
-        .pipe(gulp.dest('./dist/js'));
-    gulp.src('bower_components/jquery/dist/jquery.min.js')
-        .pipe(gulp.dest('./dist/js'));
-    gulp.src('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')
-        .pipe(gulp.dest('./dist/css'));
-    gulp.src('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
-        .pipe(gulp.dest('./dist/js'));
-    gulp.src('bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.ru.js')
-        .pipe(gulp.dest('./dist/js'));
+
+gulp.task('copyJsLibs', function () {
+    return gulp.src(['bower_components/bootstrap/dist/js/bootstrap.min.js',
+        'bower_components/angular/angular.min.js',
+        'bower_components/jquery/dist/jquery.min.js',
+        'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+        'bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.ru.js'])
+        .pipe(gulp.dest('./dist/js/ext'));
 });
 
+gulp.task('copyCssLibs', function () {
+    // gulp.src('bower_components/bootstrap/dist/fonts/**/*.{ttf,woff,eof,svg}*')
+    //     .pipe(gulp.dest('./dist/fonts'));
+
+    return gulp.src(['bower_components/bootstrap/dist/css/bootstrap.min.css',
+        'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'])
+        .pipe(gulp.dest('./dist/css'));
+});
+
+
 gulp.task('copyScripts', function () {
-    gulp.src('app/scripts/*.js')
+    return gulp.src('app/scripts/*.js')
         .pipe(gulp.dest('./dist/js/'));
 });
 
+gulp.task('concatScripts', function () {
+    return gulp.src('app/scripts/*.js')
+        .pipe(concat('all.js'))
+        .pipe(gulp.dest('dist/js'))
+})
+
+// gulp.task('copyContent', function () {
+//     gulp.src('app/*.html')
+//         .pipe(fileinclude({
+//             prefix: '@@',
+//             basepath: '@file'
+//         }))
+//         .pipe(inject(gulp.src('./app/scripts/*.js', {read: false}), {ignorePath: '/app/scripts/', addPrefix: '/js'}))
+//         .pipe(gulp.dest('./dist'));
+// });
+
 gulp.task('copyContent', function () {
-    gulp.src('app/*.html')
+    return gulp.src('app/*.html')
         .pipe(fileinclude({
             prefix: '@@',
             basepath: '@file'
         }))
-        .pipe(inject(gulp.src('./app/scripts/*.js', {read: false}), {ignorePath: '/app/scripts/', addPrefix: '/js'}))
+        .pipe(inject(gulp.src(['./dist/js/*.js'], {read: false}), {ignorePath: '/dist/js/', addPrefix: 'js'}))
         .pipe(gulp.dest('./dist'));
 });
 
+gulp.task('injectScripts', function () {
+    return gulp.src('./dist/index.html')
+        .pipe(inject(gulp.src(['./dist/js/*.js'], {read: false}), {ignorePath: '/dist/js/', addPrefix: 'js'}))
+        .pipe(gulp.dest('./dist'))
+})
+
 gulp.task('copyStyles', function () {
-    gulp.src('app/css/*.css')
+    return gulp.src('app/css/*.css')
         .pipe(gulp.dest('dist/css'));
 });
 
@@ -109,7 +154,7 @@ gulp.task('serve', ['build'], function () {
             index: 'index.html',
             middleware: [proxy(proxyOptions)]
         },
-        port: 3000
+        port: 9000
     });
     gulp.watch(['dist/**']).on('change', browserSync.reload);
 });

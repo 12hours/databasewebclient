@@ -78,7 +78,7 @@
                         <div class="panel-heading">Диагноз</div>
                         <div class="panel-body">
                             <div class="col-xs-12 select-list-box">
-                                <div ng-repeat="i in surveys.currentSurvey.selectedDiagnoses">
+                                <div ng-repeat="i in surveys.currentSurvey.selectedDiagnoses"> <!-- BUG IS HERE!!! -->
                                     <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedDiagnoses[$index]"
                                             data-ng-options="item.diagnosis for item in diagnoses track by item.diagnosis">
                                     </select>
@@ -88,7 +88,7 @@
                                     </button>
                                 </div>
                                 <button class="btn btn-sm btn-default"
-                                        ng-click="surveys.currentSurvey.selectedDiagnoses.push(null);">
+                                        ng-click="surveys.currentSurvey.selectedDiagnoses.push({});">
                                     Добавить
                                 </button>
                             </div>

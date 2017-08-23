@@ -21,6 +21,19 @@ body {
     padding-bottom: 15px;
 }
 
+.container {
+    margin-bottom: 10px;
+}
+
+.btn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.nav-pills {
+    margin: 5px;
+}
+
 .btn-del {
     width: 18%;
 }

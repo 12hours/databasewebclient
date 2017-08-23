@@ -4,11 +4,11 @@
         <table class="table table-bordered">
             <thead>
             <th style="width: 5%;">#</th>
-            <th style="width: 10%;" >Дата
+            <th style="width: 30%;" >Дата
                 <button class="date-start btn btn-default" type="text"
-                        ng-model="year">{{dateStart == null ? 'From' : dateStart}}</button>
+                        ng-model="year"><b>c:</b> {{dateStart == null ? 'все' : dateStart}}</button>
                 <button class="date-end btn btn-default"  type="text"
-                        ng-model="year">{{dateEnd == null ? 'To' : dateEnd}}</button>
+                        ng-model="year"><b>по:</b> {{dateEnd == null ? 'все' : dateEnd}}</button>
             </th>
             <th>ФИО
             <input type="text" class="form-control" id="nameFilter" placeholder="Поиск"

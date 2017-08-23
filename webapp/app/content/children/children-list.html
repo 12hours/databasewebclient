@@ -29,7 +29,7 @@
                 ng-class="{active: $index == children.currentPage}"
                 ng-show="$index >= (children.currentPage-3) && $index <= (children.currentPage+3) ||
                             $index == 0 || $index == (children.totalPages - 1)"
-                ng-click="getSurveysList($index)">
+                ng-click="getChildrenList($index)">
                 <a href="#">
                     {{($index > 0 && $index < (children.totalPages-1) &&
                     ($index==(children.currentPage+3) || $index==(children.currentPage-3)))?

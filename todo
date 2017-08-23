@@ -7,5 +7,9 @@ DONE: add children-list window
 TODO: add defaults to domain
 TODO: fix bug on surveys-list window when no surveys found there is exception(??)
 TODO: implement some trim function for input data
-TODO: after survey modifying view should be redirected on the same page of surveys-list
+DONE: after survey modifying view should be redirected on the same page of surveys-list
 TODO: show some window ("Please wait") while saving is performed
+TODO: fix bug: when clicking few times on 'Add' in diagnosis section of Survey-edit-window then it takes same number of clicks to delete diagnosis item
+    UPDATE TO PREVIOUS: seems like we have to add empty object instead of null on surveys-edit.html:91
+TODO: add 'remarks' field to survey-edit window
+TODO: add error handling to survey saving
