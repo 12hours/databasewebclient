@@ -319,7 +319,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         //diagnoses
         var diagnosesArray = [];
         for (var key in $scope.surveys.currentSurvey.selectedDiagnoses) {
-            diagnosesArray.push($scope.surveys.currentSurvey.selectedDiagnoses[key]._links.self.href);
+            if ($scope.surveys.currentSurvey.selectedDiagnoses[key].hasOwnProperty('_links'))  // check if not empty
+                diagnosesArray.push($scope.surveys.currentSurvey.selectedDiagnoses[key]._links.self.href);
         }
         var diagnosesString = diagnosesArray.join("\r\n");
         $.ajax({
@@ -338,7 +339,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         // disorders
         var disordersArray = [];
         for (var key in $scope.surveys.currentSurvey.selectedDisorders) {
-            disordersArray.push($scope.surveys.currentSurvey.selectedDisorders[key]._links.self.href);
+            if ($scope.surveys.currentSurvey.selectedDisorders[key].hasOwnProperty('_links'))
+                disordersArray.push($scope.surveys.currentSurvey.selectedDisorders[key]._links.self.href);
         }
         var disordersString = disordersArray.join("\r\n");
         $.ajax({
@@ -357,7 +359,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         // programs
         var programsArray = [];
         for (var key in $scope.surveys.currentSurvey.selectedPrograms) {
-            programsArray.push($scope.surveys.currentSurvey.selectedPrograms[key]._links.self.href);
+            if ($scope.surveys.currentSurvey.selectedPrograms[key].hasOwnProperty('_links'))
+                programsArray.push($scope.surveys.currentSurvey.selectedPrograms[key]._links.self.href);
         }
         var programsString = programsArray.join("\r\n");
         $.ajax({
@@ -376,7 +379,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         // recommendations
         var recommendsArray = [];
         for (var key in $scope.surveys.currentSurvey.selectedRecommendations) {
-            recommendsArray.push($scope.surveys.currentSurvey.selectedRecommendations[key]._links.self.href);
+            if ($scope.surveys.currentSurvey.selectedRecommendations[key].hasOwnProperty('_links'))
+                recommendsArray.push($scope.surveys.currentSurvey.selectedRecommendations[key]._links.self.href);
         }
         var recommendsString = recommendsArray.join("\r\n");
         $.ajax({
@@ -392,10 +396,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             }
         });
 
-
-        document.getElementById("popup-window-message").textContent = "Сохранено";
-        var savedWindow = document.getElementById("popup-window");
-        savedWindow.style.display = 'block';
+        raisePopup("Сохранено");
     }
 }])
 ;

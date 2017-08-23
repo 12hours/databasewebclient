@@ -1,16 +1,14 @@
 ------FRONT------
 TODO: implement some trim function for input data
 TODO: show some message ("Please wait") while saving is performing
-TODO: fix bug: when clicking few times on 'Add' in diagnosis section of Survey-edit-window then it takes same number of clicks to delete diagnosis item
-    UPDATE TO PREVIOUS: seems like we have to add empty object instead of null on surveys-edit.html:91
 TODO: add 'remarks' field to survey-edit window
 TODO: add error handling to survey saving
 TODO: make input text fields wider
 TODO: add validation to survey form
-TODO: fix bug on surveys-list window: when no surveys found there is exception(??)
 TODO: would be useful to have information if Child is at school or pre-school age
 TODO: add flexible search
 TODO: find out how logging is implemented in JS
+TODO: use async http requests instead of sync ajax
 
 ------BACK------
 TODO: add config for test, dev and deploy db
