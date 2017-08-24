@@ -15,7 +15,7 @@ by default you can access it as [localhost:8080/api](http://localhost:8080/api)
 In `webapp` directory you can find files with project dependencies: `package.json` and `bower.json`.
 Firstly, install `npm` dependencies:  
 ```
-npm install
+	npm install
 ```
 Then install `bower` and `gulp`:
 ```
@@ -24,7 +24,7 @@ Then install `bower` and `gulp`:
 ```
 Then install `bower` dependencies:  
 ```
-bower install
+	bower install
 ```
 After that you have choices:  
 	1.  To assemble web ui run `gulp build`. This will create `dist/` directory where you can look at deploy ready application.  
