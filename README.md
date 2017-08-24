@@ -27,7 +27,7 @@ Then install `bower` dependencies:
 bower install
 ```
 After that you have choices:  
-	1.  To assemble web ui run `gulp build`. This will create `dist/` directory where you can look at deploay ready application.  
+	1.  To assemble web ui run `gulp build`. This will create `dist/` directory where you can look at deploy ready application.  
 	2.  Run standalone web ui by `gulp serve`. This also creates `dist/` directory and starts browser-sync server with port `:9000`.  
 	3.  To assemble web ui before deploying app as `.jar` package run `gulp install`. This command creates `dist/` directory, assembles web app here, then copies it to `src/main/resources/static`  
 	4.  Run `gulp clean` to remove everything from `dist/`  
