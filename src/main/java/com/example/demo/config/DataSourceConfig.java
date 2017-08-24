@@ -17,6 +17,7 @@ public class DataSourceConfig {
     public DataSource testDataSource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
+                .setName("testdb")
                 .build();
     }
 
