@@ -1,1 +1,3 @@
-`databasewebclient`
+`databasewebclient/
+	|-src/
+	|-webapp/'
