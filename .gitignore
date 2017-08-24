@@ -1,8 +1,0 @@
-webapp/*
-.idea/*
-target/*
-!webapp/app/*
-!webapp/bower.json
-!webapp/package.json
-!webapp/gulpfile.js
-!webapp/karma.conf.js
