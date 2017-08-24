@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.persistence.*;
 
+import java.util.Date;
+
 import static org.hamcrest.CoreMatchers.is;
 
 @ActiveProfiles("test")
@@ -188,6 +190,7 @@ public class DomainTest {
 
         long time = System.currentTimeMillis();
         survey.setSurveyDate(new java.sql.Date(time));
+        survey.setProtocolNumber("100");
         em.persist(survey);
         em.flush();
         long id = survey.getId();
@@ -242,7 +245,8 @@ public class DomainTest {
         survey.getDisorders().add(disorder);
         survey.getDiagnoses().add(diagnosis);
         survey.getEducationPrograms().add(eduProg);
-
+        survey.setProtocolNumber("999");
+        survey.setSurveyDate(new Date());
         em.persist(survey);
         em.flush();
         long surveyId = survey.getId();
