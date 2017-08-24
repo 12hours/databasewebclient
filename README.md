@@ -9,7 +9,7 @@ databasewebclient
 
 ######Backend
 You can run api for application in IDE using `public static void main()` method from `SurveyDemoApplicattion` class, or you can simply run `mvn spring-boot:run` from command line;
-by default you can access it as <localhost:8080/api>
+by default you can access it as <http://localhost:8080/api>
 
 ######Frontend
 In `webapp` directory you can find files with project dependencies: `package.json` and `bower.json`.
