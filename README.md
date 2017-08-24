@@ -1,10 +1,10 @@
-Project structure:
+######Project structure
 ```
 databasewebclient   
 	|-src  
 	|-webapp  
 ```
-`src/` - Java sources
+`src/` - Java sources  
 `webapp/` - Front-end application sources and configuration files
 
 ######Backend
