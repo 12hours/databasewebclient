@@ -14,7 +14,7 @@ public class DataSourceConfig {
 
     @Bean
     @Profile("test")
-    public DataSource devDataSource() {
+    public DataSource testDataSource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .build();
@@ -22,13 +22,20 @@ public class DataSourceConfig {
 
     @Bean
     @Profile("dev")
-    public DataSource dataSource(){
+    public DataSource devDataSource(){
         return DataSourceBuilder.create()
                 .driverClassName("com.mysql.jdbc.Driver")
                 .url("jdbc:mysql://localhost:3306/dev_db")
                 .username("root")
                 .password("password")
                 .build();
+    }
+
+    @Bean
+    @Profile("prod")
+    public DataSource prodDataSource() {
+        //TODO
+        return null;
     }
 
 }

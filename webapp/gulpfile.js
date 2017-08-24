@@ -60,7 +60,7 @@ gulp.task('install', function () {
 });
 
 gulp.task('copyToResources', function () {
-    gulp.src('./dist/**/*')
+    return gulp.src('./dist/**/*')
         .pipe(gulp.dest('../src/main/resources/static'));
 })
 

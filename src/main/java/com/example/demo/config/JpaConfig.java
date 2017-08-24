@@ -55,9 +55,15 @@ public class JpaConfig {
         return emf;
     }
 
+    @Bean(name = "entityManagerFactory")
+    @Profile("prod")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryForHSQLDB(){
+        //TODO
+        return null;
+    }
 
     @Bean
-    @Profile({"test","dev"})
+    @Profile({"test","dev","prod"})
     public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean emfb) {
         return new JpaTransactionManager(emfb.getObject());
     }
