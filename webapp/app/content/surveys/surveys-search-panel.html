@@ -26,15 +26,44 @@
         </li>
         <li class="list-group-item">Диагноз
             <div>
-                <select class="form-control select-list"
-                        data-ng-model="surveys.currentSurvey.selectedDiagnoses[$index]"
-                        data-ng-options="item.id for item in diagnoses track by item.diagnosis">
+                <select class="form-control select-list"  ng-model='query.diagnosisQuery'
+                        ng-change="getSurveysList(0);">
+                    <option value='' ng-selected=""></option>
+                    <option ng-repeat="item in diagnoses" name="{{item.diagnosis}}"
+                            value="{{item.id}}">{{item.diagnosis}}</option>
                 </select>
             </div>
         </li>
-        <li class="list-group-item">Нарушение</li>
-        <li class="list-group-item">Программа</li>
-        <li class="list-group-item">Рекомендация</li>
+        <li class="list-group-item">Нарушение
+            <div>
+                <select class="form-control select-list"  ng-model='query.disorderQuery'
+                        ng-change="getSurveysList(0);">
+                    <option value='' ng-selected=""></option>
+                    <option ng-repeat="item in disorders"
+                            value="{{item.id}}">{{item.disorder}}</option>
+                </select>
+            </div>
+        </li>
+        <li class="list-group-item">Программа
+            <div>
+                <select class="form-control select-list"  ng-model='query.educationProgramQuery'
+                        ng-change="getSurveysList(0);">
+                    <option value='' ng-selected=""></option>
+                    <option ng-repeat="item in programs"
+                            value="{{item.id}}">{{item.program}}</option>
+                </select>
+            </div>
+        </li>
+        <li class="list-group-item">Рекомендация
+            <div>
+                <select class="form-control select-list"  ng-model='query.recommendationQuery'
+                        ng-change="getSurveysList(0);">
+                    <option value='' ng-selected=""></option>
+                    <option ng-repeat="item in recommendations"
+                            value="{{item.id}}">{{item.recommendation}}</option>
+                </select>
+            </div>
+        </li>
     </ul>
 
 </div>

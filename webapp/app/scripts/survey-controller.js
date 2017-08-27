@@ -2,13 +2,23 @@
 
 myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
-    var nameQuery = '';
-    var startDateQuery = '';
-    var endDateQuery = '';
-    var diagnosisQuery = '';
-    var disorderQuery = '';
-    var educationProgramQuery = '';
-    var recommendationQuery = '';
+    // var nameQuery = '';
+    // var startDateQuery = '';
+    // var endDateQuery = '';
+    // var diagnosisQuery = '';
+    // var disorderQuery = '';
+    // var educationProgramQuery = '';
+    // var recommendationQuery = '';
+
+    $scope.query = {
+        nameQuery: '',
+        startDateQuery: '',
+        endDateQuery: '',
+        diagnosisQuery: '',
+        disorderQuery: '',
+        educationProgramQuery: '',
+        recommendationQuery: ''
+    }
 
     $('.date-start').datepicker({
         minViewMode: 0,
@@ -17,15 +27,15 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         language: 'ru'
     });
 
-    $('.date-start').on('changeDate', function() {
+    $('.date-start').on('changeDate', function () {
         $scope.$apply(function () {
             $scope.dateStart = $('.date-start').datepicker('getFormattedDate');
-            if ($scope.dateStart === ''){
-                startDateQuery = '';
+            if ($scope.dateStart === '') {
+                $scope.query.startDateQuery = '';
                 $scope.dateStart = null;
                 $scope.getSurveysList(0);
             } else {
-                startDateQuery = "&start=" + new Date($scope.dateStart).toISOString().split('T')[0];
+                $scope.query.startDateQuery = "&start=" + new Date($scope.dateStart).toISOString().split('T')[0];
                 $scope.getSurveysList(0);
             }
         });
@@ -38,15 +48,15 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         language: 'ru'
     });
 
-    $('.date-end').on('changeDate', function() {
+    $('.date-end').on('changeDate', function () {
         $scope.$apply(function () {
             $scope.dateEnd = $('.date-end').datepicker('getFormattedDate');
-            if ($scope.dateEnd === ''){
-                endDateQuery = '';
+            if ($scope.dateEnd === '') {
+                $scope.query.endDateQuery = '';
                 $scope.dateEnd = null;
                 $scope.getSurveysList(0);
             } else {
-                endDateQuery = "&end=" + new Date($scope.dateEnd).toISOString().split('T')[0];
+                $scope.query.endDateQuery = "&end=" + new Date($scope.dateEnd).toISOString().split('T')[0];
                 $scope.getSurveysList(0);
             }
         });
@@ -60,15 +70,24 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
 
     this.$onInit = function () {
         $scope.getSurveysList(0);
+        $scope.getData();
     };
 
     $scope.getSurveysListByName = function (name) {
-        nameQuery = "&childName="+name;
+        $scope.query.nameQuery = "&childName=" + name;
         $scope.getSurveysList(0);
     };
 
     $scope.getSurveysList = function (page) {
-        $scope.getSurveysListByUrl(SURVEYS_SEARCH + startDateQuery + endDateQuery + nameQuery + "&page=" + page);
+        $scope.getSurveysListByUrl(SURVEYS_SEARCH +
+                                            $scope.query.startDateQuery +
+                                            $scope.query.endDateQuery +
+                                            $scope.query.nameQuery +
+                                            '&diagnosisId=' + $scope.query.diagnosisQuery +
+                                            '&disorderId=' + $scope.query.disorderQuery +
+                                            '&educationProgramId=' + $scope.query.educationProgramQuery +
+                                            '&recommendationId=' + $scope.query.recommendationQuery +
+                                            "&page=" + page);
     };
 
     $scope.getSurveysListByUrl = function (url) {
@@ -403,6 +422,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         });
 
         raisePopup("Сохранено");
+
     };
 }])
 ;
