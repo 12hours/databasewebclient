@@ -28,20 +28,33 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
                                         Pageable p);
 
     @RestResource(path = "byNameAndDate")
-    @Query("Select s from Survey s " +
+    @Query("SELECT DISTINCT s FROM Survey s, " +
+            "IN (s.diagnoses) AS diagnoses, IN (s.disorders) AS disorders ," +
+            "IN (s.educationPrograms) AS educationPrograms, IN (s.recommendations) AS recommendations " +
             "WHERE " +
-            "(:childName IS NULL OR (UPPER(s.childName) LIKE UPPER(:childName)||'%' )) AND " +
-            "(:start IS NULL OR s.surveyDate >= :start) AND " +
-            "(:end IS NULL OR s.surveyDate <= :end) ")
-    public Page findByChildNameAndDateBetween(@Param("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date
-                                                      start,
-                                              @Param("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date end,
+            "(:childName IS NULL OR (UPPER(s.childName) LIKE UPPER(:childName||'%') )) AND " +
+            "(:startDate IS NULL OR s.surveyDate >= :startDate) AND " +
+            "(:endDate IS NULL OR s.surveyDate <= :endDate) AND " +
+            "(:diagnosisId IS NULL OR diagnoses.id = :diagnosisId) AND " +
+            "(:disorderId IS NULL OR disorders.id = :disorderId) AND " +
+            "(:educationProgramId IS NULL OR educationPrograms.id = :educationProgramId) AND " +
+            "(:recommendationId IS NULL OR recommendations.id = :recommendationId)"
+    )
+    public Page findByChildNameAndDateBetween(@Param("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date
+                                                      startDate,
+                                              @Param("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date
+                                                      endDate,
                                               @Param("childName") String childName,
+                                              @Param("diagnosisId") Long diagnosisId,
+                                              @Param("disorderId") Long disorderId,
+                                              @Param("educationProgramId") Long educationProgramId,
+                                              @Param("recommendationId") Long recommendationId,
                                               Pageable p);
 
 
     @RestResource(path = "byBirthDate", rel = "byBirthDate")
-    @Query("Select s from Survey s WHERE " +
+    @Query("Select s from Survey s " +
+            "WHERE " +
             "s.child.birthDate = :birthDate")
     public Page findByChildBirthDate(@Param("birthDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthDate,
                                      Pageable p);
