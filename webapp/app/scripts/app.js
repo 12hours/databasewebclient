@@ -7,3 +7,6 @@ var raisePopup = function (message) {
     var savedWindow = document.getElementById("popup-window");
     savedWindow.style.display = 'block';
 };
+
+let logger = Logging.colorConsole();
+logger.warning("HELLO");

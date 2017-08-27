@@ -23,6 +23,7 @@
     "gulp-usemin": "^0.3.28",
     "jasmine-core": "^2.7.0",
     "jasmine-expect": "^3.7.1",
+    "js-logging": "^0.1.0",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "karma": "^1.7.0",
