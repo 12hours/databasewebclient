@@ -1,0 +1,33 @@
+<div class="panel panel-primary">
+    <div class="panel-heading" ng-init="hidden=true;"  ng-click="hidden= hidden? false: true;">Поиск</div>
+
+    <ul class="list-group" ng-class="{'hidden-sm': hidden==true}">
+        <li class="list-group-item">
+            ФИО ребенка:
+            <div>
+                <input type="text" class="form-control" placeholder="ФИО ребенка"
+                       ng-model="nav.targetName" ng-change="getSurveysListByName(nav.targetName)">
+            </div>
+        </li>
+
+        <li class="list-group-item">Дата рождения:</li>
+
+        <li class="list-group-item">
+            Дата обследования:
+            <div>
+                <button class="date-start btn btn-default" type="text"
+                        ng-model="year"><b>c:</b> {{dateStart == null ? 'все' : dateStart}}
+                </button>
+                <button class="date-end btn btn-default" type="text"
+                        ng-model="year"><b>по:</b> {{dateEnd == null ? 'все' : dateEnd}}
+                </button>
+            </div>
+
+        </li>
+        <li class="list-group-item">Диагноз</li>
+        <li class="list-group-item">Нарушение</li>
+        <li class="list-group-item">Программа</li>
+        <li class="list-group-item">Рекомендация</li>
+    </ul>
+
+</div>
