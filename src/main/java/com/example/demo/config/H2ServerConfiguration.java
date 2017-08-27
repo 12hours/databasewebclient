@@ -11,11 +11,11 @@ import java.sql.SQLException;
 
 /**
  * If you left the default port for the H2 web console at 8082 go to http://localhost:8082.
- * If you didnâ€™t change the name for the database in your properties file,
- * the default connection URL is jdbc:h2:mem:testdb and the username is â€žsaâ€œ, password empty.
+ * If you didn’t change the name for the database in your properties file,
+ * the default connection URL is jdbc:h2:mem:testdb and the username is „sa“, password empty.
  */
 @Configuration
-@Profile("test") // Only activate this in the "dev" profile
+@Profile({"test","dev"}) // Only activate this in the "dev" profile
 public class H2ServerConfiguration {
 
     // TCP port for remote connections, default 9092
