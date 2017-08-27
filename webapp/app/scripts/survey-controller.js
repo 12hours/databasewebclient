@@ -5,6 +5,10 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     var nameQuery = '';
     var startDateQuery = '';
     var endDateQuery = '';
+    var diagnosisQuery = '';
+    var disorderQuery = '';
+    var educationProgramQuery = '';
+    var recommendationQuery = '';
 
     $('.date-start').datepicker({
         minViewMode: 0,
@@ -12,6 +16,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         clearBtn: true,
         language: 'ru'
     });
+
     $('.date-start').on('changeDate', function() {
         $scope.$apply(function () {
             $scope.dateStart = $('.date-start').datepicker('getFormattedDate');
@@ -32,6 +37,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         clearBtn: true,
         language: 'ru'
     });
+
     $('.date-end').on('changeDate', function() {
         $scope.$apply(function () {
             $scope.dateEnd = $('.date-end').datepicker('getFormattedDate');

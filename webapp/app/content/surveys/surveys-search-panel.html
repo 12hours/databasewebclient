@@ -1,5 +1,5 @@
 <div class="panel panel-primary">
-    <div class="panel-heading" ng-init="hidden=true;"  ng-click="hidden= hidden? false: true;">Поиск</div>
+    <div class="panel-heading" ng-init="hidden=true;" ng-click="hidden= hidden? false: true;">Поиск</div>
 
     <ul class="list-group" ng-class="{'hidden-md hidden-sm hidden-xs': hidden==true}">
         <li class="list-group-item">
@@ -24,7 +24,14 @@
             </div>
 
         </li>
-        <li class="list-group-item">Диагноз</li>
+        <li class="list-group-item">Диагноз
+            <div>
+                <select class="form-control select-list"
+                        data-ng-model="surveys.currentSurvey.selectedDiagnoses[$index]"
+                        data-ng-options="item.id for item in diagnoses track by item.diagnosis">
+                </select>
+            </div>
+        </li>
         <li class="list-group-item">Нарушение</li>
         <li class="list-group-item">Программа</li>
         <li class="list-group-item">Рекомендация</li>
