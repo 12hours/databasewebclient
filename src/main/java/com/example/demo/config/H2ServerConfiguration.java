@@ -32,7 +32,7 @@ public class H2ServerConfiguration {
      * Connect to "jdbc:h2:tcp://localhost:9092/mem:testdb", username "sa", password empty.
      */
     @Bean
-    @ConditionalOnExpression("${h2.tcp.enabled:false}")
+    @ConditionalOnExpression("${h2.tcp.enabled:true}")
     public Server h2TcpServer() throws SQLException {
         return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", h2TcpPort).start();
     }

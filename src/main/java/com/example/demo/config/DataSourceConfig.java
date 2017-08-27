@@ -29,12 +29,8 @@ public class DataSourceConfig {
     @Bean
     @Profile("dev")
     public DataSource devDataSource(){
-        log.debug("CONNECTING TO MYSQL...");
         return DataSourceBuilder.create()
-                .driverClassName("com.mysql.jdbc.Driver")
-                .url("jdbc:mysql://localhost:3306/dev_db")
-                .username("root")
-                .password("password")
+                .url("jdbc:h2:file:./data/local")
                 .build();
     }
 
