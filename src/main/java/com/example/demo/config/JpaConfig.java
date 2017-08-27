@@ -33,7 +33,7 @@ public class JpaConfig {
         emf.setPackagesToScan("com.example.demo.domain");
         emf.setJpaProperties(new Properties(){
             {
-                put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+                put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
                 put("hibernate.hbm2ddl.auto", "update");
                 put("hibernate.show_sql", "true");
             }
