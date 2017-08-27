@@ -16,13 +16,13 @@ myApp.controller('ProgramsController', ['$scope', function ($scope) {
             url: EDU_PROGRAMS,
             async: false,
             success: function (result) {
-                console.log("programs list success");
+                logger.info("programs list success");
             },
             error: function (request, msg, error) {
-                console.log("programs list fail");
+                logger.error("programs list fail");
             }
         }).done(function (data) {
-            console.log(data._embedded.programs);
+            logger.info(data._embedded.programs);
             $scope.programs.list = data._embedded.educationPrograms;
         })
     };
@@ -39,10 +39,10 @@ myApp.controller('ProgramsController', ['$scope', function ($scope) {
             contentType: 'application/json',
             data: angular.toJson($scope.programs.newProgram),
             success: function (result) {
-                console.log("program save success");
+                logger.info("program save success");
             },
             error: function (request, msg, error) {
-                console.log("program save fail");
+                logger.error("program save fail");
             }
         });
         $scope.programs.newProgram = {};
@@ -62,10 +62,10 @@ myApp.controller('ProgramsController', ['$scope', function ($scope) {
             contentType: 'application/json',
             data: angular.toJson($scope.programs.currentProgram),
             success: function (result) {
-                console.log("diagnosis update success");
+                logger.info("diagnosis update success");
             },
             error: function (request, msg, error) {
-                console.log("diagnosis update fail");
+                logger.error("diagnosis update fail");
             }
         });
         $scope.programs.currentProgram = {};

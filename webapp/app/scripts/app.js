@@ -8,5 +8,5 @@ var raisePopup = function (message) {
     savedWindow.style.display = 'block';
 };
 
-let logger = Logging.colorConsole();
-logger.warning("HELLO");
+// js-logger: 'debug', 'info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency'
+let logger = Logging.colorConsole({level: 'debug'});

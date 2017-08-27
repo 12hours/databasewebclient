@@ -66,18 +66,18 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     };
 
     $scope.getSurveysListByUrl = function (url) {
-        console.log("getting page with url ", url);
+        logger.info("getting page with url ", url);
 
         $.ajax({
             type: "GET",
             url: url,
             async: false,
             success: function (result) {
-                console.log("child update success");
+                logger.info("child update success");
             },
             error: function (request, msg, error) {
-                console.log("child update fail");
-                console.log(error);
+                logger.error("child update fail");
+                logger.error(error);
             }
         }).done(function (data) {
             $scope.surveys.list = data._embedded.surveys;
@@ -100,7 +100,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
 
     $scope.initEmptySurvey = function () {
         $scope.getData();
-        console.log("clear");
+        logger.info("clear");
         $scope.surveys.currentSurvey.survey = {};
         $scope.surveys.currentSurvey.child = {};
 
@@ -112,7 +112,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
 
     $scope.initSurvey = function (surveyUrl) {
         $scope.getData();
-        console.log("TARGET=" + surveyUrl);
+        logger.info("TARGET=" + surveyUrl);
         if (surveyUrl === -1) {
             $scope.initEmptySurvey();
             return;
@@ -123,11 +123,11 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             url: surveyUrl,
             async: false,
             success: function (result) {
-                console.log("get survey success");
+                logger.info("get survey success");
             },
             error: function (request, msg, error) {
-                console.log("get survey fail");
-                console.log(error);
+                logger.error("get survey fail");
+                logger.error(error);
             }
         }).done(function (data) {
             $scope.surveys.currentSurvey.survey = angular.fromJson(data);
@@ -145,11 +145,11 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 url: childUrl,
                 async: false,
                 success: function (result) {
-                    console.log("get child for survey success");
+                    logger.info("get child for survey success");
                 },
                 error: function (request, msg, error) {
-                    console.log("get child for survey fail");
-                    console.log(error);
+                    logger.error("get child for survey fail");
+                    logger.error(error);
                 }
             }).done(function (data) {
                 $scope.surveys.currentSurvey.child = data;
@@ -161,11 +161,11 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 url: diagnosesUrl,
                 async: false,
                 success: function (result) {
-                    console.log("get diagnoses for survey success");
+                    logger.info("get diagnoses for survey success");
                 },
                 error: function (request, msg, error) {
-                    console.log("get diagnoses for survey fail");
-                    console.log(error);
+                    logger.error("get diagnoses for survey fail");
+                    logger.error(error);
                 }
             }).done(function (data) {
                 $scope.surveys.currentSurvey.selectedDiagnoses = data._embedded.diagnoses;
@@ -176,11 +176,11 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 url: disordersUrl,
                 async: false,
                 success: function (result) {
-                    console.log("get disorders for survey success");
+                    logger.info("get disorders for survey success");
                 },
                 error: function (request, msg, error) {
-                    console.log("get disorders for survey fail");
-                    console.log(error);
+                    logger.error("get disorders for survey fail");
+                    logger.error(error);
                 }
             }).done(function (data) {
                 $scope.surveys.currentSurvey.selectedDisorders = data._embedded.disorders;
@@ -191,11 +191,11 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 url: programsUrl,
                 async: false,
                 success: function (result) {
-                    console.log("get programs for survey success");
+                    logger.info("get programs for survey success");
                 },
                 error: function (request, msg, error) {
-                    console.log("get programs for survey fail");
-                    console.log(error);
+                    logger.error("get programs for survey fail");
+                    logger.error(error);
                 }
             }).done(function (data) {
                 $scope.surveys.currentSurvey.selectedPrograms = data._embedded.educationPrograms;
@@ -206,11 +206,11 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 url: recommendsUrl,
                 async: false,
                 success: function (result) {
-                    console.log("get recommendations for survey success");
+                    logger.info("get recommendations for survey success");
                 },
                 error: function (request, msg, error) {
-                    console.log("get recommendations for survey fail");
-                    console.log(error);
+                    logger.error("get recommendations for survey fail");
+                    logger.error(error);
                 }
             }).done(function (data) {
                 $scope.surveys.currentSurvey.selectedRecommendations = data._embedded.recommendations;
@@ -277,10 +277,10 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 contentType: 'application/json',
                 data: angular.toJson($scope.surveys.currentSurvey.child),
                 success: function (result) {
-                    console.log("child update success");
+                    logger.info("child update success");
                 },
                 error: function (request, msg, error) {
-                    console.log("child update fail");
+                    logger.error("child update fail");
                 }
             }
         ).done(function (data) {
@@ -303,15 +303,15 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             contentType: 'application/json',
             data: angular.toJson($scope.surveys.currentSurvey.survey),
             success: function (result) {
-                console.log("survey update success");
+                logger.info("survey update success");
             },
             error: function (request, msg, error) {
-                console.log("survey update fail: ", surveyMethodType, 'on', surveyUrl);
+                logger.error("survey update fail: ", surveyMethodType, 'on', surveyUrl);
             }
         }).done(function (data) {
             // surveyUrl = data._links.self.href;
             $scope.surveys.currentSurvey.survey = data;
-            console.log("URL ", surveyUrl);
+            logger.info("URL ", surveyUrl);
         });
         surveyUrl = $scope.surveys.currentSurvey.survey._links.self.href;
 
@@ -397,6 +397,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         });
 
         raisePopup("Сохранено");
-    }
+    };
 }])
 ;

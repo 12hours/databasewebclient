@@ -10,14 +10,14 @@ myApp.controller('ChildController', ['$scope', function ($scope) {
             url: FIND_CHILD_BY_FAMILY_NAME + 'familyName=' + familyName,
             async: false,
             success: function (result) {
-                console.log("child search success");
+                logger.info("child search success");
             },
             error: function (request, msg, error) {
-                console.log("child search fail");
+                logger.error("child search fail");
             }
         }).done(function (data) {
             $scope.suggestedChildren = data._embedded.children;
-            console.log($scope.suggestedChildren);
+            logger.info($scope.suggestedChildren);
             if ($scope.suggestedChildren != null && $scope.suggestedChildren.length > 0) {
                 var popupWindow = document.getElementById("children-list-popup-window");
                 popupWindow.style.display = 'block';
