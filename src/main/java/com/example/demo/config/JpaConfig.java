@@ -19,7 +19,7 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "com.example.demo.dao")
 public class JpaConfig {
 
-    private static final Logger log = LoggerFactory.getLogger(DataSourceConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(JpaConfig.class);
 
     @Autowired
     DataSource dataSource;

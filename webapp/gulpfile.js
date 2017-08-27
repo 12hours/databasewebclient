@@ -82,7 +82,9 @@ gulp.task('copyJsLibs', function () {
         'bower_components/angular/angular.min.js',
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
-        'bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.ru.js'])
+        'bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.ru.js',
+        'node_modules/js-logging/js-logging.browser.min.js'
+        ])
         .pipe(gulp.dest('./dist/js/ext'));
 });
 

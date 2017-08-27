@@ -48,10 +48,10 @@ myApp.controller('ChildrenController', ['$scope', function ($scope) {
             url: url,
             async: false,
             success: function (result) {
-                console.log("children list success");
+                logger.info("children list success");
             },
             error: function (request, msg, error) {
-                console.log("children list fail");
+                logger.error("children list fail");
             }
         }).done(function (data) {
             $scope.children.currentChild = data;
@@ -69,10 +69,10 @@ myApp.controller('ChildrenController', ['$scope', function ($scope) {
             contentType: 'application/json',
             data: angular.toJson($scope.children.currentChild),
             success: function (result) {
-                console.log("child update success");
+                logger.info("child update success");
             },
             error: function (request, msg, error) {
-                console.log("child update fail");
+                logger.error("child update fail");
             }
         });
         $scope.children.currentChild = {};

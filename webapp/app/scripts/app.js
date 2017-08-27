@@ -7,3 +7,6 @@ var raisePopup = function (message) {
     var savedWindow = document.getElementById("popup-window");
     savedWindow.style.display = 'block';
 };
+
+// js-logger: 'debug', 'info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency'
+let logger = Logging.colorConsole({level: 'debug'});

@@ -16,13 +16,13 @@ myApp.controller('RecommendationsController', ['$scope', function ($scope) {
             url: RECOMMENDS,
             async: false,
             success: function (result) {
-                console.log("recommendations list success");
+                logger.info("recommendations list success");
             },
             error: function (request, msg, error) {
-                console.log("recommendations list fail");
+                logger.error("recommendations list fail");
             }
         }).done(function (data) {
-            console.log(data._embedded.recommendations);
+            logger.info(data._embedded.recommendations);
             $scope.recommendations.list = data._embedded.recommendations;
         })
     };
@@ -39,10 +39,10 @@ myApp.controller('RecommendationsController', ['$scope', function ($scope) {
             contentType: 'application/json',
             data: angular.toJson($scope.recommendations.newRecommendation),
             success: function (result) {
-                console.log("recommendation save success");
+                logger.info("recommendation save success");
             },
             error: function (request, msg, error) {
-                console.log("recommendation save fail");
+                logger.error("recommendation save fail");
             }
         });
         $scope.recommendations.newRecommendation = {};
@@ -62,10 +62,10 @@ myApp.controller('RecommendationsController', ['$scope', function ($scope) {
             contentType: 'application/json',
             data: angular.toJson($scope.recommendations.currentRecommendation),
             success: function (result) {
-                console.log("diagnosis update success");
+                logger.info("diagnosis update success");
             },
             error: function (request, msg, error) {
-                console.log("diagnosis update fail");
+                logger.error("diagnosis update fail");
             }
         });
         $scope.recommendations.currentRecommendation = {};

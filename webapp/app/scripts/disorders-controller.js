@@ -16,13 +16,13 @@ myApp.controller('DisordersController', ['$scope', function ($scope) {
             url: DISORDERS,
             async: false,
             success: function (result) {
-                console.log("disorders list success");
+                logger.info("disorders list success");
             },
             error: function (request, msg, error) {
-                console.log("disorders list fail");
+                logger.error("disorders list fail");
             }
         }).done(function (data) {
-            console.log(data._embedded.disorders);
+            logger.info(data._embedded.disorders);
             $scope.disorders.list = data._embedded.disorders;
         })
     };
@@ -39,10 +39,10 @@ myApp.controller('DisordersController', ['$scope', function ($scope) {
             contentType: 'application/json',
             data: angular.toJson($scope.disorders.newDisorder),
             success: function (result) {
-                console.log("diagnosis save success");
+                logger.info("diagnosis save success");
             },
             error: function (request, msg, error) {
-                console.log("diagnosis save fail");
+                logger.error("diagnosis save fail");
             }
         });
         $scope.disorders.newDisorder = {};
@@ -62,10 +62,10 @@ myApp.controller('DisordersController', ['$scope', function ($scope) {
             contentType: 'application/json',
             data: angular.toJson($scope.disorders.currentDisorder),
             success: function (result) {
-                console.log("diagnosis update success");
+                logger.info("diagnosis update success");
             },
             error: function (request, msg, error) {
-                console.log("diagnosis update fail");
+                logger.error("diagnosis update fail");
             }
         });
         $scope.disorders.currentDisorder = {};
