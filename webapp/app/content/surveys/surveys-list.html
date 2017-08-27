@@ -1,30 +1,33 @@
 <div class="container">
     <div class="row">
 
-        <table class="table table-bordered">
-            <thead>
-            <th style="width: 5%;">#</th>
-            <th style="width: 30%;" >Дата
-                <button class="date-start btn btn-default" type="text"
-                        ng-model="year"><b>c:</b> {{dateStart == null ? 'все' : dateStart}}</button>
-                <button class="date-end btn btn-default"  type="text"
-                        ng-model="year"><b>по:</b> {{dateEnd == null ? 'все' : dateEnd}}</button>
-            </th>
-            <th>ФИО
-            <input type="text" class="form-control" id="nameFilter" placeholder="Поиск"
-                       ng-model="nav.targetName" ng-change="getSurveysListByName(nav.targetName)"></th>
-            </thead>
-            <tbody>
+        <div class="col-lg-4 col-xs-12 col-lg-push-8">
+            @@include('./search-panel.html')
+        </div>
+        <div class="col-lg-8 col-xs-12 col-lg-pull-4">
+            <table class="table table-bordered">
+                <thead>
+                <th style="width: 5%;">#</th>
+                <th style="width: 30%;">Дата
 
-            <tr ng-repeat="survey in surveys.list"
-                ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
-                ng-click="initSurvey(survey._links.self.href); nav.surveysTabSelected = 3;">
-                <td>{{survey.protocolNumber}}</td>
-                <td>{{survey.surveyDate}}</td>
-                <td>{{survey.childName}}</td>
-            </tr>
-            </tbody>
-        </table>
+                </th>
+                <th>ФИО
+                    <input type="text" class="form-control" id="nameFilter" placeholder="Поиск"
+                           ng-model="nav.targetName" ng-change="getSurveysListByName(nav.targetName)"></th>
+                </thead>
+                <tbody>
+
+                <tr ng-repeat="survey in surveys.list"
+                    ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"
+                    ng-click="initSurvey(survey._links.self.href); nav.surveysTabSelected = 3;">
+                    <td>{{survey.protocolNumber}}</td>
+                    <td>{{survey.surveyDate}}</td>
+                    <td>{{survey.childName}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
     <nav aria-label="Page navigation">
         <ul class="pagination">
