@@ -129,7 +129,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                                             '&disorderId=' + $scope.query.disorder +
                                             '&educationProgramId=' + $scope.query.educationProgram +
                                             '&recommendationId=' + $scope.query.recommendation +
-                                            "&page=" + page);
+                                            "&page=" + page +
+                                            '&sort=protocolNumber,surveyDate');
     };
 
     $scope.getSurveysListByUrl = function (url) {

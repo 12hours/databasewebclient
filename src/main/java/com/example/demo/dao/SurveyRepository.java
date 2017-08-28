@@ -32,14 +32,15 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
             "IN (s.diagnoses) AS diagnoses, IN (s.disorders) AS disorders ," +
             "IN (s.educationPrograms) AS educationPrograms, IN (s.recommendations) AS recommendations " +
             "WHERE " +
-            "(:childName IS NULL OR (UPPER(s.childName) LIKE UPPER(:childName||'%') )) AND " +
+            "(:childName IS NULL OR (UPPER(s.childName) LIKE UPPER(:childName)||'%' )) AND " +
             "(:birthDateStart IS NULL OR s.child.birthDate >= :birthDateStart) AND " +
             "(:birthDateEnd IS NULL OR s.child.birthDate <= :birthDateEnd) AND " +
             "(:surveyDateStart IS NULL OR s.surveyDate >= :surveyDateStart) AND " +
             "(:surveyDateEnd IS NULL OR s.surveyDate <= :surveyDateEnd) AND " +
             "(:diagnosisId IS NULL OR diagnoses.id = :diagnosisId) AND " +
             "(:disorderId IS NULL OR disorders.id = :disorderId) AND " +
-            "(:educationProgramId IS NULL OR educationPrograms.id = :educationProgramId) AND " +
+            "(:educationProgramId IS NULL OR educationPrograms.id = " +
+            ":educationProgramId) AND " +
             "(:recommendationId IS NULL OR recommendations.id = :recommendationId)"
     )
     public Page findByChildNameAndDateBetween(@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

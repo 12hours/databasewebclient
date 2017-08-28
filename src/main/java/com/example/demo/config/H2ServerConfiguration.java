@@ -43,7 +43,7 @@ public class H2ServerConfiguration {
      * Go to http://localhost:8082 and connect to the database "jdbc:h2:mem:testdb", username "sa", password empty.
      */
     @Bean
-    @ConditionalOnExpression("${h2.web.enabled:true}")
+    @ConditionalOnExpression("${h2.web.enabled:false}")
     public Server h2WebServer() throws SQLException {
         return Server.createWebServer("-web", "-webAllowOthers", "-webPort", h2WebPort).start();
     }
