@@ -1,0 +1,79 @@
+<div class="panel panel-primary">
+    <div class="panel-heading" ng-init="hidden=true;" ng-click="hidden= hidden? false: true;">Поиск</div>
+
+    <ul class="list-group" ng-class="{'hidden-md hidden-sm hidden-xs': hidden==true}">
+        <li class="list-group-item">
+            ФИО ребенка:
+            <div>
+                <input type="text" class="form-control" placeholder="ФИО ребенка"
+                       ng-model="nav.targetName" ng-change="getSurveysListByName(nav.targetName)">
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            Дата рождения:
+            <div>
+                <button class="birth-date-start btn btn-default" type="text"
+                        ng-model="year"><b>c:</b> {{birthDateStart  == null ? 'все' : birthDateStart }}
+                </button>
+                <button class="birth-date-end btn btn-default" type="text"
+                        ng-model="year"><b>по:</b> {{birthDateEnd == null ? 'все' : birthDateEnd}}
+                </button>
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            Дата обследования:
+            <div>
+                <button class="date-start btn btn-default" type="text"
+                        ng-model="year"><b>c:</b> {{dateStart == null ? 'все' : dateStart}}
+                </button>
+                <button class="date-end btn btn-default" type="text"
+                        ng-model="year"><b>по:</b> {{dateEnd == null ? 'все' : dateEnd}}
+                </button>
+            </div>
+
+        </li>
+        <li class="list-group-item">Диагноз
+            <div>
+                <select class="form-control select-list"  ng-model='query.diagnosis'
+                        ng-change="getSurveysList(0);">
+                    <option value='' ng-selected=""></option>
+                    <option ng-repeat="item in diagnoses" name="{{item.diagnosis}}"
+                            value="{{item.id}}">{{item.diagnosis}}</option>
+                </select>
+            </div>
+        </li>
+        <li class="list-group-item">Нарушение
+            <div>
+                <select class="form-control select-list"  ng-model='query.disorder'
+                        ng-change="getSurveysList(0);">
+                    <option value='' ng-selected=""></option>
+                    <option ng-repeat="item in disorders"
+                            value="{{item.id}}">{{item.disorder}}</option>
+                </select>
+            </div>
+        </li>
+        <li class="list-group-item">Программа
+            <div>
+                <select class="form-control select-list"  ng-model='query.educationProgram'
+                        ng-change="getSurveysList(0);">
+                    <option value='' ng-selected=""></option>
+                    <option ng-repeat="item in programs"
+                            value="{{item.id}}">{{item.program}}</option>
+                </select>
+            </div>
+        </li>
+        <li class="list-group-item">Рекомендация
+            <div>
+                <select class="form-control select-list"  ng-model='query.recommendation'
+                        ng-change="getSurveysList(0);">
+                    <option value='' ng-selected=""></option>
+                    <option ng-repeat="item in recommendations"
+                            value="{{item.id}}">{{item.recommendation}}</option>
+                </select>
+            </div>
+        </li>
+    </ul>
+
+</div>
