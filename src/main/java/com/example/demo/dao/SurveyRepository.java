@@ -33,17 +33,23 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
             "IN (s.educationPrograms) AS educationPrograms, IN (s.recommendations) AS recommendations " +
             "WHERE " +
             "(:childName IS NULL OR (UPPER(s.childName) LIKE UPPER(:childName||'%') )) AND " +
-            "(:startDate IS NULL OR s.surveyDate >= :startDate) AND " +
-            "(:endDate IS NULL OR s.surveyDate <= :endDate) AND " +
+            "(:birthDateStart IS NULL OR s.child.birthDate >= :birthDateStart) AND " +
+            "(:birthDateEnd IS NULL OR s.child.birthDate <= :birthDateEnd) AND " +
+            "(:surveyDateStart IS NULL OR s.surveyDate >= :surveyDateStart) AND " +
+            "(:surveyDateEnd IS NULL OR s.surveyDate <= :surveyDateEnd) AND " +
             "(:diagnosisId IS NULL OR diagnoses.id = :diagnosisId) AND " +
             "(:disorderId IS NULL OR disorders.id = :disorderId) AND " +
             "(:educationProgramId IS NULL OR educationPrograms.id = :educationProgramId) AND " +
             "(:recommendationId IS NULL OR recommendations.id = :recommendationId)"
     )
-    public Page findByChildNameAndDateBetween(@Param("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date
-                                                      startDate,
-                                              @Param("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date
-                                                      endDate,
+    public Page findByChildNameAndDateBetween(@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                      Date surveyDateStart,
+                                              @Param("surveyDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                      Date surveyDateEnd,
+                                              @Param("birthDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                      Date birthDateStart,
+                                              @Param("birthDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                      Date birthDateEnd,
                                               @Param("childName") String childName,
                                               @Param("diagnosisId") Long diagnosisId,
                                               @Param("disorderId") Long disorderId,

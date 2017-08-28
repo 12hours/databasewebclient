@@ -5,19 +5,21 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     // var nameQuery = '';
     // var startDateQuery = '';
     // var endDateQuery = '';
-    // var diagnosisQuery = '';
-    // var disorderQuery = '';
-    // var educationProgramQuery = '';
-    // var recommendationQuery = '';
+    // var diagnosis = '';
+    // var disorder = '';
+    // var educationProgram = '';
+    // var recommendation = '';
 
     $scope.query = {
-        nameQuery: '',
-        startDateQuery: '',
-        endDateQuery: '',
-        diagnosisQuery: '',
-        disorderQuery: '',
-        educationProgramQuery: '',
-        recommendationQuery: ''
+        name: '',
+        surveyDateStart: '',
+        surveyDateEnd: '',        
+        birthDateStart: '',
+        birthDateEnd: '',
+        diagnosis: '',
+        disorder: '',
+        educationProgram: '',
+        recommendation: ''
     }
 
     $('.date-start').datepicker({
@@ -25,17 +27,15 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         format: 'yyyy-mm-dd',
         clearBtn: true,
         language: 'ru'
-    });
-
-    $('.date-start').on('changeDate', function () {
+    }).on('changeDate', function () {
         $scope.$apply(function () {
             $scope.dateStart = $('.date-start').datepicker('getFormattedDate');
             if ($scope.dateStart === '') {
-                $scope.query.startDateQuery = '';
+                $scope.query.surveyDateStart = '';
                 $scope.dateStart = null;
                 $scope.getSurveysList(0);
             } else {
-                $scope.query.startDateQuery = "&start=" + new Date($scope.dateStart).toISOString().split('T')[0];
+                $scope.query.surveyDateStart = new Date($scope.dateStart).toISOString().split('T')[0];
                 $scope.getSurveysList(0);
             }
         });
@@ -46,17 +46,57 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         format: 'yyyy-mm-dd',
         clearBtn: true,
         language: 'ru'
-    });
-
-    $('.date-end').on('changeDate', function () {
+    }).on('changeDate', function () {
         $scope.$apply(function () {
             $scope.dateEnd = $('.date-end').datepicker('getFormattedDate');
             if ($scope.dateEnd === '') {
-                $scope.query.endDateQuery = '';
+                $scope.query.surveyDateEnd = '';
                 $scope.dateEnd = null;
                 $scope.getSurveysList(0);
             } else {
-                $scope.query.endDateQuery = "&end=" + new Date($scope.dateEnd).toISOString().split('T')[0];
+                $scope.query.surveyDateEnd = new Date($scope.dateEnd).toISOString().split('T')[0];
+                $scope.getSurveysList(0);
+            }
+        });
+    });
+
+    $('.birth-date-start').datepicker({
+        minViewMode: 0,
+        format: 'yyyy-mm-dd',
+        clearBtn: true,
+        language: 'ru'
+    }).on('changeDate', function () {
+        $scope.$apply(function () {
+            $scope.birthDateStart = $('.birth-date-start').datepicker('getFormattedDate');
+            if ($scope.birthDateStart === '') {
+                $scope.query.birthDateStart = '';
+                $scope.birthDateStart  = null;
+                $scope.getSurveysList(0);
+            } else {
+                $scope.query.birthDateStart  = new Date($scope.birthDateStart).toISOString().split('T')[0];
+                if ($scope.birthDateEnd == null){
+                    $scope.birthDateEnd = $scope.birthDateStart;
+                    $scope.query.birthDateEnd = $scope.query.birthDateStart;
+                }
+                $scope.getSurveysList(0);
+            }
+        });
+    });
+
+    $('.birth-date-end').datepicker({
+        minViewMode: 0,
+        format: 'yyyy-mm-dd',
+        clearBtn: true,
+        language: 'ru'
+    }).on('changeDate', function () {
+        $scope.$apply(function () {
+            $scope.birthDateEnd = $('.birth-date-end').datepicker('getFormattedDate');
+            if ($scope.birthDateEnd === '') {
+                $scope.query.birthDateEnd = '';
+                $scope.birthDateEnd = null;
+                $scope.getSurveysList(0);
+            } else {
+                $scope.query.birthDateEnd = new Date($scope.birthDateEnd).toISOString().split('T')[0];
                 $scope.getSurveysList(0);
             }
         });
@@ -74,24 +114,26 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     };
 
     $scope.getSurveysListByName = function (name) {
-        $scope.query.nameQuery = "&childName=" + name;
+        $scope.query.name = name;
         $scope.getSurveysList(0);
     };
 
     $scope.getSurveysList = function (page) {
         $scope.getSurveysListByUrl(SURVEYS_SEARCH +
-                                            $scope.query.startDateQuery +
-                                            $scope.query.endDateQuery +
-                                            $scope.query.nameQuery +
-                                            '&diagnosisId=' + $scope.query.diagnosisQuery +
-                                            '&disorderId=' + $scope.query.disorderQuery +
-                                            '&educationProgramId=' + $scope.query.educationProgramQuery +
-                                            '&recommendationId=' + $scope.query.recommendationQuery +
+                                            '&surveyDateStart=' + $scope.query.surveyDateStart +
+                                            '&surveyDateEnd=' + $scope.query.surveyDateEnd +
+                                            '&birthDateStart=' + $scope.query.birthDateStart +
+                                            '&birthDateEnd=' + $scope.query.birthDateEnd +
+                                            '&childName=' + $scope.query.name +
+                                            '&diagnosisId=' + $scope.query.diagnosis +
+                                            '&disorderId=' + $scope.query.disorder +
+                                            '&educationProgramId=' + $scope.query.educationProgram +
+                                            '&recommendationId=' + $scope.query.recommendation +
                                             "&page=" + page);
     };
 
     $scope.getSurveysListByUrl = function (url) {
-        logger.info("getting page with url ", url);
+        logger.notice("getting page with url ", url);
 
         $.ajax({
             type: "GET",
@@ -421,6 +463,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             }
         });
 
+        $scope.getSurveysList($scope.surveys.currentPage);
         raisePopup("Сохранено");
 
     };

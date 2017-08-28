@@ -10,7 +10,17 @@
             </div>
         </li>
 
-        <li class="list-group-item">Дата рождения:</li>
+        <li class="list-group-item">
+            Дата рождения:
+            <div>
+                <button class="birth-date-start btn btn-default" type="text"
+                        ng-model="year"><b>c:</b> {{birthDateStart  == null ? 'все' : birthDateStart }}
+                </button>
+                <button class="birth-date-end btn btn-default" type="text"
+                        ng-model="year"><b>по:</b> {{birthDateEnd == null ? 'все' : birthDateEnd}}
+                </button>
+            </div>
+        </li>
 
         <li class="list-group-item">
             Дата обследования:
@@ -26,7 +36,7 @@
         </li>
         <li class="list-group-item">Диагноз
             <div>
-                <select class="form-control select-list"  ng-model='query.diagnosisQuery'
+                <select class="form-control select-list"  ng-model='query.diagnosis'
                         ng-change="getSurveysList(0);">
                     <option value='' ng-selected=""></option>
                     <option ng-repeat="item in diagnoses" name="{{item.diagnosis}}"
@@ -36,7 +46,7 @@
         </li>
         <li class="list-group-item">Нарушение
             <div>
-                <select class="form-control select-list"  ng-model='query.disorderQuery'
+                <select class="form-control select-list"  ng-model='query.disorder'
                         ng-change="getSurveysList(0);">
                     <option value='' ng-selected=""></option>
                     <option ng-repeat="item in disorders"
@@ -46,7 +56,7 @@
         </li>
         <li class="list-group-item">Программа
             <div>
-                <select class="form-control select-list"  ng-model='query.educationProgramQuery'
+                <select class="form-control select-list"  ng-model='query.educationProgram'
                         ng-change="getSurveysList(0);">
                     <option value='' ng-selected=""></option>
                     <option ng-repeat="item in programs"
@@ -56,7 +66,7 @@
         </li>
         <li class="list-group-item">Рекомендация
             <div>
-                <select class="form-control select-list"  ng-model='query.recommendationQuery'
+                <select class="form-control select-list"  ng-model='query.recommendation'
                         ng-change="getSurveysList(0);">
                     <option value='' ng-selected=""></option>
                     <option ng-repeat="item in recommendations"
