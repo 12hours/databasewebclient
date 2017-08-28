@@ -28,9 +28,9 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
                                         Pageable p);
 
     @RestResource(path = "byNameAndDate")
-    @Query("SELECT DISTINCT s FROM Survey s, " +
-            "IN (s.diagnoses) AS diagnoses, IN (s.disorders) AS disorders ," +
-            "IN (s.educationPrograms) AS educationPrograms, IN (s.recommendations) AS recommendations " +
+    @Query("SELECT DISTINCT s FROM Survey s " +
+            "LEFT JOIN s.diagnoses diagnoses LEFT JOIN s.disorders disorders " +
+            "LEFT JOIN s.educationPrograms educationPrograms LEFT JOIN s.recommendations recommendations " +
             "WHERE " +
             "(:childName IS NULL OR (UPPER(s.childName) LIKE UPPER(:childName)||'%' )) AND " +
             "(:birthDateStart IS NULL OR s.child.birthDate >= :birthDateStart) AND " +
