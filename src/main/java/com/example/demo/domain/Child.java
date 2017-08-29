@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "children",
         uniqueConstraints =
-        @UniqueConstraint(columnNames = {"family_name, name, patr_name, birth_date"})
+        @UniqueConstraint(columnNames = {"family_name", "name", "patr_name", "birth_date"})
 )
 public class Child implements Serializable {
 

@@ -13,6 +13,14 @@ spring:
 server:
     port: 8080
 
+h2:
+    tcp:
+        port: 9092
+        enabled: true
+    web:
+        port: 8082
+        enabled: true
+
 logging:
     file: app.log
     level:
