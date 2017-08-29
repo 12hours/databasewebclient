@@ -16,7 +16,7 @@ public class Recommendation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     @Size(max = 2000)
     private String recommendation;
 
