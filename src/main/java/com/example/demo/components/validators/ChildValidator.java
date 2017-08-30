@@ -1,9 +1,11 @@
 package com.example.demo.components.validators;
 
 import com.example.demo.domain.Child;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Component
 public class ChildValidator implements Validator {
 
     @Override

@@ -1,7 +1,6 @@
 package com.example.demo.config;
 
-import com.example.demo.components.validators.ChildValidator;
-import com.example.demo.components.validators.SurveyValidator;
+import com.example.demo.components.validators.*;
 import com.example.demo.domain.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -27,6 +26,14 @@ public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
         v.addValidator("beforeSave", new SurveyValidator());
         v.addValidator("beforeCreate", new ChildValidator());
         v.addValidator("beforeSave", new ChildValidator());
+        v.addValidator("beforeCreate", new DiagnosisValidator());
+        v.addValidator("beforeSave", new DiagnosisValidator());
+        v.addValidator("beforeCreate", new DisorderValidator());
+        v.addValidator("beforeSave", new DisorderValidator());
+        v.addValidator("beforeCreate", new EducationProgramValidator());
+        v.addValidator("beforeSave", new EducationProgramValidator());
+        v.addValidator("beforeCreate", new RecommendationValidator());
+        v.addValidator("beforeSave", new RecommendationValidator());
     }
 
 }
