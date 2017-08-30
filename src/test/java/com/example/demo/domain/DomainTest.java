@@ -175,6 +175,9 @@ public class DomainTest {
         String childName = "victor";
         Child child = new Child();
         child.setName(childName);
+        child.setFamilyName("A");
+        child.setPatrName("A");
+        child.setBirthDate(new Date());
         em.persist(child);
         em.flush();
         long id = child.getId();
@@ -186,7 +189,13 @@ public class DomainTest {
     @Test
     public void createSurveyAndCheckDate(){
         Survey survey = new Survey();
-        survey.setChild(new Child());
+
+        Child child = new Child();
+        child.setName("A");
+        child.setFamilyName("A");
+        child.setPatrName("A");
+        child.setBirthDate(new Date());
+        survey.setChild(child);
 
         long time = System.currentTimeMillis();
         survey.setSurveyDate(new java.sql.Date(time));
@@ -222,7 +231,7 @@ public class DomainTest {
         assertTrue(recId > 0);
 
         EducationProgram eduProg = new EducationProgram();
-        eduProg.setProgram("some programm");
+        eduProg.setProgram("some program");
         em.persist(eduProg);
         long eduId = eduProg.getId();
         assertTrue(eduId > 0);
@@ -230,6 +239,9 @@ public class DomainTest {
 
         Child child = new Child();
         child.setName("childName");
+        child.setFamilyName("A");
+        child.setPatrName("A");
+        child.setBirthDate(new Date());
         em.persist(child);
         long childId = child.getId();
         assertTrue(childId > 0);

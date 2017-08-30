@@ -16,7 +16,7 @@ public class Disorder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     @Size(max = 200)
     String disorder;
 

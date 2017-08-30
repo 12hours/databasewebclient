@@ -11,26 +11,29 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "children")
-public class Child implements Serializable{
+@Table(name = "children",
+        uniqueConstraints =
+        @UniqueConstraint(columnNames = {"family_name", "name", "patr_name", "birth_date"})
+)
+public class Child implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "child_id")
     private Long id;
 
-    @Column(name = "family_name")
+    @Column(name = "family_name", nullable = false)
     private String familyName;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "patr_name")
+    @Column(name = "patr_name", nullable = false)
     private String patrName;
 
-    @Column(name = "birth_date")
+    @Column(name = "birth_date", nullable = false)
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date birthDate;
 
     @Column(name = "place_of_education")

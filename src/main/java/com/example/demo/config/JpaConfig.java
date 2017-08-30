@@ -25,7 +25,7 @@ public class JpaConfig {
     DataSource dataSource;
 
     @Bean(name = "entityManagerFactory")
-    @Profile("dev")
+    @Profile({"dev", "prod"})
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         log.debug("SETTING UP HIBERNATE...");
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();

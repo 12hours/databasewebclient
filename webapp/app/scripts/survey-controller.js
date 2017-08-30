@@ -9,7 +9,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     // var disorder = '';
     // var educationProgram = '';
     // var recommendation = '';
-
     $scope.query = {
         name: '',
         surveyDateStart: '',
