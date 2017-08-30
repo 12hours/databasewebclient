@@ -16,10 +16,10 @@ server:
 h2:
     tcp:
         port: 9092
-        enabled: true
+        enabled: false
     web:
         port: 8082
-        enabled: true
+        enabled: false
 
 logging:
     file: app.log
