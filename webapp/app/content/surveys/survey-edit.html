@@ -1,77 +1,87 @@
 <div class="container">
-    <div class="panel panel-default" >
+    <div class="panel panel-default">
 
         <div class="panel-heading">Ребенок</div>
         <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-6 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon">Фамилия:</span>
-                        <input type="text" class="form-control" placeholder="Фамилия"
-                               ng-model="surveys.currentSurvey.child.familyName"
-                               ng-blur="findChild(surveys.currentSurvey.child.familyName)">
+            <form name="surveyEditChild">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">Фамилия:</span>
+                            <input type="text" name="surname" ng-minlength="1" ng-required="true" class="form-control"
+                                   placeholder="Фамилия"
+                                   ng-model="surveys.currentSurvey.child.familyName"
+                                   ng-blur="findChild(surveys.currentSurvey.child.familyName)">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">Имя:</span>
+                            <input type="text" name="name" ng-minlength="1" ng-required="true" class="form-control"
+                                   placeholder="Имя"
+                                   ng-model="surveys.currentSurvey.child.name">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">Отчество:</span>
+                            <input type="text" name="patrName" ng-minlength="1" ng-required="true" class="form-control"
+                                   placeholder="Отчество"
+                                   ng-model="surveys.currentSurvey.child.patrName">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">Дата рождения:</span>
+                            <input type="date" name="birthDate" ng-minlength="1" ng-required="true" class="form-control"
+                                   placeholder="Фамилия"
+                                   ng-model="surveys.currentSurvey.child.birthDate">
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">Имя:</span>
-                        <input type="text" class="form-control" placeholder="Имя"
-                               ng-model="surveys.currentSurvey.child.name">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">Отчество:</span>
-                        <input type="text" class="form-control" placeholder="Отчество"
-                               ng-model="surveys.currentSurvey.child.patrName">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">Дата рождения:</span>
-                        <input type="date" class="form-control" placeholder="Фамилия"
-                               ng-model="surveys.currentSurvey.child.birthDate">
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon">Адрес:</span>
-                        <input type="text" class="form-control" placeholder=""
-                               ng-model="surveys.currentSurvey.child.address">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">Учебное заведение:</span>
-                        <input type="text" class="form-control" placeholder=""
-                               ng-model="surveys.currentSurvey.child.placeOfEducation">
-                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">Адрес:</span>
+                            <input type="text" class="form-control" placeholder=""
+                                   ng-model="surveys.currentSurvey.child.address">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">Учебное заведение:</span>
+                            <input type="text" class="form-control" placeholder=""
+                                   ng-model="surveys.currentSurvey.child.placeOfEducation">
+                        </div>
 
-                    <div class="input-group">
+                        <div class="input-group">
                       <span class="input-group-addon">
                         <input type="checkbox" aria-label="..." ng-model="surveys.currentSurvey.child.disability">
                       </span>
-                        <input type="text" class="form-control" aria-label="..." value="Инвалидность" disabled>
-                    </div>
-                    <div class="input-group">
+                            <input type="text" class="form-control" aria-label="..." value="Инвалидность" disabled>
+                        </div>
+                        <div class="input-group">
                       <span class="input-group-addon">
-                        <input type="checkbox" aria-label="..." ng-model="surveys.currentSurvey.child.specialFacilitiesNeeding">
+                        <input type="checkbox" aria-label="..."
+                               ng-model="surveys.currentSurvey.child.specialFacilitiesNeeding">
                       </span>
-                        <input type="text" class="form-control" aria-label="..." value="Нуждаемость в спец.средствах"
-                               disabled>
+                            <input type="text" class="form-control" aria-label="..."
+                                   value="Нуждаемость в спец.средствах"
+                                   disabled>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
     <div class="panel panel-default">
         <div class="panel-heading">ПМПК</div>
         <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-3 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon">Номер протокола:
-                        <input type="text" class="form-control" placeholder=""
-                               ng-model="surveys.currentSurvey.survey.protocolNumber"></span>
-                        <span class="input-group-addon">Дата обследования:
-                        <input type="date" class="form-control" placeholder=""
-                               ng-model="surveys.currentSurvey.survey.surveyDate"></span>
+            <form name="surveyEditSurvey">
+                <div class="row">
+                    <div class="col-sm-3 col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">Номер протокола:
+                            <input type="text" name="protocolNumber" ng-minlength="1" ng-required="true" class="form-control" placeholder=""
+                                   ng-model="surveys.currentSurvey.survey.protocolNumber"></span>
+                                        <span class="input-group-addon">Дата обследования:
+                            <input type="date" name="surveyDate" ng-minlength="1" ng-required="true" class="form-control" placeholder=""
+                                   ng-model="surveys.currentSurvey.survey.surveyDate"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
             <div class="row">
                 <div class="col-md-6">
                     <div class=" panel panel-default">
@@ -79,7 +89,8 @@
                         <div class="panel-body">
                             <div class="col-xs-12 select-list-box">
                                 <div ng-repeat="i in surveys.currentSurvey.selectedDiagnoses"> <!-- BUG IS HERE!!! -->
-                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedDiagnoses[$index]"
+                                    <select class="form-control select-list"
+                                            data-ng-model="surveys.currentSurvey.selectedDiagnoses[$index]"
                                             data-ng-options="item.diagnosis for item in diagnoses track by item.diagnosis">
                                     </select>
                                     <button class="btn btn-sm btn-default btn-del"
@@ -93,7 +104,8 @@
                                 </button>
                             </div>
                             <div class="col-xs-12">Текстовое описание:
-                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.diagnosis" rows="3"></textarea>
+                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.diagnosis"
+                                          rows="3"></textarea>
                             </div>
                         </div>
                     </div>
@@ -104,7 +116,8 @@
                         <div class="panel-body">
                             <div class="col-xs-12 select-list-box">
                                 <div ng-repeat="i in surveys.currentSurvey.selectedDisorders">
-                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedDisorders[$index]"
+                                    <select class="form-control select-list"
+                                            data-ng-model="surveys.currentSurvey.selectedDisorders[$index]"
                                             data-ng-options="item.disorder for item in disorders track by item.disorder">
                                     </select>
                                     <button class="btn btn-sm btn-default btn-del"
@@ -118,7 +131,9 @@
                                 </button>
                             </div>
                             <div class="col-xs-12">Текстовое описание:
-                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.determinedDisorder" rows="3"></textarea>
+                                <textarea class="form-control"
+                                          ng-model="surveys.currentSurvey.survey.determinedDisorder"
+                                          rows="3"></textarea>
                             </div>
                         </div>
                     </div>
@@ -131,7 +146,8 @@
                         <div class="panel-body">
                             <div class="col-xs-12 select-list-box">
                                 <div ng-repeat="i in surveys.currentSurvey.selectedPrograms">
-                                    <select class="form-control select-list" data-ng-model="surveys.currentSurvey.selectedPrograms[$index]"
+                                    <select class="form-control select-list"
+                                            data-ng-model="surveys.currentSurvey.selectedPrograms[$index]"
                                             data-ng-options="item.program for item in programs track by item.program">
                                     </select>
                                     <button class="btn btn-sm btn-default btn-del"
@@ -145,7 +161,8 @@
                                 </button>
                             </div>
                             <div class="col-xs-12">Текстовое описание:
-                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.recommendedProgramOfEducation"
+                                <textarea class="form-control"
+                                          ng-model="surveys.currentSurvey.survey.recommendedProgramOfEducation"
                                           rows="3"></textarea>
                             </div>
                         </div>
@@ -172,7 +189,8 @@
                                 </button>
                             </div>
                             <div class="col-xs-12">Текстовое описание:
-                                <textarea class="form-control" ng-model="surveys.currentSurvey.survey.recommendedFormOfEducation"
+                                <textarea class="form-control"
+                                          ng-model="surveys.currentSurvey.survey.recommendedFormOfEducation"
                                           rows="3"></textarea>
                             </div>
                         </div>

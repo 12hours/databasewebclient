@@ -38,7 +38,8 @@ gulp.task('build', function () {
                 'copyContent',
                 'copyJsLibs',
                 'copyCssLibs',
-                'copyStyles'
+                'copyStyles',
+                'copyImg'
     );
 });
 
@@ -107,6 +108,11 @@ gulp.task('concatScripts', function () {
     return gulp.src('app/scripts/*.js')
         .pipe(concat('all.js'))
         .pipe(gulp.dest('dist/js'))
+})
+
+gulp.task('copyImg', function () {
+    return gulp.src('app/img/*')
+        .pipe(gulp.dest('dist/'))
 })
 
 // gulp.task('copyContent', function () {
