@@ -1,13 +1,13 @@
 spring:
     profiles:
-        active: prod
+        active: test
     resources.static-locations: classpath:/static
     data:
         rest:
             basePath: /api
 
     datasource:
-        initialize: false
+        initialize: true
         data: classpath:/data.sql
 
 server:
