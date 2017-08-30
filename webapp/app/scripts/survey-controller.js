@@ -322,7 +322,53 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         });
     };
 
+    $scope.validate = function () {
+        var errorNames = [];
+        var validated = true;
+
+        if ($scope.surveyEditChild.surname.$invalid){
+            errorNames.push("Фамилия");
+            validated = false;
+        }
+
+        if ($scope.surveyEditChild.name.$invalid){
+            errorNames.push("Имя");
+            validated = false;
+        }
+
+        if ($scope.surveyEditChild.patrName.$invalid){
+            errorNames.push("Отчество");
+            validated = false;
+        }
+
+        if ($scope.surveyEditChild.birthDate.$invalid){
+            errorNames.push("Дата рождения");
+            validated = false;
+        }
+
+        if ($scope.surveyEditSurvey.protocolNumber.$invalid){
+            errorNames.push("Номер протокола");
+            validated = false;
+        }
+
+        if ($scope.surveyEditSurvey.surveyDate.$invalid){
+            errorNames.push("Дата обследования");
+            validated = false;
+        }
+
+        if (!validated) {
+            raisePopup(`Поле ${errorNames.join(", ")} не заполнено или заполнено неверно`);
+        }
+
+        return validated;
+    }
+
     $scope.submit = function () {
+
+        if (!$scope.validate()) {
+            throw "Validation fail";
+            return;
+        }
         var childUrl;
         var surveyUrl;
         var childMethodType;
