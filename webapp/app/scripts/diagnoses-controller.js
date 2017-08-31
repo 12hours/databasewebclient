@@ -28,6 +28,7 @@ myApp.controller('DiagnosesController', ['$scope', function ($scope) {
     };
 
     $scope.addDiagnosis = function () {
+
         if ($scope.addDiagnosisForm.diagnosis.$invalid){
             raisePopup("Поле не может быть пустым");
             return;

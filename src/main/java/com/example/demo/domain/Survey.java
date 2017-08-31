@@ -26,6 +26,10 @@ public class Survey implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date surveyDate;
 
+    @Column(name = "next_survey_date")
+    @Temporal(TemporalType.DATE)
+    private Date nextSurveyDate;
+
     @Column(name = "protocol_number", nullable = false)
     private String protocolNumber;
 

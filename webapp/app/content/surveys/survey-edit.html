@@ -69,17 +69,25 @@
         <div class="panel-heading">ПМПК</div>
         <div class="panel-body">
             <form name="surveyEditSurvey">
-                <div class="row">
-                    <div class="col-sm-3 col-xs-12">
-                        <div class="input-group">
-                            <span class="input-group-addon">Номер протокола:
-                            <input type="text" name="protocolNumber" ng-minlength="1" ng-required="true" class="form-control" placeholder=""
-                                   ng-model="surveys.currentSurvey.survey.protocolNumber"></span>
-                                        <span class="input-group-addon">Дата обследования:
-                            <input type="date" name="surveyDate" ng-minlength="1" ng-required="true" class="form-control" placeholder=""
-                                   ng-model="surveys.currentSurvey.survey.surveyDate"></span>
-                        </div>
-                    </div>
+                <div class="form-group col-lg-3">
+                    <label for="protocolNumber" class="inputLabel">Номер протокола:</label>
+                    <input type="text" name="protocolNumber" id="protocolNumber" ng-minlength="1" ng-required="true"
+                               class="form-control" placeholder="" ng-model="surveys.currentSurvey.survey.protocolNumber">
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="surveyDate" class="inputLabel">Дата обследования:</label>
+                        <input type="date" name="surveyDate" id="surveyDate" ng-minlength="1" ng-required="true"
+                               class="form-control" placeholder="" ng-model="surveys.currentSurvey.survey.surveyDate">
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="nextSurveyDate" class="inputLabel">Повторное обследование:</label>
+                    <input type="date" name="nextSurveyDate" id="nextSurveyDate" ng-minlength="1" ng-required="true"
+                           class="form-control" placeholder="" ng-model="surveys.currentSurvey.survey.nextSurveyDate">
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="surveyDate" class="inputLabel">Примечание:</label>
+                    <input type="text" name="remark" id="remark" ng-minlength="1" ng-required="true"
+                           class="form-control" placeholder="" ng-model="surveys.currentSurvey.survey.remarks">
                 </div>
             </form>
             <div class="row">
