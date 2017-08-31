@@ -8,9 +8,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
-
 
 public interface ChildRepository extends PagingAndSortingRepository<Child, Long> {
 
@@ -21,12 +21,24 @@ public interface ChildRepository extends PagingAndSortingRepository<Child, Long>
             + "where (:familyName='' or c.familyName=:familyName)"
             + "and (:name='' or c.name=:name)"
             + "and (:patrName='' or c.patrName=:patrName)"
-            + "and (:birthDate=Null or c.birthDate=:birthDate) ")
+            + "and (:birthDate IS NULL or c.birthDate=:birthDate) ")
     Page identify(@Param("familyName") String familyName,
                   @Param("name") String name,
                   @Param("patrName") String patrName,
                   @Param("birthDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthDate,
                   Pageable page);
+
+    @Query("SELECT c FROM Child c "
+            + "WHERE (c.familyName=:familyName) "
+            + "AND (c.name=:name) "
+            + "AND (c.patrName=:patrName) "
+            + "AND (c.birthDate=:birthDate) ")
+    public Child findUnique(
+            @Param("familyName") String familyName,
+            @Param("name") String name,
+            @Param("patrName") String patrName,
+            @Param("birthDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthDate
+            );
 
     @RestResource(path = "byFamilyName", rel = "byFamilyName")
     public Page findByFamilyNameIgnoreCase(@Param("familyName") String familyName, Pageable p);

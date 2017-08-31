@@ -1,7 +1,9 @@
 package com.example.demo.config;
 
 import com.example.demo.components.validators.*;
+import com.example.demo.dao.ChildRepository;
 import com.example.demo.domain.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.core.event.ValidatingRepositoryEventListener;
@@ -9,6 +11,15 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapt
 
 @Configuration
 public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
+
+    @Autowired
+    ChildValidator childValidator;
+
+    @Autowired
+    SurveyValidator surveyValidator;
+
+    private ChildRepository childRepository;
+
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.exposeIdsFor(Child.class);
@@ -22,10 +33,10 @@ public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
     @Override
     public void configureValidatingRepositoryEventListener(
             ValidatingRepositoryEventListener v) {
-        v.addValidator("beforeCreate", new SurveyValidator());
-        v.addValidator("beforeSave", new SurveyValidator());
-        v.addValidator("beforeCreate", new ChildValidator());
-        v.addValidator("beforeSave", new ChildValidator());
+        v.addValidator("beforeCreate", surveyValidator);
+        v.addValidator("beforeSave", surveyValidator);
+        v.addValidator("beforeCreate", childValidator);
+        v.addValidator("beforeSave", childValidator);
         v.addValidator("beforeCreate", new DiagnosisValidator());
         v.addValidator("beforeSave", new DiagnosisValidator());
         v.addValidator("beforeCreate", new DisorderValidator());
