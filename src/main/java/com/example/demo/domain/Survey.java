@@ -110,4 +110,13 @@ public class Survey implements Serializable{
         result = 31 * result + id;
         return (int) result;
     }
+
+    @Override
+    public String toString() {
+        return "Survey{" +
+                "surveyDate=" + surveyDate +
+                ", protocolNumber='" + protocolNumber + '\'' +
+                ", childName='" + childName + '\'' +
+                '}';
+    }
 }

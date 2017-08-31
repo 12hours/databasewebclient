@@ -92,4 +92,10 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
             "r.id = :id")
     public Page findByRecommendation(@Param("id") Long id, Pageable p);
 
+
+    @Query("SELECT s FROM Survey s WHERE " +
+            "s.protocolNumber = :protocolNumber AND " +
+            "s.surveyDate = :surveyDate")
+    public Survey findUnique(@Param("protocolNumber") String protocolNumber,
+                             @Param("surveyDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date surveyDate);
 }

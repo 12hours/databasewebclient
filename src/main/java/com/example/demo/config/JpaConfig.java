@@ -55,6 +55,8 @@ public class JpaConfig {
                 put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
                 put("hibernate.hbm2ddl.auto", "create");
                 put("hibernate.show_sql", "true");
+                put("hibernate.format_sql", "true");
+                put("use_sql_comments", "true");
             }
         });
         emf.setPersistenceProvider(new HibernatePersistenceProvider());
