@@ -199,6 +199,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         }).done(function (data) {
             $scope.surveys.currentSurvey.survey = angular.fromJson(data);
             $scope.surveys.currentSurvey.survey.surveyDate = new Date(data.surveyDate);
+            $scope.surveys.currentSurvey.survey.nextSurveyDate = new Date(data.nextSurveyDate);
             // $scope.survey.child.birthDate = new Date(response.data.child.birthDate);
             var childUrl = data._links.child.href;
             var diagnosesUrl = data._links.diagnoses.href;

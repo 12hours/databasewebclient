@@ -69,3 +69,7 @@ body {
 .input-group {
     width: 100%;
 }
+
+.inputLabel {
+    font-weight: 400;
+}
