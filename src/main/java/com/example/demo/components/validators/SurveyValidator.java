@@ -5,6 +5,7 @@ import com.example.demo.domain.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
@@ -24,12 +25,10 @@ public class SurveyValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        Survey survey = (Survey) target;
-        if (survey.getSurveyDate() == null)
-            errors.rejectValue("surveyDate", "survey.date.empty");
-        if (survey.getProtocolNumber() == null)
-            errors.rejectValue("surveyDate", "survey.number.empty");
+        ValidationUtils.rejectIfEmpty(errors, "surveyDate", "survey.date.empty");
+        ValidationUtils.rejectIfEmpty(errors, "protocolNumber", "survey.number.empty");
 
+        Survey survey = (Survey) target;
         Survey surveyExisting = surveyRepository.findUnique(survey.getProtocolNumber(), survey.getSurveyDate());
         if (surveyExisting != null) {
             if (surveyExisting.getId() != survey.getId()) {
