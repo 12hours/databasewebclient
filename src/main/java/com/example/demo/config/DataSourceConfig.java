@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import org.h2.store.fs.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,11 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import javax.sql.DataSource;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 
 @Configuration
 public class DataSourceConfig {
@@ -33,7 +39,20 @@ public class DataSourceConfig {
 
     @Bean
     @Profile("dev")
-    public DataSource devDataSource(){
+    public DataSource devDataSource() throws IOException, URISyntaxException {
+        return new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.H2)
+                .setName("testdb")
+//                .addScript(org.apache.commons.io.FileUtils.readFileToString(
+//                        new File(this.getClass().getResource("/func.sql").getPath()),
+//                        StandardCharsets.UTF_8))
+                .addScript("func.sql")
+                .build();
+    }
+
+    @Bean
+    @Profile("staging")
+    public DataSource stagingDataSource(){
         return DataSourceBuilder.create()
                 .url("jdbc:h2:file:./data/local")
                 .build();
@@ -46,5 +65,7 @@ public class DataSourceConfig {
                 .url("jdbc:h2:file:" + env.getProperty("app.database.file"))
                 .build();
     }
+
+
 
 }

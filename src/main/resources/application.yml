@@ -7,7 +7,7 @@ spring:
             basePath: /api
 
     datasource:
-        initialize: true
+        initialize: false
         data: classpath:/data.sql
 
 server:

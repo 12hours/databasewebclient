@@ -25,7 +25,7 @@ public class JpaConfig {
     DataSource dataSource;
 
     @Bean(name = "entityManagerFactory")
-    @Profile({"dev", "prod"})
+    @Profile("prod")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         log.debug("SETTING UP HIBERNATE...");
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
@@ -35,6 +35,24 @@ public class JpaConfig {
             {
                 put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
                 put("hibernate.hbm2ddl.auto", "update");
+                put("hibernate.show_sql", "true");
+            }
+        });
+        emf.setPersistenceProvider(new HibernatePersistenceProvider());
+        return emf;
+    }
+
+    @Bean(name = "entityManagerFactory")
+    @Profile("dev")
+    public LocalContainerEntityManagerFactoryBean devEntityManagerFactory(){
+        log.debug("SETTING UP HIBERNATE...");
+        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+        emf.setDataSource(dataSource);
+        emf.setPackagesToScan("com.example.demo.domain");
+        emf.setJpaProperties(new Properties(){
+            {
+                put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+                put("hibernate.hbm2ddl.auto", "create");
                 put("hibernate.show_sql", "true");
             }
         });
