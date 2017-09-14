@@ -73,3 +73,7 @@ body {
 .inputLabel {
     font-weight: 400;
 }
+
+.small {
+    width: 35%;
+}

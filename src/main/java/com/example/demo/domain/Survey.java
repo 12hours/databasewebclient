@@ -54,6 +54,9 @@ public class Survey implements Serializable{
     @Size(max = 2000)
     private String remarks;
 
+    @Column(name = "age_at_survey_date")
+    private Integer ageAtSurveyDate;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "child_id", referencedColumnName = "child_id", unique = false)
     private Child child;
