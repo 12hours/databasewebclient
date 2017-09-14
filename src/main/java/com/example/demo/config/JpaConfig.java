@@ -34,8 +34,9 @@ public class JpaConfig {
         emf.setJpaProperties(new Properties(){
             {
                 put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-                put("hibernate.hbm2ddl.auto", "update");
-                put("hibernate.show_sql", "true");
+                put("hibernate.hbm2ddl.auto", "create");
+                put("hibernate.show_sql", "update");
+                put("hibernate.enable_lazy_load_no_trans", "true");
             }
         });
         emf.setPersistenceProvider(new HibernatePersistenceProvider());
@@ -81,17 +82,11 @@ public class JpaConfig {
         return emf;
     }
 
-    @Bean(name = "entityManagerFactory")
-    @Profile("prod")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryForHSQLDB(){
-        log.debug("SETTING UP HIBERNATE...");
-        //TODO
-        return null;
-    }
 
     @Bean
     @Profile({"test","dev","prod"})
     public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean emfb) {
+//        return new org.springframework.orm.hibernate5.HibernateTransactionManager(emfb.getObject());
         return new JpaTransactionManager(emfb.getObject());
     }
 
