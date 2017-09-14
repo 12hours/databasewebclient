@@ -15,14 +15,14 @@ import java.util.Date;
 public interface SurveyRepository extends PagingAndSortingRepository<Survey, Long> {
 
     @RestResource(path = "byProtocolNumber", rel = "byProtocolNumber")
-    public Page findByProtocolNumberStartsWith(@Param("protocolNumber") String protocolNumber, Pageable p);
+    Page findByProtocolNumberStartsWith(@Param("protocolNumber") String protocolNumber, Pageable p);
 
 
     @RestResource(path = "byChildName", rel = "byChildName")
-    public Page findByChildNameStartsWith(@Param("childName") String childName, Pageable p);
+    Page findByChildNameStartsWith(@Param("childName") String childName, Pageable p);
 
     @RestResource(path = "byDateBetween")
-    public Page findBySurveyDateBetween(@Param("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date
+    Page findBySurveyDateBetween(@Param("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date
                                                 start,
                                         @Param("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date end,
                                         Pageable p);
@@ -41,9 +41,14 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
             "(:disorderId IS NULL OR disorders.id = :disorderId) AND " +
             "(:educationProgramId IS NULL OR educationPrograms.id = " +
             ":educationProgramId) AND " +
-            "(:recommendationId IS NULL OR recommendations.id = :recommendationId)"
+            "(:recommendationId IS NULL OR recommendations.id = :recommendationId) AND " +
+            "(:targetStartAge IS NULL OR " +
+            "(HOWOLD(s.child.birthDate, s.surveyDate) >= 0 AND HOWOLD(s.child.birthDate, s.surveyDate) >= :targetStartAge))" +
+            " AND "+
+            "(:targetEndAge IS NULL OR " +
+            "HOWOLD(s.child.birthDate, s.surveyDate) < :targetEndAge)"
     )
-    public Page findByChildNameAndDateBetween(@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    Page findByChildNameAndDateBetween(@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                       Date surveyDateStart,
                                               @Param("surveyDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                       Date surveyDateEnd,
@@ -56,6 +61,8 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
                                               @Param("disorderId") Long disorderId,
                                               @Param("educationProgramId") Long educationProgramId,
                                               @Param("recommendationId") Long recommendationId,
+                                              @Param("targetStartAge") Integer targetStartAge,
+                                              @Param("targetEndAge") Integer targetEndAge,
                                               Pageable p);
 
 
@@ -63,14 +70,14 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
     @Query("Select s from Survey s " +
             "WHERE " +
             "s.child.birthDate = :birthDate")
-    public Page findByChildBirthDate(@Param("birthDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthDate,
+    Page findByChildBirthDate(@Param("birthDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthDate,
                                      Pageable p);
 
 
     @RestResource(path = "byDiagnosis", rel = "byDiagnosis")
     @Query("Select s from Survey s, IN (s.diagnoses) d WHERE " +
             "d.id = :id")
-    public Page findByDiagnosis(@Param("id") Long id, Pageable p);
+    Page findByDiagnosis(@Param("id") Long id, Pageable p);
     // sql:
 //    select * from surveys
 //    join surveys_diagnoses on
@@ -80,22 +87,22 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
     @RestResource(path = "byDisorder", rel = "byDisorder")
     @Query("Select s from Survey s, IN (s.disorders) d WHERE " +
             "d.id = :id")
-    public Page findByDisorder(@Param("id") Long id, Pageable p);
+    Page findByDisorder(@Param("id") Long id, Pageable p);
 
     @RestResource(path = "byEducationProgram", rel = "byEducationProgram")
     @Query("Select s from Survey s, IN (s.educationPrograms) ep WHERE " +
             "ep.id = :id")
-    public Page findByEducationProgram(@Param("id") Long id, Pageable p);
+    Page findByEducationProgram(@Param("id") Long id, Pageable p);
 
     @RestResource(path = "byRecommendation", rel = "byRecommendation")
     @Query("Select s from Survey s, IN (s.recommendations) r WHERE " +
             "r.id = :id")
-    public Page findByRecommendation(@Param("id") Long id, Pageable p);
+    Page findByRecommendation(@Param("id") Long id, Pageable p);
 
 
     @Query("SELECT s FROM Survey s WHERE " +
             "s.protocolNumber = :protocolNumber AND " +
             "s.surveyDate = :surveyDate")
-    public Survey findUnique(@Param("protocolNumber") String protocolNumber,
+    Survey findUnique(@Param("protocolNumber") String protocolNumber,
                              @Param("surveyDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date surveyDate);
 }
