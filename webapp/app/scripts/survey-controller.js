@@ -2,13 +2,6 @@
 
 myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
-    // var nameQuery = '';
-    // var startDateQuery = '';
-    // var endDateQuery = '';
-    // var diagnosis = '';
-    // var disorder = '';
-    // var educationProgram = '';
-    // var recommendation = '';
     $scope.query = {
         name: '',
         surveyDateStart: '',
@@ -18,7 +11,9 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         diagnosis: '',
         disorder: '',
         educationProgram: '',
-        recommendation: ''
+        recommendation: '',
+        targetStartAge: '',
+        targetEndAge: ''
     }
 
     $('.date-start').datepicker({
@@ -128,7 +123,9 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                                             '&disorderId=' + $scope.query.disorder +
                                             '&educationProgramId=' + $scope.query.educationProgram +
                                             '&recommendationId=' + $scope.query.recommendation +
-                                            "&page=" + page +
+                                            '&targetStartAge=' + $scope.query.targetStartAge +
+                                            '&targetEndAge=' + $scope.query.targetEndAge +
+                                            '&page=' + page +
                                             '&sort=protocolNumber,surveyDate');
     };
 
@@ -177,6 +174,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         $scope.surveys.currentSurvey.selectedRecommendations = [];
     };
 
+
     $scope.initSurvey = function (surveyUrl) {
         $scope.getData();
         logger.info("TARGET=" + surveyUrl);
@@ -206,7 +204,6 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             var disordersUrl = data._links.disorders.href;
             var programsUrl = data._links.educationPrograms.href;
             var recommendsUrl = data._links.recommendations.href;
-
 
             $.ajax({
                 type: "GET",
@@ -284,6 +281,31 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 $scope.surveys.currentSurvey.selectedRecommendations = data._embedded.recommendations;
             });
 
+            $scope.isSchoolchild = checkIsHeSchoolchild($scope.surveys.currentSurvey.survey.surveyDate, $scope.surveys.currentSurvey.child.birthDate);
+
+            function checkIsHeSchoolchild (surveyDate, birthDate) {
+
+                var difference;
+
+                if (birthDate.getFullYear() === surveyDate.getFullYear()) difference = 0;
+                else {
+                    difference = surveyDate.getFullYear() - birthDate.getFullYear();
+                    if ((surveyDate.getMonth() === birthDate.getMonth() && surveyDate.getDay() < birthDate.getDay()) ||
+                    (surveyDate.getMonth() < birthDate.getMonth()))
+                        difference = difference - 1;
+                }
+
+                var type;
+
+                if (0 <= difference && difference < 3) type = "Ранний возраст";
+                else if (3 <= difference && difference < 6) type = "Дошкольник";
+                else if (6 <= difference && difference < 18) type = "Школьник";
+                else type = "Взрослый";
+
+                console.log("WARNING! " + difference + " " + type);
+
+                return type;
+            }
         });
     };
 
@@ -512,7 +534,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
 
         $scope.getSurveysList($scope.surveys.currentPage);
         raisePopup("Сохранено");
-
     };
+
 }])
 ;

@@ -34,6 +34,27 @@
             </div>
 
         </li>
+        <li class="list-group-item">
+            Возраст ребенка на момент обследования:
+            <div>
+                 с
+                <select class="form-control select-list small"  ng-model='query.targetStartAge'
+                        ng-change="getSurveysList(0);">
+                    <option value='' ng-selected=""></option>
+                    <option ng-repeat="n in [].constructor(18) track by $index" name="{{$index}}"
+                            value="{{$index}}">{{$index}}</option>
+                </select>
+                 до
+                <select class="form-control select-list small"  ng-model='query.targetEndAge'
+                        ng-change="getSurveysList(0);">
+                    <option value='' ng-selected=""></option>
+                    <option ng-repeat="n in [].constructor(18) track by $index" name="{{$index}}"
+                            value="{{$index}}">{{$index}}</option>
+                </select>
+            </div>
+
+        </li>
+
         <li class="list-group-item">Диагноз
             <div>
                 <select class="form-control select-list"  ng-model='query.diagnosis'

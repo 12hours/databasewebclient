@@ -48,7 +48,7 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
             "(:targetEndAge IS NULL OR " +
             "HOWOLD(s.child.birthDate, s.surveyDate) < :targetEndAge)"
     )
-    Page findByChildNameAndDateBetween(@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    Page complexSearch(@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                       Date surveyDateStart,
                                               @Param("surveyDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                       Date surveyDateEnd,
