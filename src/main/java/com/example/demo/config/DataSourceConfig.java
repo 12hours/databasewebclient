@@ -34,6 +34,7 @@ public class DataSourceConfig {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .setName("testdb")
+                .addScript("func.sql")
                 .build();
     }
 

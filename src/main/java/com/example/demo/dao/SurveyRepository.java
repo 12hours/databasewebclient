@@ -42,8 +42,11 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
             "(:educationProgramId IS NULL OR educationPrograms.id = " +
             ":educationProgramId) AND " +
             "(:recommendationId IS NULL OR recommendations.id = :recommendationId) AND " +
-            "(:targetStartAge IS NULL OR SUBYEAR(s.surveyDate, targetStartAge) >= :targetStartAge) AND " +
-            "(:targetEndAge IS NULL OR DATEDIFF('YEAR', s.child.birthDate, s.surveyDate) < :targetEndAge)"
+            "(:targetStartAge IS NULL OR " +
+            "(HOWOLD(s.child.birthDate, s.surveyDate) >= 0 AND HOWOLD(s.child.birthDate, s.surveyDate) >= :targetStartAge))" +
+            " AND "+
+            "(:targetEndAge IS NULL OR " +
+            "HOWOLD(s.child.birthDate, s.surveyDate) < :targetEndAge)"
     )
     Page findByChildNameAndDateBetween(@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                       Date surveyDateStart,
