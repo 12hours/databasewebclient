@@ -1,0 +1,36 @@
+spring:
+    profiles:
+        active: staging
+    resources.static-locations: classpath:/static
+    data:
+        rest:
+            basePath: /api
+
+    datasource:
+        initialize: false
+        data: classpath:/data.sql, classpath:/func.sql
+
+server:
+    port: 8080
+
+h2:
+    tcp:
+        port: 9092
+        enabled: true
+    web:
+        port: 8082
+        enabled: true
+
+logging:
+    file: app.log
+    level:
+        root: INFO
+        org.springframework.web: INFO
+        com.example.demo: DEBUG
+        org:
+            hibernate: # DEBUG #for full debug log
+                SQL: DEBUG
+                type: TRACE
+
+
+
