@@ -53,7 +53,7 @@ public class DataSourceConfig {
     @Profile("staging")
     public DataSource stagingDataSource(){
         return DataSourceBuilder.create()
-                .url("jdbc:h2:file:./data/local")
+                .url("jdbc:h2:file:" + env.getProperty("app.database.file"))
                 .build();
     }
 

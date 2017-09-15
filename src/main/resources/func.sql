@@ -1,5 +1,5 @@
 
-CREATE ALIAS HOWOLD AS '
+CREATE ALIAS IF NOT EXISTS HOWOLD AS '
   int howOld(java.sql.Date startDate, java.sql.Date endDate){
       if (startDate.compareTo(endDate) > 0) return -1;
 

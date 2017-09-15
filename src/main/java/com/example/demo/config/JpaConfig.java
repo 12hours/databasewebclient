@@ -25,7 +25,7 @@ public class JpaConfig {
     DataSource dataSource;
 
     @Bean(name = "entityManagerFactory")
-    @Profile("prod")
+    @Profile({"prod", "staging"})
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         log.debug("SETTING UP HIBERNATE...");
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
@@ -34,7 +34,7 @@ public class JpaConfig {
         emf.setJpaProperties(new Properties(){
             {
                 put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-                put("hibernate.hbm2ddl.auto", "create");
+                put("hibernate.hbm2ddl.auto", "update");
                 put("hibernate.show_sql", "update");
                 put("hibernate.enable_lazy_load_no_trans", "true");
             }

@@ -33,4 +33,6 @@ logging:
                 type: TRACE
 
 
-
+app:
+    backup:
+        enabled: true
