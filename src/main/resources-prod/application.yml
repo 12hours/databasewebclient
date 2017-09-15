@@ -7,11 +7,11 @@ spring:
             basePath: /api
 
     datasource:
-        initialize: false
-        data: classpath:/data.sql, classpath:/func.sql
+        initialize: true
+        data: classpath:/func.sql
 
 server:
-    port: 8080
+    port: 8082
 
 h2:
     tcp:
