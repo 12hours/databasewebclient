@@ -32,5 +32,7 @@ logging:
                 SQL: DEBUG
                 type: TRACE
 
+app.backup.enabled: true
+app.backup.interval: 30
 
 
