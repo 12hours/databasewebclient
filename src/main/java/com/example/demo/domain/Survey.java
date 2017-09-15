@@ -58,25 +58,25 @@ public class Survey implements Serializable{
     @JoinColumn(name = "child_id", referencedColumnName = "child_id", unique = false)
     private Child child;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "surveys_recommendations",
         joinColumns = @JoinColumn(name = "survey_id"),
         inverseJoinColumns = @JoinColumn(name="rec_id"))
     private Set<Recommendation> recommendations = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "surveys_edu_programs",
         joinColumns = @JoinColumn(name = "survey_id"),
         inverseJoinColumns = @JoinColumn(name = "edu_pr_id"))
     private Set<EducationProgram> educationPrograms = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "surveys_diagnoses",
         joinColumns = @JoinColumn(name = "survey_id"),
         inverseJoinColumns = @JoinColumn(name = "diagnosis_id"))
     private Set<Diagnosis> diagnoses = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "surveys_disorders",
         joinColumns = @JoinColumn(name = "survey_id"),
         inverseJoinColumns = @JoinColumn(name = "disorder_id"))

@@ -34,7 +34,6 @@ public class DataSourceConfig {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .setName("testdb")
-                .addScript("func.sql")
                 .build();
     }
 
@@ -47,7 +46,6 @@ public class DataSourceConfig {
 //                .addScript(org.apache.commons.io.FileUtils.readFileToString(
 //                        new File(this.getClass().getResource("/func.sql").getPath()),
 //                        StandardCharsets.UTF_8))
-                .addScript("func.sql")
                 .build();
     }
 

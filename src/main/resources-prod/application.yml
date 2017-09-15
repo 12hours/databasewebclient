@@ -1,17 +1,17 @@
 spring:
     profiles:
-        active: test
+        active: prod
     resources.static-locations: classpath:/static
     data:
         rest:
             basePath: /api
 
     datasource:
-        initialize: false
-        data: classpath:/data.sql
+        initialize: true
+        data: classpath:/func.sql
 
 server:
-    port: 8080
+    port: 8082
 
 h2:
     tcp:
@@ -33,6 +33,4 @@ logging:
                 type: TRACE
 
 
-app:
-    backup:
-        enabled: true
+
