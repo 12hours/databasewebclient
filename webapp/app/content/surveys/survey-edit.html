@@ -43,6 +43,7 @@
                             <select class="form-control select-list"
                                     ng-model="surveys.currentSurvey.child.region"
                                     >
+                                <option value='' ng-selected=""></option>
                                 <option ng-repeat="item in regions track by item._links.self.href"
                                         ng-selected="item._links.self.href === surveys.currentSurvey.region._links.self.href"
                                         value="{{item._links.self.href}}">{{item.region}}</option>

@@ -234,6 +234,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 error: function (request, msg, error) {
                     logger.error("get regions for survey fail");
                     logger.error(error);
+                    $scope.surveys.currentSurvey.region = {};
                 }
             }).done(function (data) {
                 $scope.surveys.currentSurvey.region = data;
