@@ -7,7 +7,7 @@ spring:
             basePath: /api
 
     datasource:
-        initialize: false
+        initialize: true
         data: classpath:/data.sql, classpath:/func.sql
 
 server:
@@ -27,12 +27,12 @@ logging:
         root: INFO
         org.springframework.web: INFO
         com.example.demo: DEBUG
-        org:
-            hibernate: # DEBUG #for full debug log
-                SQL: DEBUG
-                type: TRACE
+#        org:
+#            hibernate: # DEBUG #for full debug log
+#                SQL: DEBUG
+#                type: TRACE
 
 
 app:
     backup:
-        enabled: true
+        enabled: false

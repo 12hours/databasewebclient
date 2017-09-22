@@ -39,6 +39,14 @@
                                    ng-model="surveys.currentSurvey.child.address">
                         </div>
                         <div class="input-group">
+                            <span class="input-group-addon">Регион:</span>
+                            <select class="form-control select-list"
+                                    data-ng-model="surveys.currentSurvey.region"
+                                    data-ng-options="item.region for item in regions"
+                            >
+                            </select>
+                        </div>
+                        <div class="input-group">
                             <span class="input-group-addon">Учебное заведение:</span>
                             <input type="text" class="form-control" placeholder=""
                                    ng-model="surveys.currentSurvey.child.placeOfEducation">

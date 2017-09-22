@@ -204,6 +204,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             var disordersUrl = data._links.disorders.href;
             var programsUrl = data._links.educationPrograms.href;
             var recommendsUrl = data._links.recommendations.href;
+            // var regionsUrl = data._links.regions.href;
 
             $.ajax({
                 type: "GET",
@@ -220,6 +221,22 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 $scope.surveys.currentSurvey.child = data;
                 $scope.surveys.currentSurvey.child.birthDate = new Date(data.birthDate);
             });
+
+            // $.ajax({
+            //     type: "GET",
+            //     url: regionsUrl,
+            //     async: false,
+            //     success: function (result) {
+            //         logger.info("get regions for survey success");
+            //     },
+            //     error: function (request, msg, error) {
+            //         logger.error("get regions for survey fail");
+            //         logger.error(error);
+            //     }
+            // }).done(function (data) {
+            //     $scope.surveys.currentSurvey.child.regions = data._embedded.disorders;
+            // });
+
 
             $.ajax({
                 type: "GET",
@@ -281,7 +298,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 $scope.surveys.currentSurvey.selectedRecommendations = data._embedded.recommendations;
             });
 
-            $scope.isSchoolchild = checkIsHeSchoolchild($scope.surveys.currentSurvey.survey.surveyDate, $scope.surveys.currentSurvey.child.birthDate);
+            $scope.isSchoolchild = checkIsHeSchoolchild($scope.surveys.currentSurvey.survey.surveyDate,
+                                                        $scope.surveys.currentSurvey.child.birthDate);
 
             function checkIsHeSchoolchild (surveyDate, birthDate) {
 
@@ -314,7 +332,10 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         $scope.getDisordersList();
         $scope.getEducationProgramsList();
         $scope.getRecommendationsList();
+        $scope.getRegionsList();
     }
+
+    //TODO: Refactor next code
 
     $scope.getDiagnosesList = function () {
         $http.get(DIAGNOSES).then(function (response) {
@@ -342,6 +363,13 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         $http.get(RECOMMENDS).then(function (response) {
             var recommendationsList = response.data._embedded.recommendations;
             $scope.recommendations = recommendationsList;
+        });
+    };
+
+    $scope.getRegionsList = function () {
+        $http.get(REGIONS).then(function (response) {
+            var regionsList = response.data._embedded.regions;
+            $scope.regions = regionsList;
         });
     };
 
@@ -529,6 +557,22 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             },
             error: function (request, msg, error) {
                 // handle failure
+            }
+        });
+
+        // regions
+        var regionsString = $scope.surveys.currentSurvey.region;
+        console.log("IMPORTANT " + regionsString);
+        $.ajax({
+            url: (childUrl + "/regions"),
+            type: PUT,
+            contentType: 'text/uri-list',
+            data: regionsString,
+            success: function (result) {
+                logger.info("region update success");
+            },
+            error: function (request, msg, error) {
+                logger.info("region update fail");
             }
         });
 

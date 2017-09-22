@@ -51,6 +51,16 @@ VALUES
 (2, 'Занятия с дефектологом'),
 (3, 'Специальная группа');
 
+INSERT INTO `regions`
+(`id`,
+`region`)
+VALUES
+  (1, 'Brest'),
+  (2, 'Kobrin'),
+  (3, 'Zabinka'),
+  (4, 'g.p. Trastyanka');
+
+
 INSERT INTO `surveys`
 (`survey_id`,
   `survey_date`,
@@ -61,8 +71,8 @@ INSERT INTO `surveys`
   `recommended_form`,
   `remarks`,
   `child_id`,
-  `child_name`
-  )
+  `child_name`)
+
 VALUES
   (1, '2016-12-08', '101', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 1, 'Shumak Anna Vladimirovna'),
   (2, '2016-12-09', '102', 'NA diagnosis', 'NA disorder', 'NA program', 'NA form', 'NA remaks', 3, 'Lis Roman Olegovich'),
@@ -137,6 +147,17 @@ VALUES
   (6, 3),
   (7, 1),
   (7, 3);
+
+-- INSERT INTO `child_regions`
+-- (`child_id`,
+-- `region_id`)
+-- VALUES
+--   (1, 1),
+--   (2, 1),
+--   (3, 1),
+--   (4, 3),
+--   (5, 2);
+--
 
 
 

@@ -2,9 +2,7 @@ package com.example.demo.components;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,7 +33,5 @@ public class ScheduledTasks {
         File source = new File(env.getProperty("app.database.file") + ".mv.db");
         Files.copy(source.toPath(), Paths.get("./data/backup/backup" + date), REPLACE_EXISTING);
         log.info("The time is now {}", date);
-
-
     }
 }
