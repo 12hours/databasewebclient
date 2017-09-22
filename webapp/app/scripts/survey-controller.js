@@ -101,6 +101,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     $scope.surveys.size = 0;
     $scope.surveys.currentPage = 0;
     $scope.surveys.currentSurvey = {};
+    $scope.surveys.currentSurvey.region = {};
 
     this.$onInit = function () {
         $scope.getSurveysList(0);
@@ -222,20 +223,21 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 $scope.surveys.currentSurvey.child.birthDate = new Date(data.birthDate);
             });
 
-            // $.ajax({
-            //     type: "GET",
-            //     url: regionsUrl,
-            //     async: false,
-            //     success: function (result) {
-            //         logger.info("get regions for survey success");
-            //     },
-            //     error: function (request, msg, error) {
-            //         logger.error("get regions for survey fail");
-            //         logger.error(error);
-            //     }
-            // }).done(function (data) {
-            //     $scope.surveys.currentSurvey.child.regions = data._embedded.disorders;
-            // });
+            var regionsUrl = $scope.surveys.currentSurvey.child._links.region.href;
+            $.ajax({
+                type: "GET",
+                url: regionsUrl,
+                async: false,
+                success: function (result) {
+                    logger.info("get regions for survey success");
+                },
+                error: function (request, msg, error) {
+                    logger.error("get regions for survey fail");
+                    logger.error(error);
+                }
+            }).done(function (data) {
+                $scope.surveys.currentSurvey.region = data;
+            });
 
 
             $.ajax({
@@ -434,6 +436,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         }
 
         // child
+        // $scope.surveys.currentSurvey.child.region = $scope.surveys.currentSurvey.region._links.href;
         $.ajax({
                 url: (childUrl),
                 type: childMethodType,
@@ -560,21 +563,21 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             }
         });
 
-        // regions
-        var regionsString = $scope.surveys.currentSurvey.region;
-        console.log("IMPORTANT " + regionsString);
-        $.ajax({
-            url: (childUrl + "/regions"),
-            type: PUT,
-            contentType: 'text/uri-list',
-            data: regionsString,
-            success: function (result) {
-                logger.info("region update success");
-            },
-            error: function (request, msg, error) {
-                logger.info("region update fail");
-            }
-        });
+        // // regions
+        // var regionUrl = $scope.surveys.currentSurvey.region;
+        // console.log("IMPORTANT " + regionUrl);
+        // $.ajax({
+        //     url: (childUrl + "/regions"),
+        //     type: PUT,
+        //     contentType: 'text/uri-list',
+        //     data: regionUrl,
+        //     success: function (result) {
+        //         logger.info("region update success");
+        //     },
+        //     error: function (request, msg, error) {
+        //         logger.info("region update fail");
+        //     }
+        // });
 
         $scope.getSurveysList($scope.surveys.currentPage);
         raisePopup("Сохранено");
