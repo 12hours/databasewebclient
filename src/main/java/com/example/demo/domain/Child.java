@@ -51,6 +51,10 @@ public class Child implements Serializable {
     @OneToMany(mappedBy = "child", fetch = FetchType.EAGER)
     private Set<Survey> surveys = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "region_id", referencedColumnName = "id")
+    private Region region;
+
     @Override
     public boolean equals(Object o) {
         if (id == null) return false;
@@ -71,6 +75,13 @@ public class Child implements Serializable {
         return result;
     }
 
-
+    @Override
+    public String toString() {
+        return "Child{" +
+                "familyName='" + familyName + '\'' +
+                ", name='" + name + '\'' +
+                ", patrName='" + patrName + '\'' +
+                '}';
+    }
 }
 
