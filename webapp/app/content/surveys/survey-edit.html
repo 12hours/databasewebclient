@@ -39,6 +39,17 @@
                                    ng-model="surveys.currentSurvey.child.address">
                         </div>
                         <div class="input-group">
+                            <span class="input-group-addon">Регион:</span>
+                            <select class="form-control select-list"
+                                    ng-model="surveys.currentSurvey.child.region"
+                                    >
+                                <option value='' ng-selected=""></option>
+                                <option ng-repeat="item in regions track by item._links.self.href"
+                                        ng-selected="item._links.self.href === surveys.currentSurvey.region._links.self.href"
+                                        value="{{item._links.self.href}}">{{item.region}}</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
                             <span class="input-group-addon">Учебное заведение:</span>
                             <input type="text" class="form-control" placeholder=""
                                    ng-model="surveys.currentSurvey.child.placeOfEducation">
@@ -96,7 +107,7 @@
                         <div class="panel-heading">Диагноз</div>
                         <div class="panel-body">
                             <div class="col-xs-12 select-list-box">
-                                <div ng-repeat="i in surveys.currentSurvey.selectedDiagnoses"> <!-- BUG IS HERE!!! -->
+                                <div ng-repeat="i in surveys.currentSurvey.selectedDiagnoses">
                                     <select class="form-control select-list"
                                             data-ng-model="surveys.currentSurvey.selectedDiagnoses[$index]"
                                             data-ng-options="item.diagnosis for item in diagnoses track by item.diagnosis">

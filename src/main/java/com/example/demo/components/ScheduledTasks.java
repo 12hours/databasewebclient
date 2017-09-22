@@ -2,9 +2,7 @@ package com.example.demo.components;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,13 +27,11 @@ public class ScheduledTasks {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd-HH-mm-ss");
 
-    @Scheduled(fixedRate = 2 * 60 * 1000)
-    public void reportCurrentTime() throws IOException {
+    @Scheduled(fixedDelayString = "${app.backup.interval:60}000")
+    private void reportCurrentTime() throws IOException {
         String date = dateFormat.format(new Date());
         File source = new File(env.getProperty("app.database.file") + ".mv.db");
         Files.copy(source.toPath(), Paths.get("./data/backup/backup" + date), REPLACE_EXISTING);
         log.info("The time is now {}", date);
-
-
     }
 }

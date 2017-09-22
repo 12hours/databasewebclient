@@ -101,6 +101,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     $scope.surveys.size = 0;
     $scope.surveys.currentPage = 0;
     $scope.surveys.currentSurvey = {};
+    $scope.surveys.currentSurvey.region = {};
 
     this.$onInit = function () {
         $scope.getSurveysList(0);
@@ -204,6 +205,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             var disordersUrl = data._links.disorders.href;
             var programsUrl = data._links.educationPrograms.href;
             var recommendsUrl = data._links.recommendations.href;
+            // var regionsUrl = data._links.regions.href;
 
             $.ajax({
                 type: "GET",
@@ -220,6 +222,24 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 $scope.surveys.currentSurvey.child = data;
                 $scope.surveys.currentSurvey.child.birthDate = new Date(data.birthDate);
             });
+
+            var regionsUrl = $scope.surveys.currentSurvey.child._links.region.href;
+            $.ajax({
+                type: "GET",
+                url: regionsUrl,
+                async: false,
+                success: function (result) {
+                    logger.info("get regions for survey success");
+                },
+                error: function (request, msg, error) {
+                    logger.error("get regions for survey fail");
+                    logger.error(error);
+                    $scope.surveys.currentSurvey.region = {};
+                }
+            }).done(function (data) {
+                $scope.surveys.currentSurvey.region = data;
+            });
+
 
             $.ajax({
                 type: "GET",
@@ -281,7 +301,8 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 $scope.surveys.currentSurvey.selectedRecommendations = data._embedded.recommendations;
             });
 
-            $scope.isSchoolchild = checkIsHeSchoolchild($scope.surveys.currentSurvey.survey.surveyDate, $scope.surveys.currentSurvey.child.birthDate);
+            $scope.isSchoolchild = checkIsHeSchoolchild($scope.surveys.currentSurvey.survey.surveyDate,
+                                                        $scope.surveys.currentSurvey.child.birthDate);
 
             function checkIsHeSchoolchild (surveyDate, birthDate) {
 
@@ -314,7 +335,10 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         $scope.getDisordersList();
         $scope.getEducationProgramsList();
         $scope.getRecommendationsList();
+        $scope.getRegionsList();
     }
+
+    //TODO: Refactor next code
 
     $scope.getDiagnosesList = function () {
         $http.get(DIAGNOSES).then(function (response) {
@@ -342,6 +366,13 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         $http.get(RECOMMENDS).then(function (response) {
             var recommendationsList = response.data._embedded.recommendations;
             $scope.recommendations = recommendationsList;
+        });
+    };
+
+    $scope.getRegionsList = function () {
+        $http.get(REGIONS).then(function (response) {
+            var regionsList = response.data._embedded.regions;
+            $scope.regions = regionsList;
         });
     };
 
@@ -406,6 +437,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         }
 
         // child
+        // $scope.surveys.currentSurvey.child.region = $scope.surveys.currentSurvey.region._links.href;
         $.ajax({
                 url: (childUrl),
                 type: childMethodType,
@@ -531,6 +563,22 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 // handle failure
             }
         });
+
+        // // regions
+        // var regionUrl = $scope.surveys.currentSurvey.region;
+        // console.log("IMPORTANT " + regionUrl);
+        // $.ajax({
+        //     url: (childUrl + "/regions"),
+        //     type: PUT,
+        //     contentType: 'text/uri-list',
+        //     data: regionUrl,
+        //     success: function (result) {
+        //         logger.info("region update success");
+        //     },
+        //     error: function (request, msg, error) {
+        //         logger.info("region update fail");
+        //     }
+        // });
 
         $scope.getSurveysList($scope.surveys.currentPage);
         raisePopup("Сохранено");

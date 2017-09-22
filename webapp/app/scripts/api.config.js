@@ -6,8 +6,9 @@ var DIAGNOSES = '/api/diagnoses';
 var EDU_PROGRAMS = '/api/educationPrograms';
 var DISORDERS = '/api/disorders';
 var RECOMMENDS = '/api/recommendations';
+var REGIONS = '/api/regions';
 
-var FIND_CHILD_BY_FAMILY_NAME = '/api/children/search/byFamilyName?'
+var FIND_CHILD_BY_FAMILY_NAME = '/api/children/search/byFamilyName?';
 
 var GET = 'GET';
 var POST = 'POST';

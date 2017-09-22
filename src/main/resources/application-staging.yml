@@ -33,6 +33,7 @@ logging:
                 type: TRACE
 
 app.backup.enabled: true
+app.backup.interval: 30
 app.database.file: ./data/ockroir
 
 
