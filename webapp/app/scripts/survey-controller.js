@@ -5,7 +5,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
     $scope.query = {
         name: '',
         surveyDateStart: '',
-        surveyDateEnd: '',        
+        surveyDateEnd: '',
         birthDateStart: '',
         birthDateEnd: '',
         diagnosis: '',
@@ -231,10 +231,15 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
                 success: function (result) {
                     logger.info("get regions for survey success");
                 },
+                statusCode: {
+                    204: function () {
+                        logger.warning("region is not specified");
+                        $scope.surveys.currentSurvey.region = {};
+                    }
+                },
                 error: function (request, msg, error) {
                     logger.error("get regions for survey fail");
                     logger.error(error);
-                    $scope.surveys.currentSurvey.region = {};
                 }
             }).done(function (data) {
                 $scope.surveys.currentSurvey.region = data;
