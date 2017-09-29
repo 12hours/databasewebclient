@@ -46,7 +46,8 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
             "(HOWOLD(s.child.birthDate, s.surveyDate) >= 0 AND HOWOLD(s.child.birthDate, s.surveyDate) >= :targetStartAge))" +
             " AND "+
             "(:targetEndAge IS NULL OR " +
-            "HOWOLD(s.child.birthDate, s.surveyDate) < :targetEndAge)"
+            "HOWOLD(s.child.birthDate, s.surveyDate) < :targetEndAge) AND " +
+            "(:regionId IS NULL OR s.child.region.id = :regionId)"
     )
     Page complexSearch(@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                       Date surveyDateStart,
@@ -63,6 +64,7 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
                                               @Param("recommendationId") Long recommendationId,
                                               @Param("targetStartAge") Integer targetStartAge,
                                               @Param("targetEndAge") Integer targetEndAge,
+                                              @Param("regionId") Long regionId,
                                               Pageable p);
 
 
