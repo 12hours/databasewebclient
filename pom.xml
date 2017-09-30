@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>by.bockroir</groupId>
-    <artifactId>databse-web-client</artifactId>
+    <artifactId>database-web-client</artifactId>
     <version>0.0.9</version>
     <packaging>jar</packaging>
 
-    <name>databse-web-client</name>
-    <description>Demo project for Spring Boot</description>
+    <name>database-web-client</name>
+    <description>Database web client</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
