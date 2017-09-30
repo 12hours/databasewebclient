@@ -35,7 +35,6 @@ public class JpaConfig {
             {
                 put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
                 put("hibernate.hbm2ddl.auto", "update");
-                put("hibernate.show_sql", "update");
                 put("hibernate.enable_lazy_load_no_trans", "true");
             }
         });
@@ -54,7 +53,6 @@ public class JpaConfig {
             {
                 put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
                 put("hibernate.hbm2ddl.auto", "create");
-                put("hibernate.show_sql", "true");
             }
         });
         emf.setPersistenceProvider(new HibernatePersistenceProvider());
@@ -73,8 +71,6 @@ public class JpaConfig {
             {
                 put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
                 put("hibernate.hbm2ddl.auto", "create");
-//                put("hibernate.show_sql", "false");
-//                put("hibernate.format_sql", "true");
                 put("use_sql_comments", "true");
             }
         });
