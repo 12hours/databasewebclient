@@ -32,7 +32,7 @@
             <AppenderRef ref="RollingFileAppender"/>
         </logger>
 
-        <logger name="com.example.demo.components.DatabaseOpsEventListener" level="DEBUG">
+        <logger name="by.bockroir.app.components.DatabaseOpsEventListener" level="DEBUG">
             <AppenderRef ref="DatabaseLogAppender"/>
         </logger>
     </Loggers>

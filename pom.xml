@@ -135,7 +135,7 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
+                        <phase>package</phase>
                         <configuration>
 
                             <tasks>
@@ -169,7 +169,7 @@
 
                     <execution>
                         <id>process-static</id>
-                        <phase>validate</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
@@ -186,7 +186,7 @@
 
                     <execution>
                         <id>copy-resources</id>
-                        <phase>validate</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
