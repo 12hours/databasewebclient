@@ -10,10 +10,14 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+
 import static java.nio.file.StandardCopyOption.*;
 
 @ConditionalOnExpression("${app.backup.enabled}")
@@ -27,8 +31,9 @@ public class ScheduledTasks {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd-HH-mm-ss");
 
-    @Scheduled(fixedDelayString = "${app.backup.interval:60}000")
+    @Scheduled(fixedDelayString = "${app.backup.interval}")
     private void reportCurrentTime() throws IOException {
+        System.out.println("INTERVAL "+env.getProperty("app.backup.interval"));
         String date = dateFormat.format(new Date());
         File source = new File(env.getProperty("app.database.file") + ".mv.db");
         Files.copy(source.toPath(), Paths.get("./data/backup/backup" + date), REPLACE_EXISTING);

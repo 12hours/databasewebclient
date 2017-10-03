@@ -24,13 +24,13 @@ h2:
 logging:
     file: app.log
     level:
-        root: INFO
+        root: ERROR
         org.springframework.web: INFO
-        com.example.demo: DEBUG
+        by.ockroir.app: ERROR
         org:
             hibernate: # DEBUG #for full debug log
-                SQL: DEBUG
-                type: TRACE
+                SQL: ERROR
+                type: ERROR
 
 app.backup.enabled: true
 app.backup.interval: 30

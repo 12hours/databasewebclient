@@ -9,6 +9,10 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} %msg%n"/>
         </File>
 
+        <File name="SingleFileLog" fileName="single.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %msg%n"/>
+        </File>
+
         <RollingFile name="RollingFileAppender" fileName="app.log"
                      filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout>
@@ -26,11 +30,9 @@
     <Loggers>
         <Root level="DEBUG">
             <AppenderRef ref="Console"/>
-        </Root>
-
-        <logger name="com" level="DEBUG">
+            <!--<AppenderRef ref="SingleFileLog"/>-->
             <AppenderRef ref="RollingFileAppender"/>
-        </logger>
+        </Root>
 
         <logger name="by.bockroir.app.components.DatabaseOpsEventListener" level="DEBUG">
             <AppenderRef ref="DatabaseLogAppender"/>
