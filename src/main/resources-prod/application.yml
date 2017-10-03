@@ -22,15 +22,16 @@ h2:
         enabled: true
 
 logging:
-    file: app.log
     level:
         root: ERROR
         org.springframework.web: INFO
-        by.ockroir.app: ERROR
         org:
             hibernate: # DEBUG #for full debug log
                 SQL: ERROR
                 type: ERROR
+
+
+log4j.logger.root: ERROR
 
 app.backup.enabled: true
 app.backup.interval: 30

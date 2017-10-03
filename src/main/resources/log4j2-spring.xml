@@ -27,12 +27,15 @@
         </RollingFile>
 
     </Appenders>
+    
     <Loggers>
         <Root level="DEBUG">
             <AppenderRef ref="Console"/>
-            <!--<AppenderRef ref="SingleFileLog"/>-->
-            <AppenderRef ref="RollingFileAppender"/>
         </Root>
+
+        <logger name="by.bockroir.app" level="TRACE">
+            <AppenderRef ref="RollingFileAppender"/>
+        </logger>
 
         <logger name="by.bockroir.app.components.DatabaseOpsEventListener" level="DEBUG">
             <AppenderRef ref="DatabaseLogAppender"/>

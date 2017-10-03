@@ -1,42 +1,28 @@
 package by.bockroir.app.components;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import by.bockroir.app.components.backup.Backuper;
+import by.bockroir.app.components.backup.SimpleToFileBackuper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-
-import static java.nio.file.StandardCopyOption.*;
+import java.io.IOException;
 
 @ConditionalOnExpression("${app.backup.enabled}")
 @Component
 public class ScheduledTasks {
 
+    private Backuper backuper;
+
     @Autowired
-    Environment env;
-
-    private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
-
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd-HH-mm-ss");
+    public ScheduledTasks(@Qualifier("backupToFile") Backuper backuper) {
+        this.backuper = backuper;
+    }
 
     @Scheduled(fixedDelayString = "${app.backup.interval}")
-    private void reportCurrentTime() throws IOException {
-        System.out.println("INTERVAL "+env.getProperty("app.backup.interval"));
-        String date = dateFormat.format(new Date());
-        File source = new File(env.getProperty("app.database.file") + ".mv.db");
-        Files.copy(source.toPath(), Paths.get("./data/backup/backup" + date), REPLACE_EXISTING);
-        log.info("The time is now {}", date);
+    private void makeBackup() throws IOException {
+        backuper.makeBackup();
     }
 }
