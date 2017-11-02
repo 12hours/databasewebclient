@@ -4,6 +4,7 @@ import by.bockroir.app.components.ScheduledTasks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import java.util.Date;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
+@ConditionalOnExpression("${app.backup.enabled}")
 @Component("backupToFile")
 public class SimpleToFileBackuper implements Backuper {
 

@@ -1,6 +1,6 @@
 spring:
     profiles:
-        active: prod
+        active: test
     resources.static-locations: classpath:/static
     data:
         rest:
@@ -8,7 +8,7 @@ spring:
 
     datasource:
         initialize: true
-        data: classpath:/data.sql, classpath:/func.sql
+        data: classpath:/func.sql
 
 server:
     port: 8080
@@ -35,5 +35,5 @@ logging:
 
 app:
     backup:
-        enabled: true
+        enabled: false
 

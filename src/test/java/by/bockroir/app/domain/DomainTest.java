@@ -87,7 +87,7 @@ public class DomainTest {
 
     @Test
     public void createDisorder(){
-        final String disorderName = "dyslexia";
+        final String disorderName = "dyslexia1";
         Disorder disorder = new Disorder();
         disorder.setDisorder(disorderName);
         em.persist(disorder);
@@ -104,9 +104,9 @@ public class DomainTest {
         assertEquals(disorderFound.getDisorder(), disorderName);
     }
 
-    @Test(expected = javax.persistence.PersistenceException.class)
+    @Test(expected = Exception.class)
     public void createDisorderCheckConstraint(){
-        final String disorderName = "dyslexia";
+    	final String disorderName = "dyslexia2";
         Disorder disorder = new Disorder();
         disorder.setDisorder(disorderName);
         em.persist(disorder);
@@ -213,7 +213,7 @@ public class DomainTest {
 
         // CREATE DOMAIN OBJECTS
         Disorder disorder = new Disorder();
-        disorder.setDisorder("dyslexia");
+        disorder.setDisorder("dyslexia3");
         em.persist(disorder);
         long disorderId = disorder.getId();
         assertTrue(disorderId > 0);

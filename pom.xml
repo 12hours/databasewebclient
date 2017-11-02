@@ -5,7 +5,7 @@
 
     <groupId>by.bockroir</groupId>
     <artifactId>database-web-client</artifactId>
-    <version>0.0.9</version>
+    <version>0.1</version>
     <packaging>jar</packaging>
 
     <name>database-web-client</name>
@@ -178,7 +178,7 @@
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
-                                <phase>package</phase>
+                                <phase>process-resources</phase>
                                 <configuration>
 
                                     <tasks>
