@@ -1,0 +1,1 @@
+org.springframework.boot.env.EnvironmentPostProcessor=by.bockroir.app.components.EnviromentConfigurer

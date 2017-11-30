@@ -23,15 +23,11 @@ h2:
 
 logging:
     level:
-        root: ERROR
-        org.springframework.web: INFO
+        org.springframework.web: ERROR
         org:
             hibernate: # DEBUG #for full debug log
                 SQL: ERROR
                 type: ERROR
-
-
-log4j.logger.root: ERROR
 
 app.backup.enabled: true
 app.backup.interval: 30

@@ -22,9 +22,9 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
 
     @RestResource(path = "byDateBetween")
     Page findBySurveyDateBetween(@Param("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date
-                                                start,
-                                        @Param("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date end,
-                                        Pageable p);
+                                         start,
+                                 @Param("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date end,
+                                 Pageable p);
 
     @RestResource(path = "byNameAndDate")
     @Query("SELECT DISTINCT s FROM Survey s " +
@@ -43,28 +43,166 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
             "(:recommendationId IS NULL OR recommendations.id = :recommendationId) AND " +
             "(:targetStartAge IS NULL OR " +
             "(HOWOLD(s.child.birthDate, s.surveyDate) >= 0 AND HOWOLD(s.child.birthDate, s.surveyDate) >= :targetStartAge))" +
-            " AND "+
+            " AND " +
             "(:targetEndAge IS NULL OR " +
             "HOWOLD(s.child.birthDate, s.surveyDate) < :targetEndAge) AND " +
             "(:regionId IS NULL OR s.child.region.id = :regionId)"
     )
     Page complexSearch(@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                      Date surveyDateStart,
-                                              @Param("surveyDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                      Date surveyDateEnd,
-                                              @Param("birthDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                      Date birthDateStart,
-                                              @Param("birthDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                      Date birthDateEnd,
-                                              @Param("childName") String childName,
-                                              @Param("diagnosisId") Long diagnosisId,
-                                              @Param("disorderId") Long disorderId,
-                                              @Param("educationProgramId") Long educationProgramId,
-                                              @Param("recommendationId") Long recommendationId,
-                                              @Param("targetStartAge") Integer targetStartAge,
-                                              @Param("targetEndAge") Integer targetEndAge,
-                                              @Param("regionId") Long regionId,
-                                              Pageable p);
+                               Date surveyDateStart,
+                       @Param("surveyDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                               Date surveyDateEnd,
+                       @Param("birthDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                               Date birthDateStart,
+                       @Param("birthDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                               Date birthDateEnd,
+                       @Param("childName") String childName,
+                       @Param("diagnosisId") Long diagnosisId,
+                       @Param("disorderId") Long disorderId,
+                       @Param("educationProgramId") Long educationProgramId,
+                       @Param("recommendationId") Long recommendationId,
+                       @Param("targetStartAge") Integer targetStartAge,
+                       @Param("targetEndAge") Integer targetEndAge,
+                       @Param("regionId") Long regionId,
+                       Pageable p);
+
+    @RestResource(path = "cmpx")
+    @Query("SELECT s FROM Survey s " +
+            "WHERE " +
+            "(:diagnosisId IS NULL " +
+            "   OR EXISTS ( SELECT diagnosis FROM Diagnosis diagnosis WHERE diagnosis MEMBER OF s.diagnoses " +
+            "               AND diagnosis.id = :diagnosisId) " +
+            ") " +
+            "AND " +
+            "(:disorderId IS NULL " +
+            "   OR EXISTS ( SELECT disorder FROM Disorder disorder WHERE disorder MEMBER OF s.disorders " +
+            "               AND disorder.id = :disorderId) " +
+            ") " +
+            "AND " +
+            "(:educationProgramId IS NULL " +
+            "   OR EXISTS ( SELECT educationProgram FROM EducationProgram educationProgram " +
+            "               WHERE educationProgram MEMBER OF s.educationPrograms " +
+            "               AND educationProgram.id = :educationProgramId) " +
+            ") " +
+            "AND " +
+            "(:recommendationId IS NULL " +
+            "   OR EXISTS ( SELECT recommendation FROM Recommendation recommendation " +
+            "               WHERE recommendation MEMBER OF s.recommendations " +
+            "               AND recommendation.id = :recommendationId) " +
+            ") " +
+            "AND " +
+            "(:childName IS NULL OR (UPPER(s.childName) LIKE UPPER(:childName)||'%' )) AND " +
+            "(:birthDateStart IS NULL OR s.child.birthDate >= :birthDateStart) AND " +
+            "(:birthDateEnd IS NULL OR s.child.birthDate <= :birthDateEnd) AND " +
+            "(:surveyDateStart IS NULL OR s.surveyDate >= :surveyDateStart) AND " +
+            "(:surveyDateEnd IS NULL OR s.surveyDate <= :surveyDateEnd) AND " +
+            "(:targetStartAge IS NULL OR " +
+            "(HOWOLD(s.child.birthDate, s.surveyDate) >= 0 AND HOWOLD(s.child.birthDate, s.surveyDate) >= :targetStartAge))" +
+            " AND " +
+            "(:targetEndAge IS NULL OR " +
+            "HOWOLD(s.child.birthDate, s.surveyDate) < :targetEndAge) AND " +
+            "(:regionId IS NULL OR s.child.region.id = :regionId)" +
+            "ORDER BY (s.protocolNumber + 0)"
+    )
+    Page complexSearch2(@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                Date surveyDateStart,
+                        @Param("surveyDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                Date surveyDateEnd,
+                        @Param("birthDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                Date birthDateStart,
+                        @Param("birthDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                Date birthDateEnd,
+                        @Param("childName") String childName,
+                        @Param("diagnosisId") Long diagnosisId,
+                        @Param("disorderId") Long disorderId,
+                        @Param("educationProgramId") Long educationProgramId,
+                        @Param("recommendationId") Long recommendationId,
+                        @Param("targetStartAge") Integer targetStartAge,
+                        @Param("targetEndAge") Integer targetEndAge,
+                        @Param("regionId") Long regionId,
+                        Pageable p);
+
+
+    @RestResource(path = "complex")
+    @Query(value = "SELECT * FROM surveys " +
+            "WHERE " +
+            "(:diagnosisId IS NULL OR EXISTS (  " +
+            "    SELECT * FROM surveys_diagnoses" +
+            "    JOIN diagnoses ON diagnoses.id = surveys_diagnoses.diagnosis_id" +
+            "    WHERE surveys.survey_id = surveys_diagnoses.survey_id" +
+            "    AND diagnoses.id = :diagnosisId)" +
+            ") " +
+            "AND " +
+            "(:disorderId IS NULL OR EXISTS ( " +
+            "    SELECT * FROM surveys_disorders" +
+            "    JOIN disorders ON disorders.id = surveys_disorders.disorder_id" +
+            "    WHERE surveys.survey_id = surveys_disorders.survey_id" +
+            "    AND disorders.id = :disorderId)" +
+            ") " +
+            "AND " +
+            "(:educationProgramId IS NULL OR EXISTS (" +
+            "    SELECT * FROM surveys_edu_programs" +
+            "    JOIN education_programs ON education_programs.id = surveys_edu_programs.edu_pr_id" +
+            "    WHERE surveys.survey_id = surveys_edu_programs.survey_id" +
+            "    AND education_programs.id = :educationProgramId)" +
+            ") " +
+            "AND " +
+            "(:recommendationId IS NULL OR EXISTS (" +
+            "    SELECT * FROM surveys_recommendations" +
+            "    JOIN recommendations ON recommendations.id = surveys_recommendations.rec_id" +
+            "    WHERE surveys.survey_id = surveys_recommendations.survey_id" +
+            "    AND recommendations.id = :recommendationId)" +
+            ") " +
+            "ORDER BY survey_id \n-- #pageable\n" +
+            " LIMIT ?;", nativeQuery = true,
+            countQuery = "SELECT COUNT(1) FROM surveys " +
+                    "WHERE " +
+                    "(:diagnosisId IS NULL OR EXISTS (  " +
+                    "    SELECT * FROM surveys_diagnoses" +
+                    "    JOIN diagnoses ON diagnoses.id = surveys_diagnoses.diagnosis_id" +
+                    "    WHERE surveys.survey_id = surveys_diagnoses.survey_id" +
+                    "    AND diagnoses.id = :diagnosisId)" +
+                    ") " +
+                    "AND " +
+                    "(:disorderId IS NULL OR EXISTS (" +
+                    "    SELECT * FROM surveys_disorders" +
+                    "    JOIN disorders ON disorders.id = surveys_disorders.disorder_id" +
+                    "    WHERE surveys.survey_id = surveys_disorders.survey_id" +
+                    "    AND disorders.id = ?2;disorderId)" +
+                    ") " +
+                    "AND " +
+                    "(:educationProgramId IS NULL OR EXISTS (" +
+                    "    SELECT * FROM surveys_edu_programs" +
+                    "    JOIN education_programs ON education_programs.id = surveys_edu_programs.edu_pr_id" +
+                    "    WHERE surveys.survey_id = surveys_edu_programs.survey_id" +
+                    "    AND education_programs.id = :educationProgamId)" +
+                    ") " +
+                    "AND " +
+                    "(:recommendationId IS NULL OR EXISTS (" +
+                    "    SELECT * FROM surveys_recommendations" +
+                    "    JOIN recommendations ON recommendations.id = surveys_recommendations.rec_id" +
+                    "    WHERE surveys.survey_id = surveys_recommendations.survey_id" +
+                    "    AND recommendations.id = :recommendationId)" +
+                    ")" +
+                    ";"
+    )
+    Page veryComplexSearch(//@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                           //                           Date surveyDateStart,
+//                       @Param("surveyDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//                               Date surveyDateEnd,
+//                       @Param("birthDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//                               Date birthDateStart,
+//                       @Param("birthDateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//                               Date birthDateEnd,
+//                       @Param("childName") String childName,
+                           @Param("diagnosisId") Long diagnosisId,
+                           @Param("disorderId") Long disorderId,
+                           @Param("educationProgramId") Long educationProgramId,
+                           @Param("recommendationId") Long recommendationId,
+//                       @Param("targetStartAge") Integer targetStartAge,
+//                       @Param("targetEndAge") Integer targetEndAge,
+//                       @Param("regionId") Long regionId,
+                           Pageable p);
 
 
     @RestResource(path = "byBirthDate", rel = "byBirthDate")
@@ -72,7 +210,7 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
             "WHERE " +
             "s.child.birthDate = :birthDate")
     Page findByChildBirthDate(@Param("birthDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthDate,
-                                     Pageable p);
+                              Pageable p);
 
 
     @RestResource(path = "byDiagnosis", rel = "byDiagnosis")
@@ -105,5 +243,5 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
             "s.protocolNumber = :protocolNumber AND " +
             "s.surveyDate = :surveyDate")
     Survey findUnique(@Param("protocolNumber") String protocolNumber,
-                             @Param("surveyDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date surveyDate);
+                      @Param("surveyDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date surveyDate);
 }
