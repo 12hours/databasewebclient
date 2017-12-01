@@ -26,7 +26,8 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
                                  @Param("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date end,
                                  Pageable p);
 
-    @RestResource(path = "byNameAndDate")
+    @Deprecated
+//    @RestResource(path = "byNameAndDate")
     @Query("SELECT DISTINCT s FROM Survey s " +
             "LEFT JOIN s.diagnoses diagnoses LEFT JOIN s.disorders disorders " +
             "LEFT JOIN s.educationPrograms educationPrograms LEFT JOIN s.recommendations recommendations " +
@@ -66,7 +67,7 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
                        @Param("regionId") Long regionId,
                        Pageable p);
 
-    @RestResource(path = "cmpx")
+    @RestResource(path = "byNameAndDate")
     @Query("SELECT s FROM Survey s " +
             "WHERE " +
             "(:diagnosisId IS NULL " +

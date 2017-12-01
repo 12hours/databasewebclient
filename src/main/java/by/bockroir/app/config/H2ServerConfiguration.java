@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * the default connection URL is jdbc:h2:mem:testdb and the username is 'sa', password empty.
  */
 @Configuration
-@Profile({"test","dev"}) // Only activate this in the "dev" profile
+@Profile({"test","dev", "prod"}) // Only activate this in the "dev" profile
 public class H2ServerConfiguration {
 
     // TCP port for remote connections, default 9092
