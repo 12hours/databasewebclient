@@ -198,7 +198,7 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
         }).done(function (data) {
             $scope.surveys.currentSurvey.survey = angular.fromJson(data);
             $scope.surveys.currentSurvey.survey.surveyDate = new Date(data.surveyDate);
-            $scope.surveys.currentSurvey.survey.nextSurveyDate = new Date(data.nextSurveyDate);
+            $scope.surveys.currentSurvey.survey.nextSurveyDate = data.nextSurveyDate == null? null: new Date(data.nextSurveyDate);
             // $scope.survey.child.birthDate = new Date(response.data.child.birthDate);
             var childUrl = data._links.child.href;
             var diagnosesUrl = data._links.diagnoses.href;
@@ -480,6 +480,12 @@ myApp.controller('SurveyController', ['$http', '$scope', '$rootScope', function 
             },
             error: function (request, msg, error) {
                 logger.error("survey update fail: ", surveyMethodType, 'on', surveyUrl);
+                logger.error(request.responseText);
+                var jsonError = angular.fromJson(request.responseText);
+                if (jsonError['errors'][0]['message'] === "Survey already exists"){
+                    raisePopup("Обследование с такой датой и номером уже существует");
+                }
+
             }
         }).done(function (data) {
             // surveyUrl = data._links.self.href;

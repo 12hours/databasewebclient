@@ -68,7 +68,7 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
                        Pageable p);
 
     @RestResource(path = "byNameAndDate")
-    @Query("SELECT s FROM Survey s " +
+    @Query(value = "SELECT s FROM Survey s " +
             "WHERE " +
             "(:diagnosisId IS NULL " +
             "   OR EXISTS ( SELECT diagnosis FROM Diagnosis diagnosis WHERE diagnosis MEMBER OF s.diagnoses " +
@@ -103,7 +103,42 @@ public interface SurveyRepository extends PagingAndSortingRepository<Survey, Lon
             "(:targetEndAge IS NULL OR " +
             "HOWOLD(s.child.birthDate, s.surveyDate) < :targetEndAge) AND " +
             "(:regionId IS NULL OR s.child.region.id = :regionId)" +
-            "ORDER BY (s.protocolNumber + 0)"
+            "ORDER BY TONUM(s.protocolNumber)"
+    , countQuery = "SELECT COUNT(s.id) FROM Survey s " +
+            "WHERE " +
+            "(:diagnosisId IS NULL " +
+            "   OR EXISTS ( SELECT diagnosis FROM Diagnosis diagnosis WHERE diagnosis MEMBER OF s.diagnoses " +
+            "               AND diagnosis.id = :diagnosisId) " +
+            ") " +
+            "AND " +
+            "(:disorderId IS NULL " +
+            "   OR EXISTS ( SELECT disorder FROM Disorder disorder WHERE disorder MEMBER OF s.disorders " +
+            "               AND disorder.id = :disorderId) " +
+            ") " +
+            "AND " +
+            "(:educationProgramId IS NULL " +
+            "   OR EXISTS ( SELECT educationProgram FROM EducationProgram educationProgram " +
+            "               WHERE educationProgram MEMBER OF s.educationPrograms " +
+            "               AND educationProgram.id = :educationProgramId) " +
+            ") " +
+            "AND " +
+            "(:recommendationId IS NULL " +
+            "   OR EXISTS ( SELECT recommendation FROM Recommendation recommendation " +
+            "               WHERE recommendation MEMBER OF s.recommendations " +
+            "               AND recommendation.id = :recommendationId) " +
+            ") " +
+            "AND " +
+            "(:childName IS NULL OR (UPPER(s.childName) LIKE UPPER(:childName)||'%' )) AND " +
+            "(:birthDateStart IS NULL OR s.child.birthDate >= :birthDateStart) AND " +
+            "(:birthDateEnd IS NULL OR s.child.birthDate <= :birthDateEnd) AND " +
+            "(:surveyDateStart IS NULL OR s.surveyDate >= :surveyDateStart) AND " +
+            "(:surveyDateEnd IS NULL OR s.surveyDate <= :surveyDateEnd) AND " +
+            "(:targetStartAge IS NULL OR " +
+            "(HOWOLD(s.child.birthDate, s.surveyDate) >= 0 AND HOWOLD(s.child.birthDate, s.surveyDate) >= :targetStartAge))" +
+            " AND " +
+            "(:targetEndAge IS NULL OR " +
+            "HOWOLD(s.child.birthDate, s.surveyDate) < :targetEndAge) AND " +
+            "(:regionId IS NULL OR s.child.region.id = :regionId)"
     )
     Page complexSearch2(@Param("surveyDateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                 Date surveyDateStart,

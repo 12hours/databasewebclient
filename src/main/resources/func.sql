@@ -19,3 +19,28 @@ CREATE ALIAS IF NOT EXISTS HOWOLD AS '
       return age;
   }
 ';
+
+CREATE ALIAS IF NOT EXISTS TONUM AS '
+    int toNum(java.lang.String protocolNumberString){
+        java.lang.Integer answer;
+        try {
+            answer = java.lang.Integer.parseInt(protocolNumberString);
+        } catch (java.lang.Exception e) {
+            java.lang.StringBuilder builder = new java.lang.StringBuilder();
+            for (int i = 0; i < protocolNumberString.length(); i++){
+                char ch = protocolNumberString.charAt(i);
+                if (java.lang.Character.isDigit(ch)){
+                    builder.append(protocolNumberString.charAt(i));
+                } else {
+                    break;
+                }
+            }
+            try {
+                answer = java.lang.Integer.parseInt(builder.toString());
+            } catch (java.lang.Exception ex){
+                answer = java.lang.Integer.valueOf(0);
+            }
+        }
+        return answer;
+    }
+';
