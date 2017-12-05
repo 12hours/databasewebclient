@@ -73,4 +73,25 @@ myApp.controller('RecommendationsController', ['$scope', function ($scope) {
         $scope.getRecommendationsList();
     };
 
+    $scope.deleteRecommendation = function (url) {
+        if (confirm('Вы действительно хотите удалить запись?')) {
+            $.ajax({
+                type: DELETE,
+                url: url,
+                async: false,
+                success: function (result) {
+                    logger.info("recommendation delete success");
+                },
+                error: function (request, msg, error) {
+                    logger.error("recommendation delete fail");
+                }
+            });
+        $scope.recommendations.currentRecommendation = {};
+        $scope.nav.recommendationsTabSelected = 1;
+        $scope.getRecommendationsList();
+        } else {
+            return;
+        }
+    };
+
 }]);

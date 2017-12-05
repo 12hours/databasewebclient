@@ -12,6 +12,9 @@
                     ng-click="updateDiagnosis(diagnoses.currentDiagnosis._links.self.href);">Сохранить
             </button>
             <button type="button" class="btn btn-danger"
+                    ng-click="deleteDiagnosis(diagnoses.currentDiagnosis._links.self.href);">Удалить
+            </button>
+            <button type="button" class="btn"
                     ng-click="nav.diagnosesTabSelected = 1; diagnoses.currentDiagnosis = {}; getDiagnosesList();">Закрыть
             </button>
         </div>

@@ -73,6 +73,27 @@ myApp.controller('DisordersController', ['$scope', function ($scope) {
         $scope.getDisordersList();
     };
 
+    $scope.deleteDisorder = function (url) {
+        if (confirm('Вы действительно хотите удалить запись?')) {
+            $.ajax({
+                type: DELETE,
+                url: url,
+                async: false,
+                success: function (result) {
+                    logger.info("disorder delete success");
+                },
+                error: function (request, msg, error) {
+                    logger.error("disorder delete fail");
+                }
+            });
+            $scope.disorders.currentDisorder = {};
+            $scope.nav.disordersTabSelected = 1;
+            $scope.getDisordersList();
+        } else {
+            return;
+        }
+    };
+
 
     $scope.editDisorder = function(diagnosis) {
         var popupWindow = document.getElementById("surveys-list-popup-window");

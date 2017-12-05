@@ -22,4 +22,11 @@ public class Recommendation {
 
     @ManyToMany(mappedBy = "recommendations")
     Set<Survey> surveys = new HashSet<>();
+
+    @PreRemove
+    private void removeRecommendationFromSurveys() {
+        for (Survey s : surveys) {
+            s.getRecommendations().remove(this);
+        }
+    }
 }

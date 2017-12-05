@@ -14,3 +14,4 @@ var GET = 'GET';
 var POST = 'POST';
 var PATCH = 'PATCH';
 var PUT = 'PUT';
+var DELETE = 'DELETE';

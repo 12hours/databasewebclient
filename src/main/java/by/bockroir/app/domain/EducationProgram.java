@@ -1,6 +1,7 @@
 package by.bockroir.app.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -22,4 +23,12 @@ public class EducationProgram {
 
     @ManyToMany(mappedBy = "educationPrograms")
     Set<Survey> surveys = new HashSet<>();
+
+    @PreRemove
+    private void removeEducationProgramFromSurveys() {
+        for (Survey s : surveys) {
+            s.getEducationPrograms().remove(this);
+        }
+    }
+
 }

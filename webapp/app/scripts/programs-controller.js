@@ -73,4 +73,25 @@ myApp.controller('ProgramsController', ['$scope', function ($scope) {
         $scope.getProgramsList();
     };
 
+    $scope.deleteProgram = function (url) {
+        if (confirm('Вы действительно хотите удалить запись?')) {
+            $.ajax({
+                type: DELETE,
+                url: url,
+                async: false,
+                success: function (result) {
+                    logger.info("program delete success");
+                },
+                error: function (request, msg, error) {
+                    logger.error("program delete fail");
+                }
+            });
+            $scope.programs.currentProgram = {};
+            $scope.nav.programsTabSelected = 1;
+            $scope.getProgramsList();
+        } else {
+            return;
+        }
+    };
+
 }]);
